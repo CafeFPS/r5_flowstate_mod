@@ -91,6 +91,7 @@ global function ActuallyPutDefaultSettings
 
 global function AimTrainer_LootRollerDamageRgb
 global function AimTrainer_SetPatstrafeHudValues
+global function CL_AimTrainer_RegisterNetworkFunctions
 
 string DesiredSlot = "p"
 bool EPIC_CAMERA_ENABLED = true //Toggle between old hardcoded camera and new epic exploration camera
@@ -181,10 +182,31 @@ void function Cl_ChallengesByColombia_Init()
 	SetConVarFloat( "mat_sun_scale", 0.0 )
 }
 
+void function CL_AimTrainer_RegisterNetworkFunctions()
+{
+	if ( IsLobby() )
+		return
+	
+	RegisterNetworkedVariableChangeCallback_bool( "FS_PlayerIsMnk", FS_InputChanged )
+}
+
 table<entity, array<int> > ballFxs //each entity has its own array of fx
 
 // Health bars for aim trainer targets - always visible
 table<entity, entity> AimTrainer_TargetHealthBars
+
+void function FS_InputChanged( entity player, bool old, bool new, bool actuallyChanged )
+{
+	entity localPlayer = GetLocalClientPlayer()
+	
+	if( player != localPlayer )
+		return
+	
+	if( new )
+		MG_MovementOverlay_toggle( true )
+	else
+		MG_MovementOverlay_toggle( false )
+}
 
 void function AimTrainer_LootRollerSpawned( entity ball )
 {
@@ -473,9 +495,6 @@ void function AimTrainer_OnEntitiesDidLoad()
 
 		fxEnt.Destroy()
 	}
-	
-	
-	MG_MovementOverlay_toggle( true ) // todo(cafe) show only when player is in challenge
 }
 
 void function ServerCallback_SetDefaultMenuSettings()

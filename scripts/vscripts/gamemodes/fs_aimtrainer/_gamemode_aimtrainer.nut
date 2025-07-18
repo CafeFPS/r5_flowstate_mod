@@ -229,6 +229,8 @@ void function StartFRChallenges(entity player)
 	player.p.isChallengeActivated = false
 	SetServerVar( "minimapState", eMinimapState.Hidden)
 	printt( "Aimtrainer Start" )
+	
+	StartInputDetectorForPlayer( player )
 }
 
 void function ResetChallengeStats(entity player)

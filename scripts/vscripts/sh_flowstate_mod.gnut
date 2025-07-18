@@ -242,6 +242,8 @@ void function RegisterFlowstateRemoteFunctions()
 	
 	ScriptRegisterNetworkedVariable( "isPlayerShootingFlowstateLightningGun", SNDC_PLAYER_GLOBAL, SNVT_BOOL, false )
 	
+	ScriptRegisterNetworkedVariable( "FS_PlayerIsMnk", SNDC_PLAYER_GLOBAL, SNVT_BOOL, false )
+	
 	//Cafe
 	//Remote functions _ByRef
 	//To be used with Remote_CallFunction_ByRef( entity player, string funcName )
@@ -393,7 +395,6 @@ void function RegisterFlowstateRemoteFunctions()
 			
 			if( Playlist() == ePlaylists.fs_1v1 || Playlist() == ePlaylists.fs_vamp_1v1 || Playlist() == ePlaylists.fs_1v1_headshots_only || Playlist() == ePlaylists.fs_lgduels_1v1 )
 			{
-				ScriptRegisterNetworkedVariable( "FSDM_1v1_PlayerIsMnk", SNDC_PLAYER_GLOBAL, SNVT_BOOL, true )
 				ScriptRegisterNetworkedVariable( "FSDM_1v1_Enemy", SNDC_PLAYER_GLOBAL, SNVT_ENTITY )
 				ScriptRegisterNetworkedVariable( "FSDM_1v1_PositionInScoreboard", SNDC_PLAYER_GLOBAL, SNVT_INT, -1 )
 				ScriptRemote_RegisterClientFunction( "Gamemode1v1_ForceLegendSelector_Deprecated" ) //(mk): Todo clientsided ui activation
@@ -638,6 +639,10 @@ void function RegisterFlowstateRemoteFunctions()
 			
 			case eGamemodes.fs_dm:
 				CL_FSDM_RegisterNetworkFunctions()
+			break
+			
+			case eGamemodes.fs_aimtrainer:
+				CL_AimTrainer_RegisterNetworkFunctions()
 			break
 		}
 	

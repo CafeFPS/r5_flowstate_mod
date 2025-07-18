@@ -273,7 +273,7 @@ void function CL_FSDM_RegisterNetworkFunctions()
 	if( Playlist() == ePlaylists.fs_1v1 || Playlist() == ePlaylists.fs_vamp_1v1 || Playlist() == ePlaylists.fs_1v1_headshots_only || Playlist() == ePlaylists.fs_lgduels_1v1 )
 	{
 		RegisterNetworkedVariableChangeCallback_ent( "FSDM_1v1_Enemy", Flowstate_1v1EnemyChanged )
-		RegisterNetworkedVariableChangeCallback_bool( "FSDM_1v1_PlayerIsMnk", FS_1v1_InputChanged )
+		RegisterNetworkedVariableChangeCallback_bool( "FS_PlayerIsMnk", FS_1v1_InputChanged )
 		RegisterNetworkedVariableChangeCallback_int( "FS_1v1_PlayerState", FS_1v1_PlayerStateChanged )
 	}
 }
@@ -1236,7 +1236,6 @@ void function FS_DM_OnEntitiesDidLoad()
 	if( Playlist() == ePlaylists.fs_1v1 )
 	{
 		Send1v1SettingsToServer()
-		MG_MovementOverlay_toggle( true )
 	}
 	
     if( GetGlobalNetTime( "flowstate_DMRoundEndTime" ) < Time() || GetGameState() != eGameState.Playing || GetGlobalNetTime( "flowstate_DMRoundEndTime" ) == -1 ) // Updates round end time for players connected mid game
