@@ -250,7 +250,25 @@ void function RegisterFlowstateRemoteFunctions()
 	//Test it with script Remote_CallFunction_ByRef( gp()[0], "TestExternalRemoteFunct" )
 	//These don't change checksum
 	array<string> RemoteFunctions_ByRef = [
-		"TestExternalRemoteFunct"
+		"TestExternalRemoteFunct",
+		"FS_CreateTeleportFirstPersonEffectOnPlayer",
+		"ClearMatchPoints",
+		"AddRoundPointToWinner_IMC",
+		"AddRoundPointToWinner_Militia",
+		"AddRoundPointTied",
+		"SND_UpdateUIScore",
+		"FlowstateSND_CustomBuyMenu_Stop",
+		"ServerCallback_BuyRejected",
+		"ServerCallback_FSDM_CoolCamera",
+		"SND_ForceUpdatePlayerCount",
+		"Consumable_UseBomb",
+		"Tracker_ShowChampion",
+		"FS4DIntroSequence",
+		"FS_ShowRoundStartTimeUI",
+		"FS_ShowRoundStartSelectingTeamTimeUI",
+		"ServerCallback_PlayerOutOfVent",
+		"ServerCallback_PlayerInVent"
+		// HaloBrIntroSequence,
 	]
 	
 	RegisterExternalRemoteFunction_ByRef_Array( RemoteFunctions_ByRef, "Flowstate" )
