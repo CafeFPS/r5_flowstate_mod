@@ -5230,6 +5230,25 @@ void function Thread_CheckInput( entity player )
                         //sqprint("Player did change input! Old: " + player.p.input.tostring() + " - New: " + typeOfInput.tostring());
                         player.p.input = typeOfInput
 						player.p.lastInputChangeTime = Time()
+						
+						//Set networked var, for another client to read.
+						if( player.p.input == 0 )
+						{
+							#if DEVELOPER
+							if( player == gp()[0] )
+								printw( player.GetPlayerName() + " is mnk" )
+							#endif
+							player.SetPlayerNetBool( "FSDM_1v1_PlayerIsMnk", true )
+						}
+						else // 1
+						{
+							#if DEVELOPER
+							if( player == gp()[0] )
+								printw( player.GetPlayerName() + " is rolla" )
+							#endif
+							player.SetPlayerNetBool( "FSDM_1v1_PlayerIsMnk", false )
+						}
+						
 						player.Signal( "InputChanged" ) //registered signal in CPlayer class		
                     }
 					continue
@@ -5255,13 +5274,6 @@ void function Thread_CheckInput( entity player )
 			previousInput = typeOfInput
 			continue
 		}
-
-		/*
-		if( player.p.input == 0 )
-				sqprint( player.GetPlayerName() + "is mnk" )
-			else // 1
-				sqprint( player.GetPlayerName() + "is rolla" )
-		*/
     }
 }//ty cafe for fixed thread
 

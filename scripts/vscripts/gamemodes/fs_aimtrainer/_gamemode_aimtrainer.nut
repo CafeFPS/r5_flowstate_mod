@@ -4425,7 +4425,7 @@ void function PreChallengeStart(entity player, int challenge)
 		player.p.isChallengeActivated = true
 		Remote_CallFunction_NonReplay(player, "ServerCallback_SetChallengeActivated", true)
 
-		SetGameState( eGameState.WaitingForPlayers )
+		SetGameState( eGameState.Playing )
 	}()
 }
 

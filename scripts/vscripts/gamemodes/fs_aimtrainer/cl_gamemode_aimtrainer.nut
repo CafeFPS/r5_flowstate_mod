@@ -93,6 +93,7 @@ global function AimTrainer_LootRollerDamageRgb
 global function AimTrainer_SetPatstrafeHudValues
 
 string DesiredSlot = "p"
+bool EPIC_CAMERA_ENABLED = true //Toggle between old hardcoded camera and new epic exploration camera
 
 struct{
 	int totalShots
@@ -115,6 +116,42 @@ global struct CameraLocationPair
 {
     vector origin = <0, 0, 0>
     vector angles = <0, 0, 0>
+}
+
+global struct CinematicPath
+{
+	vector startPos = <0, 0, 0>
+	vector endPos = <0, 0, 0>
+	vector startAngles = <0, 0, 0>
+	vector endAngles = <0, 0, 0>
+	float duration = 8.0
+	float fovStart = 100.0
+	float fovEnd = 100.0
+	int curveType = 0 //0=linear, 1=ease-in-out, 2=dramatic
+	bool enableBanking = true
+}
+
+global struct DynamicCameraState
+{
+	vector position = <0, 0, 0>
+	vector angles = <0, 0, 0>
+	vector velocity = <0, 0, 0>
+	vector targetPosition = <0, 0, 0>
+	float speed = 200.0
+	float fov = 100.0
+	int explorationMode = 0 //0=traveling, 1=exploring, 2=investigating
+	float modeTimer = 0.0
+}
+
+global struct ExplorationPoint
+{
+	vector position = <0, 0, 0>
+	float interestLevel = 1.0
+	float lastVisitTime = 0.0
+	int visitCount = 0
+	bool isUnderground = false
+	bool isBuilding = false
+	bool isScenic = false
 }
 
 void function Cl_ChallengesByColombia_Init()
@@ -645,9 +682,632 @@ CameraLocationPair function NewCameraPair(vector origin, vector angles)
     return locPair
 }
 
+CinematicPath function NewCinematicPath(vector startPos, vector endPos, vector startAngles, vector endAngles, float duration = 8.0, int curveType = 1, float fovStart = 100.0, float fovEnd = 100.0)
+{
+	CinematicPath path
+	path.startPos = startPos
+	path.endPos = endPos
+	path.startAngles = startAngles
+	path.endAngles = endAngles
+	path.duration = duration
+	path.curveType = curveType
+	path.fovStart = fovStart
+	path.fovEnd = fovEnd
+	path.enableBanking = true
+	return path
+}
+
+float function EaseInOutCubic(float t)
+{
+	return t < 0.5 ? 4 * t * t * t : 1 - pow(-2 * t + 2, 3) / 2
+}
+
+float function EaseInOutQuart(float t)
+{
+	return t < 0.5 ? 8 * t * t * t * t : 1 - pow(-2 * t + 2, 4) / 2
+}
+
+float function DramaticCurve(float t)
+{
+	//Slow start, fast middle, smooth end
+	float phase1 = 0.15
+	float phase2 = 0.85
+	
+	if(t < phase1)
+		return pow(t / phase1, 2) * 0.1
+	else if(t < phase2)
+		return 0.1 + (t - phase1) * 0.8 / (phase2 - phase1)
+	else
+		return 0.9 + pow((t - phase2) / (1 - phase2), 0.5) * 0.1
+		
+	unreachable
+}
+
+vector function InterpolatePosition(CinematicPath path, float t)
+{
+	float curveT = t
+	
+	switch(path.curveType)
+	{
+		case 0: //Linear
+			break
+		case 1: //Ease-in-out
+			curveT = EaseInOutCubic(t)
+			break
+		case 2: //Dramatic
+			curveT = DramaticCurve(t)
+			break
+	}
+	
+	return path.startPos + (path.endPos - path.startPos) * curveT
+}
+
+vector function InterpolateAngles(CinematicPath path, float t)
+{
+	float curveT = t
+	
+	switch(path.curveType)
+	{
+		case 0: //Linear
+			break
+		case 1: //Ease-in-out
+			curveT = EaseInOutCubic(t)
+			break
+		case 2: //Dramatic
+			curveT = DramaticCurve(t)
+			break
+	}
+	
+	//Add banking based on movement direction
+	vector baseAngles = path.startAngles + (path.endAngles - path.startAngles) * curveT
+	
+	if(path.enableBanking)
+	{
+		vector movement = path.endPos - path.startPos
+		float bankingAmount = sin(t * PI) * 15.0 //Banking peaks at middle of movement
+		
+		if(movement.y > 0) //Moving in positive Y direction
+			baseAngles.z += bankingAmount
+		else if(movement.y < 0) //Moving in negative Y direction
+			baseAngles.z -= bankingAmount
+	}
+	
+	return baseAngles
+}
+
+float function InterpolateFOV(CinematicPath path, float t)
+{
+	return path.fovStart + (path.fovEnd - path.fovStart) * EaseInOutCubic(t)
+}
+
+//Dynamic Camera System Helper Functions
+bool function IsObstacleInDirection(vector fromPos, vector direction, float distance)
+{
+	TraceResults trace = TraceLine(fromPos, fromPos + direction * distance, null, TRACE_MASK_SHOT, TRACE_COLLISION_GROUP_NONE)
+	return trace.fraction < 1.0
+}
+
+vector function GetAvoidanceDirection(vector currentPos, vector targetDir, float checkDistance)
+{
+	//Check multiple directions to find best path
+	array<vector> directions = [
+		targetDir,
+		targetDir + <0, 0, 100>, //Up
+		targetDir + <0, 0, -50>, //Down
+		targetDir + AnglesToRight(<0, 45, 0>) * 100, //Right
+		targetDir + AnglesToRight(<0, -45, 0>) * 100, //Left
+		targetDir + AnglesToForward(<0, 30, 0>) * 100, //Right-forward
+		targetDir + AnglesToForward(<0, -30, 0>) * 100  //Left-forward
+	]
+	
+	foreach(dir in directions)
+	{
+		if(!IsObstacleInDirection(currentPos, Normalize(dir), checkDistance))
+			return Normalize(dir)
+	}
+	
+	//If all directions blocked, try going up
+	return <0, 0, 1>
+}
+
+vector function GenerateRandomExplorationTarget(vector currentPos, float minDistance, float maxDistance)
+{
+	//Generate random target within map bounds
+	float angle = RandomFloatRange(0.0, 360.0)
+	float distance = RandomFloatRange(minDistance, maxDistance)
+	float height = RandomFloatRange(-1000.0, 1000.0)
+	
+	vector dir = AnglesToForward(<0, angle, 0>)
+	vector newTarget = currentPos + dir * distance + <0, 0, height>
+	
+	//Ensure target is not underground (basic check)
+	if(newTarget.z < currentPos.z - 2000)
+		newTarget.z = currentPos.z - 500
+	
+	return newTarget
+}
+
+float function CalculateInterestLevel(vector position)
+{
+	float interest = 1.0
+	
+	//Higher interest for elevated positions
+	if(position.z > 0)
+		interest += position.z / 1000.0
+	
+	//Check if near buildings (simplified)
+	TraceResults traceDown = TraceLine(position, position + <0, 0, -500>, null, TRACE_MASK_SHOT, TRACE_COLLISION_GROUP_NONE)
+	if(traceDown.fraction < 0.8)
+		interest += 0.5 //Near structures
+	
+	return interest
+}
+
+vector function SmoothVelocityToTarget(vector currentPos, vector targetPos, vector currentVel, float maxSpeed, float smoothing)
+{
+	vector toTarget = targetPos - currentPos
+	float distance = Length(toTarget)
+	
+	if(distance < 50.0)
+		return currentVel * 0.5 //Slow down when close
+	
+	vector desiredVel = Normalize(toTarget) * maxSpeed
+	return currentVel + (desiredVel - currentVel) * smoothing
+}
+
+vector function CalculateDynamicAngles(vector position, vector velocity, int explorationMode)
+{
+	vector angles = VectorToAngles(velocity)
+	
+	switch(explorationMode)
+	{
+		case 0: //Traveling - look more downward
+			angles.x = max(angles.x, -45.0)
+			angles.x = min(angles.x, -15.0)
+			break
+		case 1: //Exploring - moderate downward look
+			angles.x = max(angles.x, -30.0)
+			angles.x = min(angles.x, -5.0)
+			break
+		case 2: //Investigating - look around more
+			angles.x += sin(Time() * 2.0) * 10.0
+			angles.y += cos(Time() * 1.5) * 5.0
+			break
+	}
+	
+	return angles
+}
+
+//Smart Location Management Functions
+float function CalculateDistance(vector pos1, vector pos2)
+{
+	return Length(pos2 - pos1)
+}
+
+array<CameraLocationPair> function SortLocationsByDistance(array<CameraLocationPair> locations, vector fromPosition, array<int> visitedIndices)
+{
+	array<CameraLocationPair> unvisited
+	array<float> distances
+	array<int> originalIndices
+	
+	//Get unvisited locations
+	for(int i = 0; i < locations.len(); i++)
+	{
+		bool isVisited = false
+		foreach(visitedIndex in visitedIndices)
+		{
+			if(visitedIndex == i)
+			{
+				isVisited = true
+				break
+			}
+		}
+		
+		if(!isVisited)
+		{
+			unvisited.append(locations[i])
+			distances.append(CalculateDistance(fromPosition, locations[i].origin))
+			originalIndices.append(i)
+		}
+	}
+	
+	//Sort by distance (bubble sort for simplicity)
+	for(int i = 0; i < distances.len() - 1; i++)
+	{
+		for(int j = 0; j < distances.len() - i - 1; j++)
+		{
+			if(distances[j] > distances[j + 1])
+			{
+				//Swap distances
+				float tempDist = distances[j]
+				distances[j] = distances[j + 1]
+				distances[j + 1] = tempDist
+				
+				//Swap locations
+				CameraLocationPair tempLoc = unvisited[j]
+				unvisited[j] = unvisited[j + 1]
+				unvisited[j + 1] = tempLoc
+				
+				//Swap indices
+				int tempIndex = originalIndices[j]
+				originalIndices[j] = originalIndices[j + 1]
+				originalIndices[j + 1] = tempIndex
+			}
+		}
+	}
+	
+	return unvisited
+}
+
+int function FindLocationIndex(array<CameraLocationPair> allLocations, CameraLocationPair targetLocation)
+{
+	for(int i = 0; i < allLocations.len(); i++)
+	{
+		if(allLocations[i].origin.x == targetLocation.origin.x && 
+		   allLocations[i].origin.y == targetLocation.origin.y && 
+		   allLocations[i].origin.z == targetLocation.origin.z)
+		{
+			return i
+		}
+	}
+	return -1
+}
+
+//Arc-Based Flight System
+float function CalculateArcHeight(vector startPos, vector endPos, int mapId)
+{
+	float distance = CalculateDistance(startPos, endPos)
+	float baseHeight = 1000.0 //Base clearance
+	
+	//Map-specific height adjustments
+	switch(mapId)
+	{
+		case eMaps.mp_rr_desertlands_64k_x_64k:
+		case eMaps.mp_rr_desertlands_64k_x_64k_nx:
+		case eMaps.mp_rr_desertlands_64k_x_64k_tt:
+		case eMaps.mp_rr_desertlands_mu1:
+		case eMaps.mp_rr_desertlands_mu1_tt:
+		case eMaps.mp_rr_desertlands_mu2:
+		case eMaps.mp_rr_desertlands_holiday:
+			baseHeight = 1200.0 //Kings Canyon has tall mountains
+			break
+		case eMaps.mp_rr_canyonlands_mu1:
+		case eMaps.mp_rr_canyonlands_mu1_night:
+		case eMaps.mp_rr_canyonlands_64k_x_64k:
+		case eMaps.mp_rr_canyonlands_mu2:
+		case eMaps.mp_rr_canyonlands_mu2_tt:
+		case eMaps.mp_rr_canyonlands_mu2_mv:
+		case eMaps.mp_rr_canyonlands_mu2_ufo:
+			baseHeight = 1000.0 //Kings Canyon S2 moderate terrain
+			break
+		case eMaps.mp_rr_arena_empty:
+		case eMaps.mp_rr_canyonlands_staging:
+			baseHeight = 1500.0 //World's Edge has very tall structures
+			break
+		case eMaps.mp_rr_olympus:
+		case eMaps.mp_rr_olympus_tt:
+			baseHeight = 1300.0 //Olympus has tall buildings
+			break
+		default:
+			baseHeight = 1000.0
+			break
+	}
+	
+	//Distance-based scaling
+	float arcHeight = baseHeight + (distance / 3.0)
+	
+	//Ensure minimum and maximum heights
+	if(arcHeight < 800.0)
+		arcHeight = 800.0
+	if(arcHeight > 2500.0)
+		arcHeight = 2500.0
+	
+	return arcHeight
+}
+
+vector function InterpolateArcPosition(vector startPos, vector endPos, float t, float arcHeight)
+{
+	//Use ease-in-out curve for smoother position interpolation
+	float easedT = EaseInOutCubic(t)
+	vector linearPos = startPos + (endPos - startPos) * easedT
+	
+	//Calculate arc height using modified parabolic formula with smoother ending
+	//Height peaks at t=0.5, goes to 0 at t=0 and t=1
+	float heightMultiplier = 4.0 * t * (1.0 - t) //Parabolic curve
+	
+	//Add extra smoothing at the end for better arrival
+	if(t > 0.8)
+	{
+		float endT = (t - 0.8) / 0.2 //Normalize last 20% to 0-1
+		heightMultiplier *= (1.0 - (endT * endT)) //Smooth fade to zero
+	}
+	
+	float currentArcHeight = heightMultiplier * arcHeight
+	
+	//Add arc height to linear position
+	return linearPos + <0, 0, currentArcHeight>
+}
+
+vector function CalculateArcAngles(vector startAngles, vector currentActualAngles, vector endAngles, vector currentPos, vector nextPos, float t)
+{
+	//Three-phase angle system for smooth transitions
+	vector groundAngles = <35.0, startAngles.y, 0>
+	
+	if(t < 0.2)
+	{
+		//Phase 1: Smooth transition from current angles to ground-looking angles (0-20%)
+		float phaseT = t / 0.2 //Normalize to 0-1 for first 20%
+		
+		//Smooth interpolation from start to end angles
+		vector angles = startAngles + (groundAngles - startAngles) * EaseInOutCubic(phaseT)
+		
+		//Add slight banking based on movement direction
+		vector velocity = nextPos - currentPos
+		if(Length(velocity) > 0)
+		{
+			vector normalized = Normalize(velocity)
+			angles.z = normalized.y * 6.0 * phaseT //Gradually add banking
+		}
+		
+		return angles
+	}
+	else if(t < 0.7)
+	{
+	  //Phase 2: Stable ground-viewing phase (20-70%)
+	  vector angles = groundAngles//currentActualAngles
+
+	  //Maintain consistent banking during stable viewing
+	  vector velocity = nextPos - currentPos
+	  if(Length(velocity) > 0)
+	  {
+		vector normalized = Normalize(velocity)
+		angles.z = normalized.y * 8.0 //Full banking during stable flight
+	  }
+
+	  return angles
+	}
+	else
+	{
+		//Phase 3: Smooth transition from ground-looking to destination angles (70-100%)
+		float phaseT = (t - 0.7) / 0.3 //Normalize to 0-1 for last 30%
+		
+		//Smooth transition to destination angles
+		vector angles = groundAngles + (endAngles - groundAngles) * EaseInOutCubic(phaseT)
+		
+		//Gradually reduce banking as we approach destination
+		vector velocity = nextPos - currentPos
+		if(Length(velocity) > 0)
+		{
+			vector normalized = Normalize(velocity)
+			angles.z = normalized.y * 8.0 * (1.0 - phaseT) //Reduce banking towards destination
+		}
+		
+		return angles
+	}
+	
+	unreachable
+}
+
+void function EpicCinematicCamera()
+{
+	entity player = GetLocalClientPlayer()
+	player.EndSignal("ChallengeStartRemoveCameras")
+	array<CameraLocationPair> cutsceneSpawns
+	array<int> visitedLocations
+	
+	if(!IsValid(player)) return
+	
+	//Use original cutscene spawn locations for each map
+	switch( MapName() )
+	{
+		case eMaps.mp_rr_desertlands_64k_x_64k:
+		case eMaps.mp_rr_desertlands_64k_x_64k_nx:
+		case eMaps.mp_rr_desertlands_64k_x_64k_tt:
+		case eMaps.mp_rr_desertlands_mu1:
+		case eMaps.mp_rr_desertlands_mu1_tt:
+		case eMaps.mp_rr_desertlands_mu2:
+		case eMaps.mp_rr_desertlands_holiday:
+			cutsceneSpawns.append(NewCameraPair(<10881.2295, 5903.09863, -3176.7959>, <0, -143.321213, 0>)) 
+			cutsceneSpawns.append(NewCameraPair(<9586.79199, 24404.5898, -2019.6366>, <0, -52.6216431, 0>)) 
+			cutsceneSpawns.append(NewCameraPair(<630.249573, 13375.9219, -2736.71948>, <0, -43.2706299, 0>))
+			cutsceneSpawns.append(NewCameraPair(<16346.3076, -34468.9492, -1109.32153>, <0, -44.3879509, 0>))
+			cutsceneSpawns.append(NewCameraPair(<1133.25562, -20102.9648, -2488.08252>, <0, -24.9140873, 0>))
+			cutsceneSpawns.append(NewCameraPair(<17434.8613, 31441.5469, -3287.58472> , <0, -73.2149734, 0>))
+			cutsceneSpawns.append(NewCameraPair(<-15754.7705, 28475.4199, -1825.63904> , <0, -33.5749741, 0>))
+			cutsceneSpawns.append(NewCameraPair(<-26765.0313, 12633.0166, -2310.10376> , <0, -122.493965, 0>))
+			cutsceneSpawns.append(NewCameraPair(<-20192.2207, 14467.7178, -2427.99756> , <0, -90.6194687, 0>))
+			cutsceneSpawns.append(NewCameraPair(<-23315.9023, -1703.98547, -2398.66748> , <0, -132.315002, 0>))
+			cutsceneSpawns.append(NewCameraPair(<-16714.9688, -10806.3818, -2243.14551> , <0, 95.1944809, 0>))
+			cutsceneSpawns.append(NewCameraPair(<-16572.2891, -21977.0254, -3007.99854> , <0, 158.171997, 0>))
+			cutsceneSpawns.append(NewCameraPair(<-8895.37598, -31398.3008, -2265.09766> , <0, 19.2363491, 0>))
+			cutsceneSpawns.append(NewCameraPair(<28299.0723, -24929.7754, -2625.38989> , <0, -153.469131, 0>))
+			cutsceneSpawns.append(NewCameraPair(<22734.1094, -9516.63574, -3728.41479> , <0, -167.168518, 0>))
+			cutsceneSpawns.append(NewCameraPair(<22825.0996, 2085.24829, -3495.45166> , <0, -175.991135, 0>))
+			
+		break
+		
+		case eMaps.mp_rr_arena_empty:
+		case eMaps.mp_rr_canyonlands_staging:
+			cutsceneSpawns.append(NewCameraPair(<32645.04,-9575.77,-25911.94>, <7.71,91.67,0>)) 
+			cutsceneSpawns.append(NewCameraPair(<49180.1055, -6836.14502, -23461.8379>, <0, -55.7723808, 0>)) 
+			cutsceneSpawns.append(NewCameraPair(<43552.3203, -1023.86182, -25270.9766>, <0, 20.9528542, 0>))
+			cutsceneSpawns.append(NewCameraPair(<30038.0254, -1036.81982, -23369.6035>, <55, -24.2035522, 0>))
+		break
+
+		case eMaps.mp_rr_canyonlands_mu1:
+		case eMaps.mp_rr_canyonlands_mu1_night:
+		case eMaps.mp_rr_canyonlands_64k_x_64k:
+		case eMaps.mp_rr_canyonlands_mu2:
+		case eMaps.mp_rr_canyonlands_mu2_tt:
+		case eMaps.mp_rr_canyonlands_mu2_mv:
+		case eMaps.mp_rr_canyonlands_mu2_ufo:
+			cutsceneSpawns.append(NewCameraPair(<-7984.68408, -16770.2031, 3972.28271>, <0, -158.605301, 0>)) 
+			cutsceneSpawns.append(NewCameraPair(<-19691.1621, 5229.45264, 4238.53125>, <0, -54.6054993, 0>))
+			cutsceneSpawns.append(NewCameraPair(<13270.0576, -20413.9023, 2999.29468>, <0, 98.6180649, 0>))
+			cutsceneSpawns.append(NewCameraPair(<-25250.0391, -723.554199, 3427.51831>, <0, -55.5126762, 0>))
+		break
+
+		case eMaps.mp_rr_olympus:
+		case eMaps.mp_rr_olympus_tt:
+			cutsceneSpawns.append(NewCameraPair(<-34747.9766, 16697.9922, -3418.06567>, <0, -25, 0>))
+			cutsceneSpawns.append(NewCameraPair(<-22534.2168, 3191.64282, -4614.2583>, <0, -96.9278641, 0>))
+			cutsceneSpawns.append(NewCameraPair(<-43278.6406, -13421.3818, -2568.48071>, <0, 60.0252533, 0>))
+			cutsceneSpawns.append(NewCameraPair(<-227.150497, -15917.8672, -3549.59814>, <0, -8.99629879, 0>))
+			cutsceneSpawns.append(NewCameraPair(<23119.459, -19445.4551, -3955.37915>, <0, 59.2959213, 0>))
+			cutsceneSpawns.append(NewCameraPair(<11381.1982, -3206.40552, -3129.646>, <0, 19.5211906, 0>))
+			cutsceneSpawns.append(NewCameraPair(<-11880.9453, 13690.4688, -3865.60645>, <0, -78.4126205, 0>))
+			cutsceneSpawns.append(NewCameraPair(<7088.45898, 25559.4492, -40.745079>, <0, -40.4022217, 0>))
+			cutsceneSpawns.append(NewCameraPair(<-19851.1211, 16372.2002, -5309.15869>, <0, -169.298721, 0>))
+		break
+		
+		default:
+			cutsceneSpawns.append(NewCameraPair(<0, 0, 2000>, <0, 0, 0>))
+		break
+	}
+	
+	//Randomize locations array only once at map load
+	cutsceneSpawns.randomize()
+	
+	//Pick random starting location
+	int randomStartIndex = RandomIntRange(0, cutsceneSpawns.len())
+	int currentLocationIndex = randomStartIndex
+	vector currentCameraPos = cutsceneSpawns[randomStartIndex].origin
+	vector currentCameraAng = cutsceneSpawns[randomStartIndex].angles
+	visitedLocations.append(randomStartIndex)
+	
+	//Setup camera at starting location
+	entity camera = CreateClientSidePointCamera(currentCameraPos, currentCameraAng, 17)
+	camera.SetFOV(100)
+	entity cutsceneMover = CreateClientsideScriptMover($"mdl/dev/empty_model.rmdl", currentCameraPos, currentCameraAng)
+	camera.SetParent(cutsceneMover)
+	GetLocalClientPlayer().SetMenuCameraEntity( camera )
+	DoF_SetFarDepth( 6000, 10000 )
+	
+	OnThreadEnd(
+		function() : ( player, cutsceneMover, camera )
+		{
+			GetLocalClientPlayer().ClearMenuCameraEntity()
+			if(IsValid(cutsceneMover))
+				cutsceneMover.Destroy()
+			if(IsValid(camera))
+				camera.Destroy()
+			DoF_SetNearDepthToDefault()
+			DoF_SetFarDepthToDefault()
+		}
+	)
+	
+	while(true)
+	{
+		//Check if all locations visited
+		if(visitedLocations.len() >= cutsceneSpawns.len())
+		{
+			//Reset for new cycle - keep same location order, but exclude current location
+			visitedLocations.clear()
+			visitedLocations.append(currentLocationIndex) //Exclude current location from next selection
+		}
+		
+		//Get sorted locations by distance from current position
+		array<CameraLocationPair> sortedLocations = SortLocationsByDistance(cutsceneSpawns, currentCameraPos, visitedLocations)
+		
+		if(sortedLocations.len() == 0)
+		{
+			//This shouldn't happen, but just in case
+			visitedLocations.clear()
+			continue
+		}
+		
+		//Pick nearest location
+		CameraLocationPair targetLocation = sortedLocations[0]
+		vector targetPos = targetLocation.origin
+		vector targetAngles = targetLocation.angles
+		
+		//Mark this location as visited and update current location
+		int targetIndex = FindLocationIndex(cutsceneSpawns, targetLocation)
+		if(targetIndex != -1)
+		{
+			visitedLocations.append(targetIndex)
+			currentLocationIndex = targetIndex //Update current location index
+		}
+		
+		//Calculate arc flight parameters
+		float flightDistance = CalculateDistance(currentCameraPos, targetPos)
+		float flightDuration = max(6.0, flightDistance / 800.0) //Dynamic duration based on distance
+		float arcHeight = CalculateArcHeight(currentCameraPos, targetPos, MapName())
+		
+		//Execute arc-based flight to location
+		float startTime = Time()
+		float duration = flightDuration
+		
+		while(Time() - startTime < duration)
+		{
+			float t = (Time() - startTime) / duration
+			
+			//Calculate arc position and angles
+			vector pos = InterpolateArcPosition(currentCameraPos, targetPos, t, arcHeight)
+			vector angles = CalculateArcAngles(currentCameraAng, camera.GetAngles(), targetAngles, currentCameraPos, targetPos, t)
+			
+			//Dynamic FOV based on arc phase
+			float fov = 100.0
+			if(t < 0.5)
+				fov = 100.0 + (t * 2.0) * 15.0 //Wider FOV when ascending (100-115)
+			else
+				fov = 115.0 - ((t - 0.5) * 2.0) * 10.0 //Narrower FOV when descending (115-105)
+			
+			cutsceneMover.SetOrigin(pos)
+			cutsceneMover.SetAngles(angles)
+			camera.SetOrigin(pos)
+			camera.SetAngles(angles)
+			// camera.SetFOV(fov)
+			
+			wait 0.01 //Faster updates
+		}
+		
+		// wait 2
+		//At destination - slow rightward drift
+		vector rightVector = AnglesToRight(cutsceneMover.GetAngles())
+		vector driftEndPos = cutsceneMover.GetOrigin() + rightVector * 200
+		
+		//Create slow drift path
+		CinematicPath driftPath = NewCinematicPath(targetPos, driftEndPos, targetAngles, targetAngles, 4.0, 0, 110, 95)
+		
+		//Execute slow drift
+		startTime = Time()
+		duration = driftPath.duration
+		
+		while(Time() - startTime < duration)
+		{
+			float t = (Time() - startTime) / duration
+			
+			//Update position and angles
+			vector pos = InterpolatePosition(driftPath, t)
+			// vector angles = InterpolateAngles(driftPath, t)
+			// float fov = InterpolateFOV(driftPath, t)
+			
+			cutsceneMover.SetOrigin(pos)
+			// cutsceneMover.SetAngles(angles)
+			camera.SetOrigin(pos)
+			// camera.SetAngles(angles)
+			// camera.SetFOV(fov)
+			
+			wait 0.01 //Faster updates
+		}
+		
+		//Update current position to drift end for next iteration
+		currentCameraPos = cutsceneMover.GetOrigin() //driftEndPos
+		currentCameraAng = cutsceneMover.GetAngles() //targetAngles
+	}
+}
+
 void function CoolCameraOnMenu()
 //based on sal's tdm
 {
+	if(EPIC_CAMERA_ENABLED)
+	{
+		thread EpicCinematicCamera()
+		return
+	}
+	
+	//Original camera system
     entity player = GetLocalClientPlayer()
 	player.EndSignal("ChallengeStartRemoveCameras")
 	array<CameraLocationPair> cutsceneSpawns
