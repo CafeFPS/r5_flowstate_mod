@@ -1,0 +1,1003 @@
+scripts/resource/ui/menus/SpiesLegends/gadgetsselector.menu
+{
+	menu
+	{
+		ControlName				Frame
+		xpos					0
+		ypos					30
+		zpos					3
+		wide					f0
+		tall					f0
+		autoResize				0
+		pinCorner				0
+		visible					1
+		enabled					1
+		tabPosition				0
+		PaintBackgroundType		0
+		infocus_bgcolor_override	"0 0 0 0"
+		outoffocus_bgcolor_override	"0 0 0 0"
+		modal					1
+
+		ScreenBlur
+		{
+			ControlName				RuiPanel
+			wide					%100
+			tall					%100
+			rui                     "ui/invisible.rpak"
+			visible					1
+			drawColor				"0 0 0 50"
+		}	
+
+		// Title
+		// {
+			// ControlName				Label
+			// xpos                    -90
+			// ypos					-30
+			// auto_wide_tocontents	1
+			// tall					50
+			// visible					1
+			// fontHeight				60
+			// labelText				"FLOWSTATE SPIES LEGENDS"
+			// font					"TitleBoldFont"
+			// allcaps					1
+			// fgcolor_override		"252 198 3 255"
+			// pin_to_sibling			ScreenBlur
+			// pin_corner_to_sibling	TOP_RIGHT
+			// pin_to_sibling_corner	TOP_RIGHT
+		// }
+		
+		MadeBy
+		{
+			ControlName				Label
+			xpos                    -40
+			ypos					-60
+			auto_wide_tocontents	1
+			tall					25
+			visible					1
+			fontHeight				25
+			labelText				"Game mode by @CafeFPS - Engine by @AmosModz"
+			font					DefaultBold_41
+			allcaps					0
+			fgcolor_override		"255 255 255 255"
+			pin_to_sibling			ScreenBlur
+			pin_corner_to_sibling	BOTTOM_RIGHT
+			pin_to_sibling_corner	BOTTOM_RIGHT
+		}
+		
+		MadeBy2
+		{
+			ControlName				Label
+			xpos                    0
+			ypos					20
+			auto_wide_tocontents	1
+			tall					25
+			visible					1
+			fontHeight				25
+			labelText				"©Respawn Entertainment"
+			font					DefaultBold_41
+			allcaps					0
+			fgcolor_override		"255 255 255 255"
+			pin_to_sibling			MadeBy
+			pin_corner_to_sibling	BOTTOM_RIGHT
+			pin_to_sibling_corner	BOTTOM_RIGHT
+		}
+		
+		WeaponSelectorFrame
+		{
+			ControlName				RuiPanel
+			wide					%50//%70
+			xpos                    0//%50//%15
+			ypos 					0//%15
+			tall					%70
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                basicImageColor     "0 0 0"
+                basicImageAlpha     0.7
+            }
+
+			pin_to_sibling          ScreenBlur
+			pin_corner_to_sibling   CENTER
+			pin_to_sibling_corner   CENTER
+		}
+
+		WeaponSelectorBlur
+		{
+			ControlName				RuiPanel
+			wide					%50//%70
+			xpos                    0
+			ypos 					0
+			tall					%70
+			zpos 					0
+			visible					1
+			rui 					"ui/screen_blur.rpak"
+			drawColor				"0 0 0 10"
+			
+			pin_to_sibling          WeaponSelectorFrame
+			pin_corner_to_sibling   TOP_LEFT
+			pin_to_sibling_corner   TOP_LEFT
+		}
+	
+		TitleAbilitySelector
+		{
+			ControlName				Label
+			xpos                    0
+			ypos					-15
+			zpos 1
+			auto_wide_tocontents	1
+			tall					50
+			visible					1
+			fontHeight				40
+			labelText				"SELECT TWO GADGETS - SPY"
+			font					"TitleBoldFont"
+			allcaps					1
+			fgcolor_override		"179 227 223 255"
+			pin_to_sibling			WeaponSelectorFrame
+			pin_corner_to_sibling	TOP
+			pin_to_sibling_corner	TOP
+		}
+
+		// TitleRole
+		// {
+			// ControlName				Label
+			// xpos                    0
+			// ypos					50
+			// zpos 1
+			// auto_wide_tocontents	1
+			// tall					50
+			// visible					1
+			// fontHeight				40
+			// labelText				"ROLE: SPY"
+			// font					"TitleBoldFont"
+			// allcaps					1
+			// fgcolor_override		"179 227 223 255"
+			// pin_to_sibling			TitleAbilitySelector
+			// pin_corner_to_sibling	BOTTOM
+			// pin_to_sibling_corner	BOTTOM
+		// }
+
+		/////////////////
+
+		////////////
+		
+		TacticalSquare
+		{
+			ControlName				RuiPanel
+			wide					210
+			tall					160
+			xpos                    -120//%50//%15
+			ypos 					200//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "0 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/gadgets_empty"
+            }
+
+			pin_to_sibling			TitleAbilitySelector
+			pin_corner_to_sibling	BOTTOM
+			pin_to_sibling_corner	BOTTOM
+		}
+		
+		TacticalIcon
+		{
+			ControlName				RuiPanel
+			wide					100
+			tall					100
+			xpos                    0//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					0
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/passive_autocloak"
+            }
+
+			pin_to_sibling			TacticalSquare
+			pin_corner_to_sibling	CENTER
+			pin_to_sibling_corner	CENTER
+		}
+		
+		TacticalSquareText
+		{
+			ControlName				Label
+			xpos                    0
+			ypos					45
+			zpos 1
+			auto_wide_tocontents	1
+			tall					50
+			visible					1
+			fontHeight				20
+			labelText				"Tactical"
+			font					"TitleBoldFont"
+			allcaps					1
+			fgcolor_override		"179 227 223 255"
+			pin_to_sibling			TacticalSquare
+			pin_corner_to_sibling	BOTTOM
+			pin_to_sibling_corner	BOTTOM
+		}
+		
+		UltimateSquare
+		{
+			ControlName				RuiPanel
+			wide					210
+			tall					160
+			xpos                    240//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "0 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/gadgets_empty"
+            }
+
+			pin_to_sibling			TacticalSquare
+			pin_corner_to_sibling	RIGHT
+			pin_to_sibling_corner	RIGHT
+		}
+
+		UltimateIcon
+		{
+			ControlName				RuiPanel
+			wide					100
+			tall					100
+			xpos                    0//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					0
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/passive_autocloak"
+            }
+
+			pin_to_sibling			UltimateSquare
+			pin_corner_to_sibling	CENTER
+			pin_to_sibling_corner	CENTER
+		}
+		
+		UltimateSquareText
+		{
+			ControlName				Label
+			xpos                    0
+			ypos					45
+			zpos 1
+			auto_wide_tocontents	1
+			tall					50
+			visible					1
+			fontHeight				20
+			labelText				"Ultimate"
+			font					"TitleBoldFont"
+			allcaps					1
+			fgcolor_override		"179 227 223 255"
+			pin_to_sibling			UltimateSquare
+			pin_corner_to_sibling	BOTTOM
+			pin_to_sibling_corner	BOTTOM
+		}
+		
+		///////////
+		//ABILITIES
+		
+		ResetCircle_1
+		{
+			ControlName				RuiPanel
+			wide					100
+			tall					100
+			xpos                    120//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					0
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/ability_circle"
+            }
+
+			pin_to_sibling			TacticalSquare
+			pin_corner_to_sibling	LEFT
+			pin_to_sibling_corner	LEFT
+		}
+
+		ResetIcon_1
+		{
+			ControlName				RuiPanel
+			wide					70
+			tall					70
+			xpos                    0//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/abilities_cleanup"
+            }
+
+			pin_to_sibling			ResetCircle_1
+			pin_corner_to_sibling	CENTER
+			pin_to_sibling_corner	CENTER
+		}
+
+		ResetText_1
+		{
+			ControlName				Label
+			xpos                    0
+			ypos					20
+			zpos 1
+			auto_wide_tocontents	1
+			tall					50
+			visible					1
+			fontHeight				20
+			labelText				"Reset"
+			font					"TitleBoldFont"
+			allcaps					0
+			fgcolor_override		"179 227 223 255"
+			pin_to_sibling			ResetCircle_1
+			pin_corner_to_sibling	BOTTOM
+			pin_to_sibling_corner	BOTTOM
+		}
+		
+		ResetButton_1
+		{
+			ControlName				RuiButton
+			wide					150
+			tall					180
+			zpos 2
+			visible					1
+			rui					    "ui/blank_button.rpak"
+			scriptID				0
+			
+			pin_to_sibling			ResetCircle_1
+			pin_corner_to_sibling	CENTER
+			pin_to_sibling_corner	CENTER
+		}
+
+		/////////
+		
+		AbilityCircle_1
+		{
+			ControlName				RuiPanel
+			wide					100
+			tall					100
+			xpos                    -180//%50//%15
+			ypos 					180//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/ability_circle"
+            }
+
+			pin_to_sibling			TacticalSquare
+			pin_corner_to_sibling	BOTTOM
+			pin_to_sibling_corner	BOTTOM
+		}
+
+		AbilityIcon_1
+		{
+			ControlName				RuiPanel
+			wide					70
+			tall					70
+			xpos                    0//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/ability_cloak"
+            }
+
+			pin_to_sibling			AbilityCircle_1
+			pin_corner_to_sibling	CENTER
+			pin_to_sibling_corner	CENTER
+		}
+		
+		AbilityText_1
+		{
+			ControlName				Label
+			xpos                    0
+			ypos					45
+			zpos 1
+			auto_wide_tocontents	1
+			tall					50
+			visible					1
+			fontHeight				20
+			labelText				"Cloak"
+			font					"TitleBoldFont"
+			allcaps					0
+			fgcolor_override		"179 227 223 255"
+			pin_to_sibling			AbilityCircle_1
+			pin_corner_to_sibling	BOTTOM
+			pin_to_sibling_corner	BOTTOM
+		}
+		
+		AbilityButton_1
+		{
+			ControlName				RuiButton
+			wide					100
+			tall					100
+			visible					1
+			rui					    "ui/blank_button.rpak"
+			scriptID				1
+
+			pin_to_sibling			AbilityCircle_1
+			pin_corner_to_sibling	CENTER
+			pin_to_sibling_corner	CENTER
+		}
+	
+		/////////
+
+		AbilityCircle_2
+		{
+			ControlName				RuiPanel
+			wide					100
+			tall					100
+			xpos                    150//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/ability_circle"
+            }
+
+			pin_to_sibling			AbilityCircle_1
+			pin_corner_to_sibling	RIGHT
+			pin_to_sibling_corner	RIGHT
+		}
+
+		AbilityIcon_2
+		{
+			ControlName				RuiPanel
+			wide					70
+			tall					70
+			xpos                    0//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/ability_void_dash"
+            }
+
+			pin_to_sibling			AbilityCircle_2
+			pin_corner_to_sibling	CENTER
+			pin_to_sibling_corner	CENTER
+		}
+
+		AbilityText_2
+		{
+			ControlName				Label
+			xpos                    0
+			ypos					45
+			zpos 1
+			auto_wide_tocontents	1
+			tall					50
+			visible					1
+			fontHeight				20
+			labelText				"Void Dash"
+			font					"TitleBoldFont"
+			allcaps					0
+			fgcolor_override		"179 227 223 255"
+			pin_to_sibling			AbilityCircle_2
+			pin_corner_to_sibling	BOTTOM
+			pin_to_sibling_corner	BOTTOM
+		}
+		
+		AbilityButton_2
+		{
+			ControlName				RuiButton
+			wide					100
+			tall					100
+			visible					1
+			rui					    "ui/blank_button.rpak"
+			scriptID				2
+
+			pin_to_sibling			AbilityCircle_2
+			pin_corner_to_sibling	CENTER
+			pin_to_sibling_corner	CENTER
+		}
+		
+		/////////
+		AbilityCircle_3
+		{
+			ControlName				RuiPanel
+			wide					100
+			tall					100
+			xpos                    150//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/ability_circle"
+            }
+
+			pin_to_sibling			AbilityCircle_2
+			pin_corner_to_sibling	RIGHT
+			pin_to_sibling_corner	RIGHT
+		}
+
+		AbilityIcon_3
+		{
+			ControlName				RuiPanel
+			wide					70
+			tall					70
+			xpos                    0//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/ability_smoke_grenade"
+            }
+
+			pin_to_sibling			AbilityCircle_3
+			pin_corner_to_sibling	CENTER
+			pin_to_sibling_corner	CENTER
+		}
+
+		AbilityText_3
+		{
+			ControlName				Label
+			xpos                    0
+			ypos					45
+			zpos 1
+			auto_wide_tocontents	1
+			tall					50
+			visible					1
+			fontHeight				20
+			labelText				"Smoke Grenade"
+			font					"TitleBoldFont"
+			allcaps					0
+			fgcolor_override		"179 227 223 255"
+			pin_to_sibling			AbilityCircle_3
+			pin_corner_to_sibling	BOTTOM
+			pin_to_sibling_corner	BOTTOM
+		}
+		
+		AbilityButton_3
+		{
+			ControlName				RuiButton
+			wide					100
+			tall					100
+			visible					1
+			rui					    "ui/blank_button.rpak"
+			scriptID				3
+
+			pin_to_sibling			AbilityCircle_3
+			pin_corner_to_sibling	CENTER
+			pin_to_sibling_corner	CENTER
+		}
+		
+		//////////////
+
+		AbilityCircle_4
+		{
+			ControlName				RuiPanel
+			wide					100
+			tall					100
+			xpos                    150//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/ability_circle"
+            }
+
+			pin_to_sibling			AbilityCircle_3
+			pin_corner_to_sibling	RIGHT
+			pin_to_sibling_corner	RIGHT
+		}
+
+		AbilityIcon_4
+		{
+			ControlName				RuiPanel
+			wide					70
+			tall					70
+			xpos                    0//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/ability_flashbang"
+            }
+
+			pin_to_sibling			AbilityCircle_4
+			pin_corner_to_sibling	CENTER
+			pin_to_sibling_corner	CENTER
+		}
+
+		AbilityText_4
+		{
+			ControlName				Label
+			xpos                    0
+			ypos					45
+			zpos 1
+			auto_wide_tocontents	1
+			tall					50
+			visible					1
+			fontHeight				20
+			labelText				"Flashbang Grenade"
+			font					"TitleBoldFont"
+			allcaps					0
+			fgcolor_override		"179 227 223 255"
+			pin_to_sibling			AbilityCircle_4
+			pin_corner_to_sibling	BOTTOM
+			pin_to_sibling_corner	BOTTOM
+		}
+		
+		AbilityButton_4
+		{
+			ControlName				RuiButton
+			wide					100
+			tall					100
+			visible					1
+			rui					    "ui/blank_button.rpak"
+			scriptID				4
+
+			pin_to_sibling			AbilityCircle_4
+			pin_corner_to_sibling	CENTER
+			pin_to_sibling_corner	CENTER
+		}
+		
+		
+		AbilityCircle_5
+		{
+			ControlName				RuiPanel
+			wide					100
+			tall					100
+			xpos                    150//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/ability_circle"
+            }
+
+			pin_to_sibling			AbilityCircle_4
+			pin_corner_to_sibling	RIGHT
+			pin_to_sibling_corner	RIGHT
+		}
+
+		AbilityIcon_5
+		{
+			ControlName				RuiPanel
+			wide					70
+			tall					70
+			xpos                    0//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/camera_satchel"
+            }
+
+			pin_to_sibling			AbilityCircle_5
+			pin_corner_to_sibling	CENTER
+			pin_to_sibling_corner	CENTER
+		}
+
+		AbilityText_5
+		{
+			ControlName				Label
+			xpos                    0
+			ypos					45
+			zpos 1
+			auto_wide_tocontents	1
+			tall					50
+			visible					1
+			fontHeight				20
+			labelText				"Satchel Camera"
+			font					"TitleBoldFont"
+			allcaps					0
+			fgcolor_override		"179 227 223 255"
+			pin_to_sibling			AbilityCircle_5
+			pin_corner_to_sibling	BOTTOM
+			pin_to_sibling_corner	BOTTOM
+		}
+		
+		AbilityButton_5
+		{
+			ControlName				RuiButton
+			wide					100
+			tall					100
+			visible					1
+			rui					    "ui/blank_button.rpak"
+			scriptID				5
+
+			pin_to_sibling			AbilityCircle_5
+			pin_corner_to_sibling	CENTER
+			pin_to_sibling_corner	CENTER
+		}
+
+
+		TitlePassives
+		{
+			ControlName				Label
+			xpos                    -160
+			ypos					300
+			zpos 1
+			auto_wide_tocontents	1
+			tall					50
+			visible					1
+			fontHeight				30
+			labelText				"PASSIVES"
+			font					"TitleBoldFont"
+			allcaps					1
+			fgcolor_override		"179 227 223 255"
+			pin_to_sibling			TacticalSquare
+			pin_corner_to_sibling	BOTTOM_LEFT
+			pin_to_sibling_corner	BOTTOM_LEFT
+		}
+
+		BorderPassives
+		{
+			ControlName				RuiPanel
+			wide					264
+			tall					81
+			xpos                    70//%50//%15
+			ypos 					85//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/passives_border"
+            }
+
+			pin_to_sibling			TitlePassives
+			pin_corner_to_sibling	BOTTOM_LEFT
+			pin_to_sibling_corner	BOTTOM_LEFT
+		}
+		
+		
+		GoBackButton
+		{
+			"ControlName" 			"RuiButton"
+			"rui"					"ui/footer_button.rpak"
+			wide					205
+			tall					30
+		    visible				"1"
+			sound_focus           "UI_Menu_Focus"
+			sound_accept          "UI_Menu_Accept"
+			cursorPriority        "-1"	
+			
+			ruiArgs
+			{
+				isSelected 0
+				buttonText "CONFIRM SELECTIONS"
+				basicImageColor     "255 255 255"
+                basicImageAlpha     1
+			}
+			
+			
+			xpos                    0
+			ypos                    -30
+			zpos                    30
+            visible 1
+
+			pin_to_sibling          WeaponSelectorFrame
+			pin_corner_to_sibling   BOTTOM
+			pin_to_sibling_corner   BOTTOM
+		}
+
+
+		PassiveIcon_1
+		{
+			ControlName				RuiPanel
+			wide					50
+			tall					50
+			xpos                    30//%50//%15
+			ypos 					60//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/passive_autocloak"
+            }
+
+			pin_to_sibling			TitlePassives
+			pin_corner_to_sibling	BOTTOM_LEFT
+			pin_to_sibling_corner	BOTTOM_LEFT
+		}
+		
+		PassiveText_1
+		{
+			ControlName				Label
+			xpos                    0
+			ypos					30
+			zpos 1
+			auto_wide_tocontents	1
+			tall					50
+			visible					1
+			fontHeight				15
+			labelText				"Veil"
+			font					"TitleBoldFont"
+			allcaps					1
+			fgcolor_override		"179 227 223 255"
+			pin_to_sibling			PassiveIcon_1
+			pin_corner_to_sibling	BOTTOM
+			pin_to_sibling_corner	BOTTOM
+		}
+
+		PassiveIcon_2
+		{
+			ControlName				RuiPanel
+			wide					50
+			tall					50
+			xpos                    75//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/passive_nofootsteps"
+            }
+
+			pin_to_sibling			PassiveIcon_1
+			pin_corner_to_sibling	RIGHT
+			pin_to_sibling_corner	RIGHT
+		}
+		
+		PassiveText_2
+		{
+			ControlName				Label
+			xpos                    0
+			ypos					30
+			zpos 1
+			auto_wide_tocontents	1
+			tall					50
+			visible					1
+			fontHeight				15
+			labelText				"Silent"
+			font					"TitleBoldFont"
+			allcaps					1
+			fgcolor_override		"179 227 223 255"
+			pin_to_sibling			PassiveIcon_2
+			pin_corner_to_sibling	BOTTOM
+			pin_to_sibling_corner	BOTTOM
+		}
+
+		PassiveIcon_3
+		{
+			ControlName				RuiPanel
+			wide					50
+			tall					50
+			xpos                    75//%50//%15
+			ypos 					0//%15
+			
+			zpos 1
+			visible					1
+			rui                     "ui/basic_image.rpak"
+
+            ruiArgs
+            {
+                //basicImageColor     "255 0 0"
+                //basicImageAlpha     0.7
+				basicImage "rui/flowstate_custom/passive_kill_from_behind"
+            }
+
+			pin_to_sibling			PassiveIcon_2
+			pin_corner_to_sibling	RIGHT
+			pin_to_sibling_corner	RIGHT
+		}
+		
+		PassiveText_3
+		{
+			ControlName				Label
+			xpos                    0
+			ypos					30
+			zpos 1
+			auto_wide_tocontents	1
+			tall					50
+			visible					1
+			fontHeight				15
+			labelText				"Execute"
+			font					"TitleBoldFont"
+			allcaps					1
+			fgcolor_override		"179 227 223 255"
+			pin_to_sibling			PassiveIcon_3
+			pin_corner_to_sibling	BOTTOM
+			pin_to_sibling_corner	BOTTOM
+		}		
+	}
+}
