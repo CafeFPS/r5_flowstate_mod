@@ -641,7 +641,10 @@ void function FS1v1_OnEntitiesDidLoad()
 //1v1 Settings Client Commands
 bool function CC_1v1_StartInRest( entity player, array<string> args )
 {
-	if( !IsValid( player ) || !IsStringNumeric( args[0] ) )
+	if( !args.len() )
+		return false
+
+	if( !IsValid( player ) || !IsStringNumeric( args[0], 0, 1 ) )
 		return false
 	
 	if(args[0] == "0")
@@ -658,12 +661,15 @@ bool function CC_1v1_StartInRest( entity player, array<string> args )
 
 bool function CC_1v1_AcceptChallenges( entity player, array<string> args )
 {
-	if( !IsValid( player ) || !IsStringNumeric( args[0] ) )
+	if( !args.len() )
+		return false
+		
+	if( !IsValid( player ) || !IsStringNumeric( args[0], 0, 1 ) )
 		return false
 	
-	if(args[0] == "0")
+	if( args[0] == "0" )
 		player.p.lock1v1_setting = false
-	else if(args[0] == "1")
+	else if( args[0] == "1" )
 		player.p.lock1v1_setting = true
 
 	return true
@@ -671,12 +677,12 @@ bool function CC_1v1_AcceptChallenges( entity player, array<string> args )
 
 bool function CC_1v1_ShowInputBanner( entity player, array<string> args )
 {
-	if( !IsValid( player ) || !IsStringNumeric( args[0] ) )
+	if( !IsValid( player ) || !IsStringNumeric( args[0], 0, 1 ) )
 		return false
 	
-	if(args[0] == "0")
+	if( args[0] == "0" )
 		player.p.enable_input_banner = false
-	else if(args[0] == "1")
+	else if( args[0] == "1" )
 		player.p.enable_input_banner = true
 
 	return true
@@ -684,12 +690,15 @@ bool function CC_1v1_ShowInputBanner( entity player, array<string> args )
 
 bool function CC_1v1_ShowVsUI( entity player, array<string> args )
 {
-	if( !IsValid( player ) || !IsStringNumeric( args[0] ) )
+	if( !args.len() )
+		return false
+		
+	if( !IsValid( player ) || !IsStringNumeric( args[0], 0, 1 ) )
 		return false
 	
-	if(args[0] == "0")
+	if( args[0] == "0" )
 		player.p.showvsui = false
-	else if(args[0] == "1")
+	else if( args[0] == "1" )
 		player.p.showvsui = true
 
 	return true
@@ -697,10 +706,13 @@ bool function CC_1v1_ShowVsUI( entity player, array<string> args )
 
 bool function CC_1v1_CamoColor( entity player, array<string> args )
 {
+	if( !args.len() )
+		return false
+		
 	if( !IsValid( player ) || !IsStringNumeric( args[0] ) )
 		return false
 	
-	player.p.playerCamo = ClampInt( args[0].tointeger(), 0, 9 )
+	player.p.playerCamo = ClampInt( args[0].tointeger(), 0, 9 ) //(mk): this should not be hardcoded.
 	
 	if( IsAlive( player ) && Gamemode1v1_IsPlayerInState( player, e1v1State.RESTING ) )
 	{
@@ -708,7 +720,8 @@ bool function CC_1v1_CamoColor( entity player, array<string> args )
 		{
 			player.SetSkin( 1 )
 			player.SetCamo( 0 )
-		} else if( args[0].tointeger() > 0 && args[0].tointeger() <= 9 ) 
+		} 
+		else if( args[0].tointeger() > 0 && args[0].tointeger() <= 9 ) 
 		{
 			player.SetSkin( 2 )
 			player.SetCamo( player.p.playerCamo == 9 ? RandomIntRangeInclusive( 0, 15 ) : player.p.playerCamo )
@@ -720,20 +733,26 @@ bool function CC_1v1_CamoColor( entity player, array<string> args )
 
 bool function CC_1v1_WeaponCharm( entity player, array<string> args )
 {
+	if( !args.len() )
+		return false
+		
 	if( !IsValid( player ) || !IsStringNumeric( args[0] ) )
 		return false
 	
-	player.p.chosenCharm = ClampInt( args[0].tointeger(), 0, 8 )
+	player.p.chosenCharm = ClampInt( args[0].tointeger(), 0, 8 ) //(mk): This should not be hardcoded.. instead:( some struct.len() )
 	
 	return true
 }
 
 bool function CC_1v1_Heirloom( entity player, array<string> args )
 {
+	if( !args.len() )
+		return false
+		
 	if( !IsValid( player ) || !IsStringNumeric( args[0] ) )
 		return false
 	
-	player.p.chosenHeirloom = ClampInt( args[0].tointeger(), 0, 5 )
+	player.p.chosenHeirloom = ClampInt( args[0].tointeger(), 0, 5 ) //(mk): should not be hardcoded, get valid indexes dynamically at compiletime or runtime
 	
 	if( IsAlive( player ) && Gamemode1v1_IsPlayerInState( player, e1v1State.RESTING ) )
 		FS_GiveRandomMelee( player, true )
@@ -744,7 +763,10 @@ bool function CC_1v1_Heirloom( entity player, array<string> args )
 
 bool function CC_1v1_MaxEnemyLatency( entity player, array<string> args )
 {
-	if( !IsValid( player ) || !IsStringNumeric( args[0] ) )
+	if( !args.len() )
+		return false
+		
+	if( !IsValid( player ) || !IsStringNumeric( args[0], 5, 999 ) )
 		return false
 	
 	player.p.max_enemy_ping = Clamp( args[0].tofloat(), 5.0, 999.0 )
@@ -754,7 +776,10 @@ bool function CC_1v1_MaxEnemyLatency( entity player, array<string> args )
 
 bool function CC_1v1_IBMM( entity player, array<string> args )
 {
-	if( !IsValid( player ) || !IsStringNumeric( args[0] ) )
+	if( !args.len() )
+		return false
+		
+	if( !IsValid( player ) || !IsStringNumeric( args[0], 0, 1 ) )
 		return false
 	
 	if(args[0] == "0")
@@ -771,7 +796,10 @@ bool function CC_1v1_IBMM( entity player, array<string> args )
 
 bool function CC_1v1_MaxIBMMTime( entity player, array<string> args )
 {
-	if( !IsValid( player ) || !IsStringNumeric( args[0] ) )
+	if( !args.len() )
+		return false
+		
+	if( !IsValid( player ) || !IsStringNumeric( args[0], 0, 30 ) )
 		return false
 	
 	// if( args[0].tofloat() <= 0 )
