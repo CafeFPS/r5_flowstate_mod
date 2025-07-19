@@ -1447,6 +1447,9 @@ void function TrackerInit()
 	Tracker_SettingsInit()
 	Tracker_Internal_Init()
 	PlayerDataCallbacks_Init()
+	
+	foreach ( weapon, idx in eDamageSourceId )
+		TrackerWepTable()[ weapon ] <- idx
 
 	AddCallback_EntitiesDidLoad( WeaponSettings_Init )
 	AddClientCommandCallbackVoid( "requestStat", Tracker_CC_RequestStat )
