@@ -3795,7 +3795,7 @@ void function SimpleChampionUI()
 	foreach( roundPlayer in GetPlayerArray() )
 		FSDM_SetMatchPersistentVarsForPlayer( roundPlayer )
 
-	PIN_RoundEnd( file.currentRound ) //must be after champion determined.
+	Tracker_RoundEnd( file.currentRound ) //must be after champion determined.
 	// wait (2) // Not required wait since we're already waiting above flowstateSettings.endgame_delay
 	WaitEndFrame()
 

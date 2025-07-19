@@ -681,13 +681,13 @@ void function RegisterFlowstateRemoteFunctions()
 void function InitFlowstateWeapons()
 {
 	#if SERVER
-	TurretPlasma_Init()
-	
-	SpawnSystem_Init()
-	NotificationSystem_Init()
-	Flowstate_Afk_Init()
-	PIN_Init_Mkos()
-	Chat_Init()
+		TurretPlasma_Init()
+		
+		SpawnSystem_Init()
+		NotificationSystem_Init()
+		Flowstate_Afk_Init()
+		TrackerInit()
+		Chat_Init()
 	#endif
 	
 	WorldDrawAsset_Init()

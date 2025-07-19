@@ -1,9 +1,3 @@
-
-
-global function PIN_Init_Mkos
-
-// global function GameSummary_GetPlayerData
-
 ///////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -20,14 +14,20 @@ const LOG_ERRORS = true
 // SHARED GLOBAL //TODO: Reduce repeat declares between tracker/non tracker
 
 global function g__InternalCheckReload //todo: move somewhere ideal
-global function SavePlayerData
+
+global function TrackerInit
 global function Tracker_FetchPlayerData
 global function Tracker_SavePlayerData
-global function SetAfkToRest
-global function ArrayRemoveBot //todo move to code
-global function ClientCommand_RequestStat
 global function Tracker_SetStartLog
 global function Tracker_UpdateMOTDTextForPlayer
+global function Tracker_RoundEnd
+global function Tracker_PlayerLeft
+global function Tracker_CC_RequestStat
+
+global function SavePlayerData
+global function SetAfkToRest
+global function ArrayRemoveBot //todo move to code
+
 
 #if TRACKER
 	global const bool STUB = false
@@ -140,6 +140,7 @@ global function GetDefaultEnableInputBannerSetting //todo deprecate
 //////////////////////////////////////////////////////////////////////////////////
 global function Tracker_QueryInit
 global function AddCallback_QueryString
+
 //For getting settings via query system by key.  (todo: rework)
 global function Tracker_GetQueryString
 global function Tracker_GetQueryFloat
@@ -213,19 +214,6 @@ const array<string> SERVER_MSG_EVENT_TYPES =
 	"start",
 	"end"		
 ]
-	
-
-//(respawns) game summary
-global struct GameSummarySquadData
-{
-	string uid
-	int kills
-	int damageDealt
-	int survivalTime
-	int revivesGiven
-	int respawnsGiven
-	int deaths
-}
 
 global struct DamageEvent 
 {
@@ -372,7 +360,7 @@ struct //Todo: move appropriate to tracker.var
 	float maxWaitForBatchLoad
 	
 	int fightIdCounter = 0
-	bool PIN_GameState_Start = false
+	bool Tracker_GameState_Start = false
 	bool global_stats
 
 	bool LogOn = false
@@ -645,7 +633,7 @@ void function DEV_ManualLogKill( bool ship )
 		#endif 
 	#endif 
 	
-	file.PIN_GameState_Start = false
+	file.Tracker_GameState_Start = false
 	svGlobal.levelEnt.Signal( "TrackerNoLog" )
 	TrackerStopLogging__internal( ship )
 }
@@ -1436,7 +1424,7 @@ void function __CONTROLLED_LogInit()
 	}
 }
 
-void function PIN_Init_Mkos()
+void function TrackerInit()
 {
 	file.launchStartUnixTime = GetUnixTimestamp()
 	
@@ -1457,11 +1445,12 @@ void function PIN_Init_Mkos()
 	
 	__internals()
 	Tracker_SettingsInit()
-	Tracker_Init()
+	Tracker_Internal_Init()
 	PlayerDataCallbacks_Init()
 
 	AddCallback_EntitiesDidLoad( WeaponSettings_Init )
-	AddClientCommandCallbackVoid( "requestStat", ClientCommand_RequestStat )
+	AddClientCommandCallbackVoid( "requestStat", Tracker_CC_RequestStat )
+	AddCallback_OnPlayerKilled( Tracker_PlayerKilled )
 	
 	if( !bRunTracker )
 		file.LogOn = false
@@ -1469,7 +1458,7 @@ void function PIN_Init_Mkos()
 	if( file.bChatbotEnabled && file.bBotAllowed )
 	{
 		INIT_IntervalMessages()
-		AddCallback_EntitiesDidLoad( PIN_OnEntitiesLoaded_Chatbot )
+		AddCallback_EntitiesDidLoad( Tracker_OnEntitiesLoaded_Chatbot )
 		AddCallback_GameStateEnter( eGameState.Playing, __executeEventStart_messages )
 	}
 	
@@ -1699,7 +1688,7 @@ void function PlayerConnectedCallback( entity player )
 	if( checkName == "[" ) //hack, make sure player is not message bot entity (TODO: REMOVE)
 		return
 		
-    thread PIN_AddPlayer( player )
+    thread Tracker_AddPlayer( player )
 	
 	if( file.superglideDetect )
 	{
@@ -1725,7 +1714,7 @@ void function PlayerConnectedCallback( entity player )
 		thread __SetPlayerSyncData( player )
 }
 
-void function PIN_OnEntitiesLoaded_Chatbot()
+void function Tracker_OnEntitiesLoaded_Chatbot()
 {
 	thread __LoadServerBot()
 }
@@ -1754,10 +1743,10 @@ bool function DiscordHook_MatchesRecapEnabled()
 
 void function __START_LOGGING()
 {
-	if ( file.PIN_GameState_Start ) 
+	if ( file.Tracker_GameState_Start ) 
 	{
 		#if DEVELOPER 
-			sqprint( "file.PIN_GameState_Start was true, returning" )
+			sqprint( "file.Tracker_GameState_Start was true, returning" )
 		#endif
 		return 
 	}
@@ -1777,7 +1766,7 @@ void function Init_NewGame()
 	if ( !file.LogOn )
 	{
 		sqprint( "::: Logging disabled -- to enable set in playlists file --" )
-		file.PIN_GameState_Start = true
+		file.Tracker_GameState_Start = true
 		return
 	}
 	
@@ -1884,7 +1873,7 @@ void function Init_NewGame()
 	
 	PrintMatchIDtoAll()
 	
-	file.PIN_GameState_Start = true
+	file.Tracker_GameState_Start = true
 }
 
 
@@ -4253,7 +4242,7 @@ void function SetIgnoreSyncFlag( entity player )
 	{
 		PlayerMetricsArray[ index ].ignore_sync_flag = true
 	}
-	catch(e){}
+	catch(e){} //todo, why is this not handled with normal lgoci flow.
 }
 
 bool function Tracker_IgnoreResync( entity player )
@@ -4843,24 +4832,13 @@ void function PlayerDisconnectedCallback( entity player )
 	}
 		
     string reason = "Disconnection"
-    PIN_PlayerLeft( player, reason )
-}
-
-void function PIN_GameStart()
-{
-	//stubbed
-}
-
-
-void function PIN_SetGameStartTime()
-{
-
+    Tracker_PlayerLeft( player, reason )
 }
 
 //make sure round_end isn't started from multiple sources in codebase at same time.
 bool process_end_round_complete = true; 
 
-void function PIN_RoundEnd( int roundnum )
+void function Tracker_RoundEnd( int roundnum )
 {	
 	if( process_end_round_complete == true )
 	{
@@ -4947,7 +4925,7 @@ void function FinishGameStatsRound()
 		UpdateRoundStats_GlobalsCarryOver()	
 		__DestroyStats()
 		process_end_round_complete = true
-		file.PIN_GameState_Start = false		
+		file.Tracker_GameState_Start = false		
 	} 
 }
 
@@ -4963,7 +4941,7 @@ void function __UpdateMetricsNow()
 	__UpdateLiveStats_internal( Tracker_BuildAllPlayerMetrics( true ) )
 }
 
-void function PIN_GameEnd()
+void function Tracker_GameEnd() //not used?
 {	
 	if ( process_end_round_complete == true )
 	{
@@ -4972,8 +4950,8 @@ void function PIN_GameEnd()
 	}
 }
 
-void function PIN_AddPlayer( entity player )
-{	
+void function Tracker_AddPlayer( entity player )
+{
 	if( !IsValid( player ) ) 
 		return
 	
@@ -5045,7 +5023,7 @@ void function BotInvis( entity bot )
 	bot.SetPlayerNetBool( "stats_loaded", true )
 }
 
-void function PIN_PlayerLeft( entity player, string reason )
+void function Tracker_PlayerLeft( entity player, string reason )
 {
 	string playerName = player.GetPlayerName()
 	string OID = player.GetPlatformUID()
@@ -5085,37 +5063,8 @@ void function CheckForMessageBot( entity player ) //todo: remove after native so
 	BotInvis( player )
 }
 
-void function PIN_PlayerSpawned( entity player )
+void function Tracker_PlayerKilled( entity victim, entity attacker, var damageInfo )
 {
-	/*
-	string pname = player.GetPlayerName( )
-	string message = format("%s spawned ", pname )
-	sqprint(message)
-	*/
-}
-
-void function PIN_PlayerDowned( entity victim, entity attacker, var damageInfo )
-{
-	/*
-	string downedplayer = victim.GetPlayerName( )
-	string attackingplayer = attacker.GetPlayerName( )
-	string message = format("%s was downed by %s ", downedplayer, attackingplayer )
-	sqprint(message)
-	*/
-}
-
-void function PIN_PlayerRevived( entity injured, entity healer )
-{
-	/*
-	string downedplayer = injured.GetPlayerName( )
-	string revivingplayer = healer.GetPlayerName( )
-	string message = format("%s was revived by %s ", downedplayer, revivingplayer )
-	sqprint(message)
-	*/
-}
-
-void function PIN_PlayerKilled( entity victim, entity attacker, var damageInfo )
-{	
 	if ( file.LogOn && TrackerIsLogging__internal() && IsValid( victim ) && victim.IsPlayer() )
 		thread __EndFight( victim, attacker, damageInfo, Time() )
 }
@@ -5126,20 +5075,6 @@ void function Tracker_EndFight( entity victim, entity attacker, var damageInfo )
 		return
 		
 	thread __EndFight( victim, attacker, damageInfo, Time() )
-}
-
-void function PIN_PlanePath( vector startPos, vector endPos, float duration )
-{
-
-}
-
-void function PIN_SetGameStartGetUnixTimestamp()
-{
-	/*
-	int time = GetUnixTimestamp()
-	string message = format(" deprecate Game start time: %d ", time )
-	sqprint(message)
-	*/
 }
 
 bool function CheckPlayerStartInRest( entity player )
@@ -5157,77 +5092,6 @@ bool function CheckPlayerStartInRest( entity player )
 	}
 	
 	return false	
-}
-
-
-void function PIN_GameStartedForPlayer( entity player )
-{	
-	/*
-	string pname = player.GetPlayerName( )
-
-	if ( IsPlayerTracked(pname)) {
-        return;
-    }
-
-	GameStartedForPlayer.push(pname);
-
-
-	// useless, handled by onconnected
-	string message = format("useless call; Game started for: %s ", pname )
-	sqprint(message)
-	*/
-		
-}
-
-
-/* ######################################################################################### */
-
-void function PIN_CircleLocation( string type, vector origin, float radius, string action )
-{
-
-}
-
-void function PIN_DamageDone( entity attacker, entity victim, float damageAmount )
-{
-	/* doesn't help without damageInfo
-
-	string pname = attacker.GetPlayerName( )
-	string vname = victim.GetPlayerName( )
-	string message = format("%s did damage to %s", pname, vname)
-	sqprint(message)
-	*/
-}
-
-void function PIN_DamageDoneToPlayerForWeapon( entity attacker, string weaponclassname, float damageAmount, bool isHeadshot )
-{
-	/* useless
-	string pname = attacker.GetPlayerName( )
-	string message = format("%s did damge with weapon ", pname )
-	sqprint(message)
-	*/
-}
-
-void function PIN_PlayerEquip( entity player )
-{	
-	/* useless
-	string pname = player.GetPlayerName( )
-	string message = format("%s equiped something ", pname )
-	sqprint(message)
-	*/
-}
-
-void function PIN_PlayerUse( entity player, string ref, ... )
-{	
-	/*
-	string pname = player.GetPlayerName( )
-	string message = format("%s used %s ", pname, ref )
-	sqprint(message)
-	*/
-}
-
-void function PIN_PlayerOutResource( entity player, string ref )
-{
-
 }
 
 //Todo: change determination based on mode
@@ -5265,31 +5129,6 @@ string function Tracker_WinnerByKillsAndDamage()
 
     return ""
 }
-
-
-// GameSummarySquadData function GameSummary_GetPlayerData( entity player )
-// {
-	// GameSummarySquadData data
-
-	// if ( !IsValid( player ) )
-		// return data
-
-	// data.uid = player.GetPlatformUID()
-	// data.kills = player.GetPlayerNetInt( "kills" )
-	// data.deaths = player.p.numberOfDeaths
-	// data.survivalTime = int( Time() - player.p.lastRespawnTime )
-	// data.damageDealt = int( player.p.playerDamageDealt )
-	// data.revivesGiven = player.p.revivesGiven
-	// data.respawnsGiven = player.p.respawnsGiven
-
-	// /*
-    // string metrics = format("Player Stats - Kills: %d, Deaths: %d, Survival Time: %d seconds, Damage Dealt: %d, Revives Given: %d, Respawns Given: %d",
-                                 // data.kills, data.deaths, data.survivalTime, data.damageDealt, data.revivesGiven, data.respawnsGiven);
-    // sqprint( metrics )
-	// */
-	
-	// return data
-// }
 
 void function Tracker_Credits()
 {
@@ -5380,7 +5219,7 @@ string function statPrintUID( string uid )
 void function SetAfkToRest( bool setting ){ file.afk_to_rest_enabled = setting }
 bool function bAfkToRest(){ return file.afk_to_rest_enabled }
 
-void function ClientCommand_RequestStat( entity player, array<string> args )
+void function Tracker_CC_RequestStat( entity player, array<string> args )
 {
 	// #if DEVELOPER
 		// print_string_array( args )
@@ -5557,7 +5396,7 @@ SerializedData function Tracker_BuildAllPlayerMetrics( bool _ ){ return "" }
 array<entity> function ArrayRemoveBot( array<entity> _ ){ return _ }
 int function Tracker_GetStartUnixTime(){ return file.launchStartUnixTime }
 
-void function PIN_Init_Mkos()
+void function TrackerInit()
 {
 	#if CLIENT 
 		return 

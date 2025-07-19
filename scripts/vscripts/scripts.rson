@@ -107,7 +107,7 @@ When: "SERVER"
 Scripts:
 [
 	mp/_input_detector.nut
-	mp/pintelemetry_mkos.gnut
+	mp/tracker/tracker_core.gnut
 	mp/tracker/chat.nut
 	mp/tracker/utility.nut
 	gamemodes/global/_gamemode_spawn_system.nut
