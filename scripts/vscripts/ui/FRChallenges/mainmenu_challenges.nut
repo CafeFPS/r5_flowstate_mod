@@ -3,9 +3,18 @@ global function OpenFRChallengesMainMenu
 global function CloseFRChallengesMainMenu
 global function SetAimTrainerSessionEnabled
 
+global function Init_ChallengesListMenu
+
 struct
 {
 	var menu
+
+	var panel
+	var contentPanel
+	
+	var   videoRui
+	int   videoChannel = -1
+	asset currentVideo = $""
 } file
 
 void function OpenFRChallengesMainMenu(int dummiesKilled)
@@ -15,9 +24,9 @@ void function OpenFRChallengesMainMenu(int dummiesKilled)
 	PlayerKillsForChallengesUI = dummiesKilled.tostring()
 	Hud_SetText(Hud_GetChild( file.menu, "DummiesKilledCounter"), "Dummies killed this session: " + dummiesKilled.tostring())
 	if(PlayerCurrentWeapon == "") 
-		Hud_SetText(Hud_GetChild( file.menu, "CurrentWeapon"), "Current weapon: Wingman")
+		Hud_SetText(Hud_GetChild( file.menu, "CurrentWeapon"), "Current Weapon: Hitscan Auto")
 	else
-		Hud_SetText(Hud_GetChild( file.menu, "CurrentWeapon"), "Current weapon: " + PlayerCurrentWeapon)
+		Hud_SetText(Hud_GetChild( file.menu, "CurrentWeapon"), "Current Weapon: " + PlayerCurrentWeapon)
 	EmitUISound("UI_Menu_SelectMode_Extend")
 	AdvanceMenu( file.menu )
 }
@@ -38,6 +47,15 @@ void function InitFRChallengesMainMenu( var newMenuArg )
 {
 	var menu = GetMenu( "FRChallengesMainMenu" )
 	file.menu = menu
+	
+	file.videoRui = Hud_GetRui( Hud_GetChild( file.menu, "BikVideo" ) )
+	
+	file.videoChannel = ReserveVideoChannel()
+	RuiSetInt( file.videoRui, "channel", file.videoChannel )
+	
+	//TEST
+	StartVideoOnChannel( file.videoChannel, $"media/flowstate/aimtrainer/strafingdummy.bik", true, 0.0 )
+	
     AddMenuEventHandler( menu, eUIEvent.MENU_SHOW, OnR5RSB_Show )
 	AddMenuEventHandler( menu, eUIEvent.MENU_OPEN, OnR5RSB_Open )
 	AddMenuEventHandler( menu, eUIEvent.MENU_CLOSE, OnR5RSB_Close )
@@ -47,23 +65,28 @@ void function InitFRChallengesMainMenu( var newMenuArg )
 	AddEventHandlerToButton( menu, "Settings", UIE_CLICK, SettingsButtonFunct )
 	//var Challenge1 = Hud_GetChild( menu, "Challenge1" )
 	//First column
-	AddEventHandlerToButton( menu, "Challenge1", UIE_CLICK, Challenge1Funct )
-	AddEventHandlerToButton( menu, "Challenge2", UIE_CLICK, Challenge2Funct )
-	AddEventHandlerToButton( menu, "Challenge3", UIE_CLICK, Challenge3Funct )
-	AddEventHandlerToButton( menu, "Challenge4", UIE_CLICK, Challenge4Funct )
-	AddEventHandlerToButton( menu, "Challenge5", UIE_CLICK, Challenge5Funct )
-	AddEventHandlerToButton( menu, "Challenge6", UIE_CLICK, Challenge6Funct )
-	AddEventHandlerToButton( menu, "Challenge7", UIE_CLICK, Challenge7Funct )
-	AddEventHandlerToButton( menu, "Challenge8", UIE_CLICK, Challenge8Funct )
-	//Second column
-	AddEventHandlerToButton( menu, "Challenge1NewC", UIE_CLICK, Challenge1NewCFunct )
-	AddEventHandlerToButton( menu, "Challenge2NewC", UIE_CLICK, Challenge2NewCFunct )
-	AddEventHandlerToButton( menu, "Challenge3NewC", UIE_CLICK, Challenge3NewCFunct )
-	AddEventHandlerToButton( menu, "Challenge4NewC", UIE_CLICK, Challenge4NewCFunct )
-	AddEventHandlerToButton( menu, "Challenge5NewC", UIE_CLICK, Challenge5NewCFunct )
-	AddEventHandlerToButton( menu, "Challenge6NewC", UIE_CLICK, Challenge6NewCFunct )
-	AddEventHandlerToButton( menu, "Challenge7NewC", UIE_CLICK, Challenge7NewCFunct )
-	AddEventHandlerToButton( menu, "Challenge8NewC", UIE_CLICK, Challenge8NewCFunct )
+	// AddEventHandlerToButton( menu, "Challenge1", UIE_CLICK, Challenge1Funct )
+	// AddEventHandlerToButton( menu, "Challenge2", UIE_CLICK, Challenge2Funct )
+	// AddEventHandlerToButton( menu, "Challenge3", UIE_CLICK, Challenge3Funct )
+	// AddEventHandlerToButton( menu, "Challenge4", UIE_CLICK, Challenge4Funct )
+	// AddEventHandlerToButton( menu, "Challenge5", UIE_CLICK, Challenge5Funct )
+	// AddEventHandlerToButton( menu, "Challenge6", UIE_CLICK, Challenge6Funct )
+	// AddEventHandlerToButton( menu, "Challenge7", UIE_CLICK, Challenge7Funct )
+	// AddEventHandlerToButton( menu, "Challenge8", UIE_CLICK, Challenge8Funct )
+	// //Second column
+	// AddEventHandlerToButton( menu, "Challenge1NewC", UIE_CLICK, Challenge1NewCFunct )
+	// AddEventHandlerToButton( menu, "Challenge2NewC", UIE_CLICK, Challenge2NewCFunct )
+	// AddEventHandlerToButton( menu, "Challenge3NewC", UIE_CLICK, Challenge3NewCFunct )
+	// AddEventHandlerToButton( menu, "Challenge4NewC", UIE_CLICK, Challenge4NewCFunct )
+	// AddEventHandlerToButton( menu, "Challenge5NewC", UIE_CLICK, Challenge5NewCFunct )
+	// AddEventHandlerToButton( menu, "Challenge6NewC", UIE_CLICK, Challenge6NewCFunct )
+	// AddEventHandlerToButton( menu, "Challenge7NewC", UIE_CLICK, Challenge7NewCFunct )
+	// AddEventHandlerToButton( menu, "Challenge8NewC", UIE_CLICK, Challenge8NewCFunct )
+	
+	AddButtonEventHandler( Hud_GetChild( file.menu, "SupportTheDev"), UIE_CLICK, SupportTheDev)
+	
+	SetMenuReceivesCommands( menu, false )
+	SetGamepadCursorEnabled( menu, true )
 	
 	var gameMenuButton = Hud_GetChild( menu, "GameMenuButton" )
 	ToolTipData gameMenuToolTip
@@ -77,6 +100,56 @@ void function InitFRChallengesMainMenu( var newMenuArg )
 		RunClientScript("RefreshChallengeActivated")
 
 	AddUICallback_OnLevelInit( OnLevelInit )
+}
+
+void function OnR5RSB_Open()
+{
+	SetBlurEnabled( true )
+
+	ShowPanel( Hud_GetChild( file.menu, "ChallengesList" ) )
+}
+
+void function Init_ChallengesListMenu( var panel ) 
+{
+	file.panel = panel
+	var contentPanel = Hud_GetChild( panel, "ContentPanel" )
+	file.contentPanel = contentPanel
+
+	ScrollPanel_InitPanel( panel )
+	ScrollPanel_InitScrollBar( panel, Hud_GetChild( panel, "ScrollBar" ) )
+	
+	AddPanelEventHandler( panel, eUIEvent.PANEL_SHOW, OnChallengesListPanel_Show )
+	AddPanelEventHandler( panel, eUIEvent.PANEL_HIDE, OnChallengesListPanel_Hide )
+
+	//Setup buttons
+	for( int i = 0; i <= 50 ; i++ )
+	{
+		AddButtonEventHandler( Hud_GetChild( file.contentPanel, "Button" + i ), UIE_CLICK, RequestChallengeToPlay )
+	}
+}
+
+void function OnChallengesListPanel_Show( var panel )
+{
+	ScrollPanel_SetActive( panel, true )
+	ScrollPanel_Refresh( panel )
+}
+
+void function OnChallengesListPanel_Hide( var panel )
+{
+	ScrollPanel_SetActive( panel, false )
+}
+
+void function RequestChallengeToPlay( var button )
+{
+	int scriptID = int( Hud_GetScriptID( button ) )
+	
+	CloseAllMenus()
+	// RunClientScript( "CC_ReplayFight", scriptID )
+}
+
+void function SupportTheDev(var button)
+{
+	LaunchExternalWebBrowser( "https://ko-fi.com/r5r_colombia", WEBBROWSER_FLAG_NONE )
 }
 
 void function OnLevelInit()
@@ -213,12 +286,6 @@ void function OnR5RSB_Show()
 {
     //
 }
-
-void function OnR5RSB_Open()
-{
-	//
-}
-
 
 void function OnR5RSB_Close()
 {

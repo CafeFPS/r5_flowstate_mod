@@ -13,6 +13,7 @@ Scripts:
 [
 	mp/banner/sh_banner_asset.nut
 	
+	weapons/mp_weapon_rapidpistol.nut
 	weapons/mp_weapon_vctblue.nut
 	weapons/mp_weapon_raygun.nut
 	

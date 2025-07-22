@@ -111,6 +111,9 @@ struct{
 	array<float> armorSwapTimes
 	
 	var activeQuickHint
+	
+	int dummiesKilled
+	bool isInMainMenu
 } file
 
 global struct CameraLocationPair
@@ -180,6 +183,8 @@ void function Cl_ChallengesByColombia_Init()
 	RegisterSignal( "RestartDamageRGB" )
 	
 	SetConVarFloat( "mat_sun_scale", 0.0 )
+	
+	AddCallback_UIScriptReset( Client_UIScriptReset )
 }
 
 void function CL_AimTrainer_RegisterNetworkFunctions()
@@ -188,6 +193,17 @@ void function CL_AimTrainer_RegisterNetworkFunctions()
 		return
 	
 	RegisterNetworkedVariableChangeCallback_bool( "FS_PlayerIsMnk", FS_InputChanged )
+}
+
+void function Client_UIScriptReset()
+{
+	if( file.isInMainMenu )
+	{
+		entity player = GetLocalClientPlayer()
+		thread CoolCameraOnMenu()
+		DoF_SetFarDepth( 6000, 10000 )
+		RunUIScript( "OpenFRChallengesMainMenu", file.dummiesKilled)
+	}
 }
 
 table<entity, array<int> > ballFxs //each entity has its own array of fx
@@ -617,6 +633,9 @@ void function ServerCallback_OpenFRChallengesMainMenu(int dummiesKilled)
 {
 	entity player = GetLocalClientPlayer()
 	RunUIScript( "OpenFRChallengesMainMenu", dummiesKilled)
+	
+	file.dummiesKilled = dummiesKilled
+	file.isInMainMenu = true
 }
 
 void function ServerCallback_OpenFRChallengesHistory(int dummiesKilled)
@@ -1605,6 +1624,8 @@ void function UpdateUIRespawnTimer()
 
 void function CreateDescriptionRUI(string description)
 {
+	file.isInMainMenu = false
+	
 	entity player = GetLocalClientPlayer()
 	player.Signal("ChallengeStartRemoveCameras")
 	EndSignal(player, "ForceResultsEnd_SkipButton")
@@ -1773,7 +1794,7 @@ void function StartChallenge1Client()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Hit the strafing dummy to get points.")
 	thread CreateTimerRUIandSTATS()	
-	player.ClientCommand("CC_StartChallenge1")
+	player.ClientCommand("CC_StartChallenge 1")
 }
 
 void function StartChallenge2Client()
@@ -1782,7 +1803,7 @@ void function StartChallenge2Client()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Transfers practice with easy strafe.")
 	thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge2")
+	player.ClientCommand("CC_StartChallenge 2")
 }
 
 void function StartChallenge3Client()
@@ -1791,7 +1812,7 @@ void function StartChallenge3Client()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Don't let dummy touch ground to get streak points.")
 	thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge3")
+	player.ClientCommand("CC_StartChallenge 3")
 }
 
 void function StartChallenge4Client()
@@ -1800,7 +1821,7 @@ void function StartChallenge4Client()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Tracking practice. Hit the dummies to get points.")
 	thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge4")
+	player.ClientCommand("CC_StartChallenge 4")
 }
 
 void function StartChallenge5Client()
@@ -1809,7 +1830,7 @@ void function StartChallenge5Client()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Hitscan weapon recommended. Hit as many targets as possible.")
 	thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge5")
+	player.ClientCommand("CC_StartChallenge 5")
 }
 void function StartChallenge6Client()
 {
@@ -1817,7 +1838,7 @@ void function StartChallenge6Client()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Hitscan auto weapon recommended. Hit the dummies to get points.")
 	thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge6")
+	player.ClientCommand("CC_StartChallenge 6")
 }
 void function StartChallenge7Client()
 {
@@ -1825,7 +1846,7 @@ void function StartChallenge7Client()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Hitscan auto weapon recommended. Hit the dummies to get points.")
 	thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge7")
+	player.ClientCommand("CC_StartChallenge 7")
 }
 void function StartChallenge8Client()
 {
@@ -1833,7 +1854,7 @@ void function StartChallenge8Client()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Hit the dummies to get points.")
 	thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge8")
+	player.ClientCommand("CC_StartChallenge 8")
 }
 void function StartChallenge1NewCClient()
 {
@@ -1841,7 +1862,7 @@ void function StartChallenge1NewCClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Avoid death by killing dummy.")
 	thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge1NewC")
+	player.ClientCommand("CC_StartChallenge 1newc")
 }
 
 void function StartChallenge2NewCClient()
@@ -1850,7 +1871,7 @@ void function StartChallenge2NewCClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Only sticks count, shields are disabled.")
 	thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge2NewC")
+	player.ClientCommand("CC_StartChallenge 2newc")
 }
 
 void function StartChallenge3NewCClient()
@@ -1859,7 +1880,7 @@ void function StartChallenge3NewCClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("This challenge is in beta version. Vertical grenades practice.")
 	thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge3NewC")
+	player.ClientCommand("CC_StartChallenge 3newc")
 }
 
 void function StartChallenge4NewCClient()
@@ -1868,7 +1889,7 @@ void function StartChallenge4NewCClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Valk ultimate tracking simulation.")
 	thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge4NewC")
+	player.ClientCommand("CC_StartChallenge 4newc")
 }
 
 void function StartChallenge5NewCClient()
@@ -1877,7 +1898,7 @@ void function StartChallenge5NewCClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Tracking from gravity lift simulation.")
 	thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge5NewC")
+	player.ClientCommand("CC_StartChallenge 5newc")
 }
 	
 void function StartChallenge6NewCClient()
@@ -1886,7 +1907,7 @@ void function StartChallenge6NewCClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("This challenge is in beta version. Hit the skydiving dummies to get points.")
 	thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge6NewC")
+	player.ClientCommand("CC_StartChallenge 6newc")
 }
 
 void function StartChallenge7NewCClient()
@@ -1895,7 +1916,7 @@ void function StartChallenge7NewCClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Hit the running dummies to get points.")
 	thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge7NewC")
+	player.ClientCommand("CC_StartChallenge 7newc")
 }
 
 void function StartChallenge8NewCClient()
@@ -1905,7 +1926,7 @@ void function StartChallenge8NewCClient()
 	thread CreateDescriptionRUI("Swap armor as fast as you can")
 	
 	//thread CreateTimerRUIandSTATS()
-	player.ClientCommand("CC_StartChallenge8NewC")
+	player.ClientCommand("CC_StartChallenge 8newc")
 	
 	DisableLiveStatsUI()
 	
@@ -2224,7 +2245,7 @@ void function Start1Wall6TargetsClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Click 6 static targets arranged on the front wall as fast as possible.")
 	thread CreateTimerRUIandSTATS()	
-	player.ClientCommand("CC_Start1Wall6TargetsChallenge")
+	player.ClientCommand("CC_StartChallenge 1wall6targets")
 }
 
 //script_ui CloseAllMenus();script_client StartCloseLongStrafesClient()
@@ -2234,7 +2255,7 @@ void function StartCloseLongStrafesClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Track a single target moving horizontally across the full room width.")
 	thread CreateTimerRUIandSTATS()	
-	player.ClientCommand("CC_StartCloseLongStrafesChallenge")
+	player.ClientCommand("CC_StartChallenge close_long_strafes")
 }
 
 //like 1Wall6Targets but 3d space
@@ -2246,7 +2267,7 @@ void function StartTileFrenzyStrafingClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Move with WASD and click targets spawning randomly across the tile grid.")
 	thread CreateTimerRUIandSTATS()	
-	player.ClientCommand("CC_StartTileFrenzyStrafingChallenge")
+	player.ClientCommand("CC_StartChallenge tile_frenzy")
 }
 
 //script_ui CloseAllMenus();script_client StartPatternTrackingScenarioClient()
@@ -2256,7 +2277,7 @@ void function StartPatternTrackingScenarioClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Track the single ball following a predictable corner-to-corner pattern.")
 	thread CreateTimerRUIandSTATS()	
-	player.ClientCommand("CC_StartPatternTrackingChallenge")
+	player.ClientCommand("CC_StartChallenge pattern_tracking")
 }
 
 //script_ui CloseAllMenus();script_client StartBouncingTrackingScenarioClient()
@@ -2266,7 +2287,7 @@ void function StartBouncingTrackingScenarioClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Track a ball with bouncing physics.")
 	thread CreateTimerRUIandSTATS()	
-	player.ClientCommand("CC_StartBouncingTrackingChallenge")
+	player.ClientCommand("CC_StartChallenge bouncing_tracking")
 }
 
 //script_ui CloseAllMenus();script_client StartMultiBallHealthTrackingClient()
@@ -2276,7 +2297,7 @@ void function StartMultiBallHealthTrackingClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Track and kill the balls with fixed speed. New balls spawn when killed.")
 	thread CreateTimerRUIandSTATS()	
-	player.ClientCommand("CC_StartMultiBallHealthTrackingChallenge")
+	player.ClientCommand("CC_StartChallenge multiball_health")
 }
 
 //script_ui CloseAllMenus();script_client StartRandomSpeedTrackingClient()
@@ -2286,7 +2307,7 @@ void function StartRandomSpeedTrackingClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Track and kill the balls with random speed. New balls spawn when killed.")
 	thread CreateTimerRUIandSTATS()	
-	player.ClientCommand("CC_StartRandomSpeedTrackingChallenge")
+	player.ClientCommand("CC_StartChallenge random_speed")
 }
 
 //script_ui CloseAllMenus();script_client StartAntiMirrorStrafingClient()
@@ -2299,7 +2320,7 @@ void function StartAntiMirrorStrafingClient()
 	
 	// EnableApexvaaksNewHud( true )
 	
-	player.ClientCommand("CC_StartAntiMirrorStrafingChallenge")
+	player.ClientCommand("CC_StartChallenge anti_mirror")
 }
 
 //script_ui CloseAllMenus();script_client StartMirrorStrafingClient()
@@ -2312,7 +2333,7 @@ void function StartMirrorStrafingClient()
 	
 	// EnableApexvaaksNewHud( true )
 	
-	player.ClientCommand("CC_StartMirrorStrafingChallenge")
+	player.ClientCommand("CC_StartChallenge mirror")
 }
 
 void function EnableApexvaaksNewHud( bool show )
@@ -2348,5 +2369,5 @@ void function StartPopcornPhysicsClient()
 	ScreenFade( player, 0, 0, 0, 255, 1, 1, FFADE_IN | FFADE_PURGE )
 	thread CreateDescriptionRUI("Physics-based popcorn targets bounce around the room with realistic movement.")
 	thread CreateTimerRUIandSTATS()	
-	player.ClientCommand("CC_StartPopcornPhysicsChallenge")
+	player.ClientCommand("CC_StartChallenge popcorn_physics")
 }

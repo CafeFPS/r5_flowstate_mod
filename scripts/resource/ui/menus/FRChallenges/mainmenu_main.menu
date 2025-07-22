@@ -28,35 +28,83 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
 			drawColor				"0 0 0 50"
 		}	
 
-		DarkenBackground
+		// PanelFrame
+		// {
+			// ControlName				RuiPanel
+			// wide					%100//%70
+			// xpos                    0//%15
+			// tall					%100
+			// visible					0
+			// rui                     "ui/basic_image.rpak"
+
+            // ruiArgs
+            // {
+                // basicImageColor     "0 0 0"
+                // basicImageAlpha     0.9
+            // }
+		// }
+		
+        ScreenFrame
+        {
+            ControlName				RuiPanel
+            xpos					0
+            ypos					0
+            wide					%100
+            tall					%100
+            visible					1
+            enabled 				1
+            scaleImage				1
+            rui                     "ui/screen_blur.rpak"
+            drawColor				"255 255 255 255"
+        }
+
+		PanelFrame
 		{
-			ControlName				RuiPanel
-			wide					%50//%70
-			xpos                    0//%15
-			tall					%100
-			visible					1
-			rui                     "ui/basic_image.rpak"
+			ControlName				Label
+			xpos					0
+			ypos					-128
+	    	wide					1824 //%100
+    		tall					904 //%100
+			labelText				""
+			//bgcolor_override		"0 255 0 100"
+			//paintbackground			1
+			visible					0
 
-            ruiArgs
-            {
-                basicImageColor     "0 0 0"
-                basicImageAlpha     0.9
-            }
+			pin_to_sibling			ScreenFrame
+			pin_corner_to_sibling	TOP
+			pin_to_sibling_corner	TOP
 		}
+        Cover
+        {
+            ControlName				ImagePanel
+            xpos					0
+            ypos					0
+            wide                    %200
+            tall					%200
+            visible					1
+            enabled 				1
+            scaleImage				1
+            image					"vgui/HUD/white"
+            drawColor				"0 0 0 200"
 
+            pin_to_sibling			ScreenFrame
+            pin_corner_to_sibling	CENTER
+            pin_to_sibling_corner	CENTER
+        }		
 		Title
 		{
 			ControlName				Label
 			xpos                    -30
-			ypos					-30
+			ypos					-18
+			zpos 5
 			auto_wide_tocontents	1
 			tall					50
 			visible					1
-			fontHeight				60
+			fontHeight				50
 			labelText				"FLOWSTATE AIM TRAINER"
 			font					"TitleBoldFont"
 			allcaps					1
-			fgcolor_override		"191 13 13 255"
+			fgcolor_override		"183 29 37 255"
 			pin_to_sibling			ScreenBlur
 			pin_corner_to_sibling	TOP_RIGHT
 			pin_to_sibling_corner	TOP_RIGHT
@@ -71,7 +119,8 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
 			drawColor		"52 255 41 200"
 			visible					0
 			ypos					0
-			pin_to_sibling			DarkenBackground
+			zpos 5
+			pin_to_sibling			ScreenFrame
 			pin_corner_to_sibling	TOP_LEFT
 			pin_to_sibling_corner	TOP_LEFT
 		}
@@ -79,9 +128,10 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
 		Background
 		{
 			ControlName				RuiPanel
-			wide					%50
+			wide					%100
 			tall					85
 			xpos					0
+			zpos 1
 			visible					1
 			enabled					1
 			proportionalToParent    1
@@ -95,8 +145,8 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
 			"ControlName"				"RuiButton"
 			"InheritProperties"			"TabButtonSettings"
 			"classname" 				"TopButtons"
-			"zpos"						"0"
-			"xpos"                    	"%-1.5"
+			"zpos"						"5"
+			"xpos"                    	"%8"
 			"ypos"						"0"
 			"scriptID"					"0"
 			"ypos" "-1"
@@ -116,7 +166,7 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
 			"ControlName"				"RuiButton"
 			"InheritProperties"			"TabButtonSettings"
 			"classname" 				"TopButtons"
-			"zpos"						"0"
+			"zpos"						"5"
 			"xpos"                    	"205"
 			"scriptID"					"0"
 			"ypos" "0"
@@ -136,7 +186,7 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
 			"ControlName"				"RuiButton"
 			"InheritProperties"			"TabButtonSettings"
 			"classname" 				"TopButtons"
-			"zpos"						"0"
+			"zpos"						"5"
 			"xpos"                    	"205"
 			"scriptID"					"0"
 			"ypos" "0"
@@ -163,24 +213,6 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
             pin_corner_to_sibling		TOP_LEFT
             pin_to_sibling_corner		TOP_LEFT
         }		
-				
-		Description
-		{
-			ControlName				Label
-			xpos                    0
-			ypos					140
-			auto_wide_tocontents	1
-			tall					60
-			visible					1
-			fontHeight				32
-			labelText				"#FS_SELECT_CHALLENGE"
-			font					TitleBoldFont
-			allcaps					1
-			fgcolor_override		"252 198 3 255"
-			pin_to_sibling			Background
-			pin_corner_to_sibling	BOTTOM
-			pin_to_sibling_corner	BOTTOM
-		}
 		
 		DummiesKilledCounter
 		{
@@ -189,13 +221,13 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
 			ypos					-90
 			auto_wide_tocontents	1
 			tall					60
-			visible					1
+			visible					0
 			fontHeight				30
 			labelText				"#FS_DUMMIES_KILLED"
 			font					Default
 			allcaps					0
 			fgcolor_override		"255 255 255 255"
-			pin_to_sibling			DarkenBackground
+			pin_to_sibling			PanelFrame
 			pin_corner_to_sibling	BOTTOM
 			pin_to_sibling_corner	BOTTOM
 		}
@@ -213,7 +245,7 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
 			font					Default
 			allcaps					0
 			fgcolor_override		"255 255 255 255"
-			pin_to_sibling			DarkenBackground
+			pin_to_sibling			PanelFrame
 			pin_corner_to_sibling	BOTTOM
 			pin_to_sibling_corner	BOTTOM
 		}		
@@ -226,7 +258,7 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
 			tall					25
 			visible					1
 			fontHeight				25
-			labelText				"v1.32 | Made in Colombia by @CafeFPS"
+			labelText				"Flowstate Aim Trainer v1.5 | Made in Colombia by @CafeFPS"
 			font					DefaultBold_41
 			allcaps					0
 			fgcolor_override		"255 255 255 255"
@@ -234,23 +266,23 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
 			pin_corner_to_sibling	BOTTOM_RIGHT
 			pin_to_sibling_corner	BOTTOM_RIGHT
 		}
-		MadeBy2
-		{
-			ControlName				Label
-			xpos                    0
-			ypos					20
-			auto_wide_tocontents	1
-			tall					25
-			visible					1
-			fontHeight				25
-			labelText				"Powered by R5Reloaded - ©Respawn Entertainment"
-			font					DefaultBold_41
-			allcaps					0
-			fgcolor_override		"255 255 255 255"
-			pin_to_sibling			MadeBy
-			pin_corner_to_sibling	BOTTOM_RIGHT
-			pin_to_sibling_corner	BOTTOM_RIGHT
-		}
+		// MadeBy2
+		// {
+			// ControlName				Label
+			// xpos                    0
+			// ypos					20
+			// auto_wide_tocontents	1
+			// tall					25
+			// visible					1
+			// fontHeight				25
+			// labelText				"Powered by R5Reloaded"
+			// font					DefaultBold_41
+			// allcaps					0
+			// fgcolor_override		"255 255 255 255"
+			// pin_to_sibling			MadeBy
+			// pin_corner_to_sibling	BOTTOM_RIGHT
+			// pin_to_sibling_corner	BOTTOM_RIGHT
+		// }
 		
         GameMenuButton
         {
@@ -262,16 +294,36 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
             pin_corner_to_sibling	TOP_RIGHT
             pin_to_sibling_corner	TOP_RIGHT
         }
+
+		// TabsCommon
+		// {
+			// ControlName				CNestedPanel
+			// classname				"TabsCommonClass"
+			// zpos					5
+			// wide					f0
+			// tall					84
+			// ypos					128
+			// visible					1
+			// controlSettingsFile		"scripts/resource/ui/menus/panels/tabs_settings.res"
+
+			// pin_to_sibling			PanelFrame
+			// pin_corner_to_sibling	TOP
+			// pin_to_sibling_corner	TOP
+		// }
 		
-		Challenge1
+		//////////////////// SCENARIOS CATEGORIES
+		
+		ClickingChallenges
 		{
 			"ControlName" 			"RuiButton"
 			"rui"					"ui/footer_button.rpak"
 			ruiArgs
 			{
-				buttonText "Strafing Dummy"
+				isSelected 1
+				buttonText "Clicking"
 			}
-			wide					233
+			
+			wide					266
 			tall					50
 			"labelText"             ""
 			"visible"				"1"
@@ -279,350 +331,49 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
 			"sound_accept"          "UI_Menu_Accept"
 			"cursorPriority"        "-1"
 
-			xpos                   	80
-			ypos                    115
-			zpos                    3
+			xpos                   	0
+			ypos                    70
+			zpos                    11
             visible 1
 
-			pin_to_sibling          Description
-			pin_corner_to_sibling   LEFT
-			pin_to_sibling_corner   LEFT
+			pin_to_sibling          ChallengesList
+			pin_corner_to_sibling   TOP_LEFT
+			pin_to_sibling_corner   TOP_LEFT
 		}
 
-		Challenge1DialogFrame
+		ClickingChallengesFrame
 		{
             ControlName		ImagePanel
-			wide					233
+			wide					266
 			tall					50
 			xpos                    0
 			ypos                    0
-			zpos                    1
+			zpos                    10
 			visible			1
             scaleImage		1
-            fillColor		"30 30 30 200"
-            drawColor		"30 30 30 200"
+			
+			fillColor		"183 29 37 255"
+            drawColor		"183 29 37 255"
+			
+			// fillColor		"30 30 30 200"
+			// drawColor		"30 30 30 200" 
 
-			pin_to_sibling			Challenge1
-			pin_corner_to_sibling	CENTER
-			pin_to_sibling_corner	CENTER
-		}
-
-		Challenge2
-		{
-			"ControlName" 			"RuiButton"
-			"rui"					"ui/footer_button.rpak"
-			ruiArgs
-			{
-				buttonText "Target Switching"
-			}
-			wide					235
-			tall					50
-			"labelText"             ""
-			"visible"				"1"
-			sound_focus           "UI_Menu_Focus"
-			"sound_accept"          "UI_Menu_Accept"
-			"cursorPriority"        "-1"
-
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
-            visible 1
-
-			pin_to_sibling          Challenge1
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
-		}
-
-		Challenge2DialogFrame
-		{
-            ControlName		ImagePanel
-			wide					235
-			tall					50
-			xpos                    0
-			ypos                    0
-			zpos                    1
-			visible			1
-            scaleImage		1
-            fillColor		"30 30 30 200"
-            drawColor		"30 30 30 200"
-
-			pin_to_sibling			Challenge2
-			pin_corner_to_sibling	CENTER
-			pin_to_sibling_corner	CENTER
-		}
-
-		Challenge3
-		{
-			"ControlName" 			"RuiButton"
-			"rui"					"ui/footer_button.rpak"
-			ruiArgs
-			{
-				buttonText "Floating Target"
-			}
-			wide					215
-			tall					50
-			"labelText"             ""
-			"visible"				"1"
-			sound_focus           "UI_Menu_Focus"
-			"sound_accept"          "UI_Menu_Accept"
-			"cursorPriority"        "-1"
-
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
-            visible 1
-
-			pin_to_sibling          Challenge2
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
-		}
-
-		Challenge3DialogFrame
-		{
-            ControlName		ImagePanel
-			wide					215
-			tall					50
-			xpos                    0
-			ypos                    0
-			zpos                    1
-			visible			1
-            scaleImage		1
-            fillColor		"30 30 30 200"
-            drawColor		"30 30 30 200"
-
-			pin_to_sibling			Challenge3
-			pin_corner_to_sibling	CENTER
-			pin_to_sibling_corner	CENTER
-		}
-
-		Challenge4
-		{
-			"ControlName" 			"RuiButton"
-			"rui"					"ui/footer_button.rpak"
-			ruiArgs
-			{
-				buttonText "Popcorn Targets"
-			}
-			wide					235
-			tall					50
-			"labelText"             ""
-			"visible"				"1"
-			sound_focus           "UI_Menu_Focus"
-			"sound_accept"          "UI_Menu_Accept"
-			"cursorPriority"        "-1"
-
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
-            visible 1
-
-			pin_to_sibling          Challenge3
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
-		}
-
-		Challenge4DialogFrame
-		{
-            ControlName		ImagePanel
-			wide					235
-			tall					50
-			xpos                    0
-			ypos                    0
-			zpos                    1
-			visible			1
-            scaleImage		1
-            fillColor		"30 30 30 200"
-            drawColor		"30 30 30 200"
-
-			pin_to_sibling			Challenge4
-			pin_corner_to_sibling	CENTER
-			pin_to_sibling_corner	CENTER
-		}
-
-		Challenge5
-		{
-			"ControlName" 			"RuiButton"
-			"rui"					"ui/footer_button.rpak"
-			ruiArgs
-			{
-				buttonText "Tile Frenzy"
-			}
-			wide					166
-			tall					50
-			"labelText"             ""
-			"visible"				"1"
-			sound_focus           "UI_Menu_Focus"
-			"sound_accept"          "UI_Menu_Accept"
-			"cursorPriority"        "-1"
-
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
-            visible 1
-
-			pin_to_sibling          Challenge4
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
-		}
-
-		Challenge5DialogFrame
-		{
-            ControlName		ImagePanel
-			wide					166
-			tall					50
-			xpos                    0
-			ypos                    0
-			zpos                    1
-			visible			1
-            scaleImage		1
-            fillColor		"30 30 30 200"
-            drawColor		"30 30 30 200"
-
-			pin_to_sibling			Challenge5
-			pin_corner_to_sibling	CENTER
-			pin_to_sibling_corner	CENTER
-		}
-
-	Challenge6
-		{
-			"ControlName" 			"RuiButton"
-			"rui"					"ui/footer_button.rpak"
-			ruiArgs
-			{
-				buttonText "Close Fast Strafes"
-			}
-			wide					260
-			tall					50
-			"labelText"             ""
-			"visible"				"1"
-			sound_focus           "UI_Menu_Focus"
-			"sound_accept"          "UI_Menu_Accept"
-			"cursorPriority"        "-1"
-
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
-            visible 1
-
-			pin_to_sibling          Challenge5
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
-		}
-
-		Challenge6DialogFrame
-		{
-            ControlName		ImagePanel
-			wide					260
-			tall					50
-			xpos                    0
-			ypos                    0
-			zpos                    1
-			visible			1
-            scaleImage		1
-            fillColor		"30 30 30 200"
-            drawColor		"30 30 30 200"
-
-			pin_to_sibling			Challenge6
-			pin_corner_to_sibling	CENTER
-			pin_to_sibling_corner	CENTER
-		}
-	Challenge7
-		{
-			"ControlName" 			"RuiButton"
-			"rui"					"ui/footer_button.rpak"
-			ruiArgs
-			{
-				buttonText "Smoothbot"
-			}			
-			wide					160
-			tall					50
-			"labelText"             ""
-			"visible"				"1"
-			sound_focus           "UI_Menu_Focus"
-			"sound_accept"          "UI_Menu_Accept"
-			"cursorPriority"        "-1"
-
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
-            visible 1
-
-			pin_to_sibling          Challenge6
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
-		}
-
-		Challenge7DialogFrame
-		{
-            ControlName		ImagePanel
-			wide					160
-			tall					50
-			xpos                    0
-			ypos                    0
-			zpos                    1
-			visible			1
-            scaleImage		1
-            fillColor		"30 30 30 200"
-            drawColor		"30 30 30 200"
-
-			pin_to_sibling			Challenge7
+			pin_to_sibling			ClickingChallenges
 			pin_corner_to_sibling	CENTER
 			pin_to_sibling_corner	CENTER
 		}
 		
-	Challenge8
+		//////////////////////////////////////////
+
+		TrackingChallenges
 		{
 			"ControlName" 			"RuiButton"
 			"rui"					"ui/footer_button.rpak"
 			ruiArgs
 			{
-				buttonText "TODO"
-			}			
-			wide					155
-			tall					50
-			"labelText"             ""
-			"visible"				"0"
-			sound_focus           "UI_Menu_Focus"
-			"sound_accept"          "UI_Menu_Accept"
-			"cursorPriority"        "-1"
-
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
-            visible 0
-
-			pin_to_sibling          Challenge7
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
-		}
-	
-		Challenge8DialogFrame
-		{
-            ControlName		ImagePanel
-			wide					155
-			tall					50
-			xpos                    0
-			ypos                    0
-			zpos                    1
-			visible			0
-            scaleImage		1
-            fillColor		"30 30 30 200"
-            drawColor		"30 30 30 200"
-
-			pin_to_sibling			Challenge8
-			pin_corner_to_sibling	CENTER
-			pin_to_sibling_corner	CENTER
-		}
-	//NEW COLUMN
-	Challenge1NewC
-		{
-			"ControlName" 			"RuiButton"
-			"rui"					"ui/footer_button.rpak"
-			ruiArgs
-			{
-				buttonText "Fast Jumps Strafes"
-			}		
-			wide					275
+				buttonText "Tracking"
+			}
+			wide					266
 			tall					50
 			"labelText"             ""
 			"visible"				"1"
@@ -630,218 +381,44 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
 			"sound_accept"          "UI_Menu_Accept"
 			"cursorPriority"        "-1"
 
-			xpos                    380
+			xpos                   	270
 			ypos                    0
-			zpos                    3
+			zpos                    11
             visible 1
 
-			pin_to_sibling          Challenge1
+			pin_to_sibling          ClickingChallenges
 			pin_corner_to_sibling   RIGHT
 			pin_to_sibling_corner   RIGHT
 		}
 
-		Challenge1NewCDialogFrame
+		TrackingChallengesFrame
 		{
             ControlName		ImagePanel
-			wide					275
+			wide					266
 			tall					50
 			xpos                    0
 			ypos                    0
-			zpos                    1
+			zpos                    10
 			visible			1
             scaleImage		1
             fillColor		"30 30 30 200"
             drawColor		"30 30 30 200"
 
-			pin_to_sibling			Challenge1NewC
+			pin_to_sibling			TrackingChallenges
 			pin_corner_to_sibling	CENTER
 			pin_to_sibling_corner	CENTER
 		}
+		//////////////////////////////////////////
 
-	Challenge2NewC
+		SwitchingChallenges
 		{
 			"ControlName" 			"RuiButton"
 			"rui"					"ui/footer_button.rpak"
 			ruiArgs
 			{
-				buttonText "Arc Stars Practice"
-			}		
-			wide					259
-			tall					50
-			"labelText"             ""
-			"visible"				"1"
-			sound_focus           "UI_Menu_Focus"
-			"sound_accept"          "UI_Menu_Accept"
-			"cursorPriority"        "-1"
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
-            visible 1
-
-			pin_to_sibling          Challenge1NewC
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
-		}
-
-		Challenge2NewCDialogFrame
-		{
-            ControlName		ImagePanel
-			wide					259
-			tall					50
-			xpos                    0
-			ypos                    0
-			zpos                    1
-			visible			1
-            scaleImage		1
-            fillColor		"30 30 30 200"
-            drawColor		"30 30 30 200"
-
-			pin_to_sibling			Challenge2NewC
-			pin_corner_to_sibling	CENTER
-			pin_to_sibling_corner	CENTER
-		}
-
-	Challenge3NewC
-		{
-			"ControlName" 			"RuiButton"
-			"rui"					"ui/footer_button.rpak"
-			ruiArgs
-			{
-				buttonText "Grenades Practice"
-			}	
-			wide					260
-			tall					50
-			"labelText"             ""
-			"visible"				"1"
-			sound_focus           "UI_Menu_Focus"
-			"sound_accept"          "UI_Menu_Accept"
-			"cursorPriority"        "-1"
-
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
-            visible 1
-			
-			pin_to_sibling          Challenge2NewC
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
-		}
-
-		Challenge3NewCDialogFrame
-		{
-            ControlName		ImagePanel
-			wide					260
-			tall					50
-			xpos                    0
-			ypos                    0
-			zpos                    1
-			visible			1
-            scaleImage		1
-            fillColor		"30 30 30 200"
-            drawColor		"30 30 30 200"
-
-			pin_to_sibling			Challenge3NewC
-			pin_corner_to_sibling	CENTER
-			pin_to_sibling_corner	CENTER
-		}
-
-	Challenge4NewC
-		{
-			"ControlName" 			"RuiButton"
-			"rui"					"ui/footer_button.rpak"
-			ruiArgs
-			{
-				buttonText "Shooting Valk's Ult"
-			}	
-			wide					265
-			tall					50
-			"labelText"             ""
-			"visible"				"1"
-			sound_focus           "UI_Menu_Focus"
-			"sound_accept"          "UI_Menu_Accept"
-			"cursorPriority"        "-1"
-
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
-            visible 1
-			
-			pin_to_sibling          Challenge3NewC
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
-		}
-		
-		Challenge4NewCDialogFrame
-		{
-            ControlName		ImagePanel
-			wide					265
-			tall					50
-			xpos                    0
-			ypos                    0
-			zpos                    1
-			visible			1
-            scaleImage		1
-            fillColor		"30 30 30 200"
-            drawColor		"30 30 30 200"
-
-			pin_to_sibling			Challenge4NewC
-			pin_corner_to_sibling	CENTER
-			pin_to_sibling_corner	CENTER
-		}
-		
-	Challenge5NewC
-		{
-			"ControlName" 			"RuiButton"
-			"rui"					"ui/footer_button.rpak"
-			ruiArgs
-			{
-				buttonText "Shooting From Lift"
-			}	
-			wide					270
-			tall					50
-			"labelText"             ""
-			"visible"				"1"
-			sound_focus           "UI_Menu_Focus"
-			"sound_accept"          "UI_Menu_Accept"
-			"cursorPriority"        "-1"
-
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
-            visible 1
-			
-			pin_to_sibling          Challenge4NewC
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
-		}
-
-		Challenge5NewCDialogFrame
-		{
-            ControlName		ImagePanel
-			wide					270
-			tall					50
-			xpos                    0
-			ypos                    0
-			zpos                    1
-			visible			1
-            scaleImage		1
-            fillColor		"30 30 30 200"
-            drawColor		"30 30 30 200"
-
-			pin_to_sibling			Challenge5NewC
-			pin_corner_to_sibling	CENTER
-			pin_to_sibling_corner	CENTER
-		}
-		
-	Challenge6NewC
-		{
-			"ControlName" 			"RuiButton"
-			"rui"					"ui/footer_button.rpak"
-			ruiArgs
-			{
-				buttonText "Skydiving Targets"
+				buttonText "Switching"
 			}
-			wide					265
+			wide					266
 			tall					50
 			"labelText"             ""
 			"visible"				"1"
@@ -849,43 +426,44 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
 			"sound_accept"          "UI_Menu_Accept"
 			"cursorPriority"        "-1"
 
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
+			xpos                   	270
+			ypos                    0
+			zpos                    11
             visible 1
-			
-			pin_to_sibling          Challenge5NewC
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
+
+			pin_to_sibling          TrackingChallenges
+			pin_corner_to_sibling   RIGHT
+			pin_to_sibling_corner   RIGHT
 		}
 
-	Challenge6NewCDialogFrame
+		SwitchingChallengesFrame
 		{
             ControlName		ImagePanel
-			wide					265
+			wide					266
 			tall					50
 			xpos                    0
 			ypos                    0
-			zpos                    1
+			zpos                    10
 			visible			1
             scaleImage		1
             fillColor		"30 30 30 200"
             drawColor		"30 30 30 200"
 
-			pin_to_sibling			Challenge6NewC
+			pin_to_sibling			SwitchingChallenges
 			pin_corner_to_sibling	CENTER
 			pin_to_sibling_corner	CENTER
-		}
-		
-	Challenge7NewC
+		}		
+		///////////////////////////////////////////
+
+		MovementChallenges
 		{
 			"ControlName" 			"RuiButton"
 			"rui"					"ui/footer_button.rpak"
 			ruiArgs
 			{
-				buttonText "Running Targets"
+				buttonText "Movement"
 			}
-			wide					245
+			wide					266
 			tall					50
 			"labelText"             ""
 			"visible"				"1"
@@ -893,161 +471,1284 @@ scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu
 			"sound_accept"          "UI_Menu_Accept"
 			"cursorPriority"        "-1"
 
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
+			xpos                   	270
+			ypos                    0
+			zpos                    11
             visible 1
-			
-			pin_to_sibling          Challenge6NewC
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
+
+			pin_to_sibling          SwitchingChallenges
+			pin_corner_to_sibling   RIGHT
+			pin_to_sibling_corner   RIGHT
 		}
-	
-		Challenge7NewCDialogFrame
+
+		MovementChallengesFrame
 		{
             ControlName		ImagePanel
-			wide					245
+			wide					266
 			tall					50
 			xpos                    0
 			ypos                    0
-			zpos                    1
+			zpos                    10
 			visible			1
             scaleImage		1
             fillColor		"30 30 30 200"
             drawColor		"30 30 30 200"
 
-			pin_to_sibling			Challenge7NewC
+			pin_to_sibling			MovementChallenges
 			pin_corner_to_sibling	CENTER
 			pin_to_sibling_corner	CENTER
+		}		
+		////////////////////////////////////////////
+		
+        ChallengesList
+        {
+            ControlName			    CNestedPanel
+            InheritProperties       SettingsTabPanel
+            ypos					-70
+			zpos					9
+			tall					670
+			// wide 					1064
+			
+			visible 	1
+			enabled 	1
+			
+            pin_to_sibling			PanelFrame
+            pin_corner_to_sibling	TOP
+            pin_to_sibling_corner	TOP
+
+            tabPosition             1
+
+            ScrollFrame
+            {
+                ControlName				ImagePanel
+				xpos					0
+				ypos					0
+				zpos					10
+				wide					1064
+				tall					650
+				visible					1
+				proportionalToParent	1
+            }
+
+            ScrollBar
+            {
+                ControlName				RuiButton
+				xpos                    0
+				ypos                    0
+				zpos					10
+				wide					24
+				tall					670//740
+				visible					1
+				enabled 				1
+				rui						"ui/survival_scroll_bar.rpak"
+				zpos                    101
+				
+                pin_to_sibling			ScrollFrame
+                pin_corner_to_sibling	TOP_RIGHT
+                pin_to_sibling_corner	TOP_RIGHT
+            }
+
+            ContentPanel
+            {
+                ControlName				CNestedPanel
+				xpos					0
+				ypos					0
+				zpos					11
+				wide					%100
+				
+				visible					1
+				proportionalToParent	1
+                tabPosition             1
+                tall					1800
+
+                controlSettingsFile		"scripts/resource/ui/menus/FRChallenges/challenges_list_mainmenu.res"
+            }
+        }
+
+		ScenarioPreview
+		{
+			ControlName				Label
+			xpos                    0
+			ypos					35
+			auto_wide_tocontents	1
+			tall					30
+			visible					1
+			fontHeight				30
+			labelText				"Challenge Preview"
+			font					TitleBoldFont
+			allcaps					0
+			fgcolor_override		"255 255 255 255"
+			pin_to_sibling			BikVideo
+			pin_corner_to_sibling	TOP_LEFT
+			pin_to_sibling_corner	TOP_LEFT
 		}
 		
-	Challenge8NewC
+		BikVideo
 		{
-			"ControlName" 			"RuiButton"
-			"rui"					"ui/footer_button.rpak"
+			ControlName             RuiPanel
+			xpos					-50//576
+			ypos					185
+			zpos 12
+			wide                    512
+			tall                    288
+			visible                 1
+			enabled 	1
+			rui                     "ui/finisher_video.rpak"
+
+            pin_to_sibling			ChallengesList
+            pin_corner_to_sibling	RIGHT
+            pin_to_sibling_corner	RIGHT
+		}
+		BikVideoFrame
+		{
+			ControlName             RuiPanel
+			xpos					0//576
+			ypos					2
+			zpos 12
+			wide                    512
+			tall                    288
+			visible                 1
+			enabled 	1
+			rui                     "ui/gamemode_select_v2_lobby_button.rpak"
+			labelText               ""
+			scaleImage              1
 			ruiArgs
 			{
-				buttonText "Armor Swap Trainer"
+			lockIconEnabled 0
+			modeNameText ""//Strafing Dummy"
+			modeDescText ""
+			alwaysShowDesc 0
+			modeImage ""//rui/menu/maps/mp_rr_olympus"
 			}
-			wide					270
-			tall					50
-			"labelText"             ""
-			"visible"				"1"
-			sound_focus           "UI_Menu_Focus"
-			"sound_accept"          "UI_Menu_Accept"
-			"cursorPriority"        "-1"
-
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
-            visible 1
 			
-			pin_to_sibling          Challenge7NewC
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
-		}
-
-		Challenge8NewCDialogFrame
-		{
-            ControlName		ImagePanel
-			wide					270
-			tall					50
-			xpos                    0
-			ypos                    0
-			zpos                    1
-			visible			1
-            scaleImage		1
-            fillColor		"30 30 30 200"
-            drawColor		"30 30 30 200"
-
-			pin_to_sibling			Challenge8NewC
-			pin_corner_to_sibling	CENTER
-			pin_to_sibling_corner	CENTER
+            pin_to_sibling			BikVideo
+            pin_corner_to_sibling	CENTER
+            pin_to_sibling_corner	CENTER
 		}
 		
-	// Challenge8NewC_IsNewChallenge
+		// Challenge1
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Strafing Dummy"
+			// }
+			// wide					233
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                   	80
+			// ypos                    80
+			// zpos                    3
+            // visible 1
+
+			// pin_to_sibling          Description
+			// pin_corner_to_sibling   LEFT
+			// pin_to_sibling_corner   LEFT
+		// }
+
+		// Challenge1DialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					233
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge1
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+		
+		// Challenge1MaxScore
 		// {
 			// ControlName				Label
 			// auto_wide_tocontents    1
-			// labelText				"New!"
+			// labelText				"Best Score: 0"
 			// visible                 1
-			// xpos 					45
+			// xpos 					0
 			// zpos 					3
 			// tall					55
 			// fontHeight				20
 			// font					TitleBoldFont
 			// fgcolor_override		"255 255 255 255"
 
-			// ypos                    0
-			// xpos					-12
-			// pin_to_sibling          Challenge8NewC
-			// pin_corner_to_sibling   RIGHT
-			// pin_to_sibling_corner   RIGHT
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge1DialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
 		// }	
 		
-	Challenge8
-		{
-			"ControlName" 			"RuiButton"
-			"rui"					"ui/footer_button.rpak"
-			ruiArgs
-			{
-				buttonText "Bounces Simulator"
-			}
-			wide					270
-			tall					50
-			"labelText"             ""
-			"visible"				"1"
-			sound_focus           "UI_Menu_Focus"
-			"sound_accept"          "UI_Menu_Accept"
-			"cursorPriority"        "-1"
+		// Challenge2
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Target Switching"
+			// }
+			// wide					235
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
 
-			xpos                    0
-			ypos                    %7.5
-			zpos                    3
-            visible 1
-			
-			pin_to_sibling          Challenge7
-			pin_corner_to_sibling   BOTTOM
-			pin_to_sibling_corner   BOTTOM
-		}
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 1
+
+			// pin_to_sibling          Challenge1
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+		// Challenge2DialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					235
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge2
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
 		
-	// Challenge8_IsNewChallenge
+		// Challenge2MaxScore
 		// {
 			// ControlName				Label
 			// auto_wide_tocontents    1
-			// labelText				"New!"
+			// labelText				"Best Score: 0"
 			// visible                 1
-			// xpos 					45
+			// xpos 					0
 			// zpos 					3
 			// tall					55
 			// fontHeight				20
 			// font					TitleBoldFont
 			// fgcolor_override		"255 255 255 255"
 
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge2DialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+		// Challenge3
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Floating Target"
+			// }
+			// wide					215
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 1
+
+			// pin_to_sibling          Challenge2
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+		// Challenge3DialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					215
+			// tall					50
+			// xpos                    0
 			// ypos                    0
-			// xpos					-12
-			// pin_to_sibling          Challenge8
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge3
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+		
+		// Challenge3MaxScore
+		// {
+			// ControlName				Label
+			// auto_wide_tocontents    1
+			// labelText				"Best Score: 0"
+			// visible                 1
+			// xpos 					0
+			// zpos 					3
+			// tall					55
+			// fontHeight				20
+			// font					TitleBoldFont
+			// fgcolor_override		"255 255 255 255"
+
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge3DialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+		// Challenge4
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Popcorn Targets"
+			// }
+			// wide					235
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 1
+
+			// pin_to_sibling          Challenge3
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+		// Challenge4DialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					235
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge4
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+		
+		// Challenge4MaxScore
+		// {
+			// ControlName				Label
+			// auto_wide_tocontents    1
+			// labelText				"Best Score: 0"
+			// visible                 1
+			// xpos 					0
+			// zpos 					3
+			// tall					55
+			// fontHeight				20
+			// font					TitleBoldFont
+			// fgcolor_override		"255 255 255 255"
+
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge4DialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+		// Challenge5
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Tile Frenzy"
+			// }
+			// wide					166
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 1
+
+			// pin_to_sibling          Challenge4
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+		// Challenge5DialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					166
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge5
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+		
+		// Challenge5MaxScore
+		// {
+			// ControlName				Label
+			// auto_wide_tocontents    1
+			// labelText				"Best Score: 0"
+			// visible                 1
+			// xpos 					0
+			// zpos 					3
+			// tall					55
+			// fontHeight				20
+			// font					TitleBoldFont
+			// fgcolor_override		"255 255 255 255"
+
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge5DialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+	// Challenge6
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Close Fast Strafes"
+			// }
+			// wide					260
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 1
+
+			// pin_to_sibling          Challenge5
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+		// Challenge6DialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					260
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge6
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+		
+		// Challenge6MaxScore
+		// {
+			// ControlName				Label
+			// auto_wide_tocontents    1
+			// labelText				"Best Score: 0"
+			// visible                 1
+			// xpos 					0
+			// zpos 					3
+			// tall					55
+			// fontHeight				20
+			// font					TitleBoldFont
+			// fgcolor_override		"255 255 255 255"
+
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge6DialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+	// Challenge7
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Smoothbot"
+			// }			
+			// wide					160
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 1
+
+			// pin_to_sibling          Challenge6
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+		// Challenge7DialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					160
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge7
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+		
+		// Challenge7MaxScore
+		// {
+			// ControlName				Label
+			// auto_wide_tocontents    1
+			// labelText				"Best Score: 0"
+			// visible                 1
+			// xpos 					0
+			// zpos 					3
+			// tall					55
+			// fontHeight				20
+			// font					TitleBoldFont
+			// fgcolor_override		"255 255 255 255"
+
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge7DialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+		
+	// Challenge8
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "TODO"
+			// }			
+			// wide					155
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"0"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 0
+
+			// pin_to_sibling          Challenge7
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+	
+		// Challenge8DialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					155
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			0
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge8
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+	// //NEW COLUMN
+	// Challenge1NewC
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Fast Jumps Strafes"
+			// }		
+			// wide					275
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                    380
+			// ypos                    0
+			// zpos                    3
+            // visible 1
+
+			// pin_to_sibling          Challenge1
 			// pin_corner_to_sibling   RIGHT
 			// pin_to_sibling_corner   RIGHT
-		// }	
-		Challenge8DialogFrame
-		{
-            ControlName		ImagePanel
-			wide					270
-			tall					50
-			xpos                    0
-			ypos                    0
-			zpos                    1
-			visible			1
-            scaleImage		1
-            fillColor		"30 30 30 200"
-            drawColor		"30 30 30 200"
+		// }
 
-			pin_to_sibling			Challenge8
-			pin_corner_to_sibling	CENTER
-			pin_to_sibling_corner	CENTER
-		}
+		// Challenge1NewCDialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					275
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge1NewC
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
 		
+		// Challenge1NewCMaxScore
+		// {
+			// ControlName				Label
+			// auto_wide_tocontents    1
+			// labelText				"Best Score: 0"
+			// visible                 1
+			// xpos 					0
+			// zpos 					3
+			// tall					55
+			// fontHeight				20
+			// font					TitleBoldFont
+			// fgcolor_override		"255 255 255 255"
+
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge1NewCDialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+	// Challenge2NewC
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Arc Stars Practice"
+			// }		
+			// wide					259
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 1
+
+			// pin_to_sibling          Challenge1NewC
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+		// Challenge2NewCDialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					259
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge2NewC
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+		
+		// Challenge2NewCMaxScore
+		// {
+			// ControlName				Label
+			// auto_wide_tocontents    1
+			// labelText				"Best Score: 0"
+			// visible                 1
+			// xpos 					0
+			// zpos 					3
+			// tall					55
+			// fontHeight				20
+			// font					TitleBoldFont
+			// fgcolor_override		"255 255 255 255"
+
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge2NewCDialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+	// Challenge3NewC
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Grenades Practice"
+			// }	
+			// wide					260
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 1
+			
+			// pin_to_sibling          Challenge2NewC
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+		// Challenge3NewCDialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					260
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge3NewC
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+		
+		// Challenge3NewCMaxScore
+		// {
+			// ControlName				Label
+			// auto_wide_tocontents    1
+			// labelText				"Best Score: 0"
+			// visible                 1
+			// xpos 					0
+			// zpos 					3
+			// tall					55
+			// fontHeight				20
+			// font					TitleBoldFont
+			// fgcolor_override		"255 255 255 255"
+
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge3NewCDialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+	// Challenge4NewC
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Shooting Valk's Ult"
+			// }	
+			// wide					265
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 1
+			
+			// pin_to_sibling          Challenge3NewC
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+		
+		// Challenge4NewCDialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					265
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge4NewC
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+		
+		// Challenge4NewCMaxScore
+		// {
+			// ControlName				Label
+			// auto_wide_tocontents    1
+			// labelText				"Best Score: 0"
+			// visible                 1
+			// xpos 					0
+			// zpos 					3
+			// tall					55
+			// fontHeight				20
+			// font					TitleBoldFont
+			// fgcolor_override		"255 255 255 255"
+
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge4NewCDialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+		
+	// Challenge5NewC
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Shooting From Lift"
+			// }	
+			// wide					270
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 1
+			
+			// pin_to_sibling          Challenge4NewC
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+		// Challenge5NewCDialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					270
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge5NewC
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+		
+		// Challenge5NewCMaxScore
+		// {
+			// ControlName				Label
+			// auto_wide_tocontents    1
+			// labelText				"Best Score: 0"
+			// visible                 1
+			// xpos 					0
+			// zpos 					3
+			// tall					55
+			// fontHeight				20
+			// font					TitleBoldFont
+			// fgcolor_override		"255 255 255 255"
+
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge5NewCDialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+		
+	// Challenge6NewC
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Skydiving Targets"
+			// }
+			// wide					265
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 1
+			
+			// pin_to_sibling          Challenge5NewC
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+	// Challenge6NewCDialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					265
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge6NewC
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+		
+		// Challenge6NewCMaxScore
+		// {
+			// ControlName				Label
+			// auto_wide_tocontents    1
+			// labelText				"Best Score: 0"
+			// visible                 1
+			// xpos 					0
+			// zpos 					3
+			// tall					55
+			// fontHeight				20
+			// font					TitleBoldFont
+			// fgcolor_override		"255 255 255 255"
+
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge6NewCDialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+		
+	// Challenge7NewC
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Running Targets"
+			// }
+			// wide					245
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 1
+			
+			// pin_to_sibling          Challenge6NewC
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
 	
+		// Challenge7NewCDialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					245
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge7NewC
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+		
+		// Challenge7NewCMaxScore
+		// {
+			// ControlName				Label
+			// auto_wide_tocontents    1
+			// labelText				"Best Score: 0"
+			// visible                 1
+			// xpos 					0
+			// zpos 					3
+			// tall					55
+			// fontHeight				20
+			// font					TitleBoldFont
+			// fgcolor_override		"255 255 255 255"
+
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge7NewCDialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+		
+	// Challenge8NewC
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Armor Swap Trainer"
+			// }
+			// wide					270
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 1
+			
+			// pin_to_sibling          Challenge7NewC
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+
+		// Challenge8NewCDialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					270
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge8NewC
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+		
+		// Challenge8NewCMaxScore
+		// {
+			// ControlName				Label
+			// auto_wide_tocontents    1
+			// labelText				"Best Score: 0"
+			// visible                 1
+			// xpos 					0
+			// zpos 					3
+			// tall					55
+			// fontHeight				20
+			// font					TitleBoldFont
+			// fgcolor_override		"255 255 255 255"
+
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge8NewCDialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+		
+	// // Challenge8NewC_IsNewChallenge
+		// // {
+			// // ControlName				Label
+			// // auto_wide_tocontents    1
+			// // labelText				"New!"
+			// // visible                 1
+			// // xpos 					45
+			// // zpos 					3
+			// // tall					55
+			// // fontHeight				20
+			// // font					TitleBoldFont
+			// // fgcolor_override		"255 255 255 255"
+
+			// // ypos                    0
+			// // xpos					-12
+			// // pin_to_sibling          Challenge8NewC
+			// // pin_corner_to_sibling   RIGHT
+			// // pin_to_sibling_corner   RIGHT
+		// // }	
+		
+	// Challenge8
+		// {
+			// "ControlName" 			"RuiButton"
+			// "rui"					"ui/footer_button.rpak"
+			// ruiArgs
+			// {
+				// buttonText "Bounces Simulator"
+			// }
+			// wide					270
+			// tall					50
+			// "labelText"             ""
+			// "visible"				"1"
+			// sound_focus           "UI_Menu_Focus"
+			// "sound_accept"          "UI_Menu_Accept"
+			// "cursorPriority"        "-1"
+
+			// xpos                    0
+			// ypos                    100
+			// zpos                    3
+            // visible 1
+			
+			// pin_to_sibling          Challenge7
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+		
+	// // Challenge8_IsNewChallenge
+		// // {
+			// // ControlName				Label
+			// // auto_wide_tocontents    1
+			// // labelText				"New!"
+			// // visible                 1
+			// // xpos 					45
+			// // zpos 					3
+			// // tall					55
+			// // fontHeight				20
+			// // font					TitleBoldFont
+			// // fgcolor_override		"255 255 255 255"
+
+			// // ypos                    0
+			// // xpos					-12
+			// // pin_to_sibling          Challenge8
+			// // pin_corner_to_sibling   RIGHT
+			// // pin_to_sibling_corner   RIGHT
+		// // }	
+		// Challenge8DialogFrame
+		// {
+            // ControlName		ImagePanel
+			// wide					270
+			// tall					50
+			// xpos                    0
+			// ypos                    0
+			// zpos                    1
+			// visible			1
+            // scaleImage		1
+            // fillColor		"30 30 30 200"
+            // drawColor		"30 30 30 200"
+
+			// pin_to_sibling			Challenge8
+			// pin_corner_to_sibling	CENTER
+			// pin_to_sibling_corner	CENTER
+		// }
+		
+		// Challenge8MaxScore
+		// {
+			// ControlName				Label
+			// auto_wide_tocontents    1
+			// labelText				"Best Score: 0"
+			// visible                 1
+			// xpos 					0
+			// zpos 					3
+			// tall					55
+			// fontHeight				20
+			// font					TitleBoldFont
+			// fgcolor_override		"255 255 255 255"
+
+			// ypos                    40
+			
+			// pin_to_sibling          Challenge8DialogFrame
+			// pin_corner_to_sibling   BOTTOM
+			// pin_to_sibling_corner   BOTTOM
+		// }
+		
+		SupportTheDev
+		{
+			"ControlName" 			"RuiButton"
+			"rui"					"ui/footer_button.rpak"
+			"wide" 					"500"
+			"tall" 					"30"
+			ypos                    -10
+			xpos					-20
+			"zpos" 					"6"
+
+			ruiArgs
+			{
+				buttonText "I maintain and develop Flowstate for free - Buy me a coffee :)"
+			}
+
+				pin_to_sibling          PanelFrame
+				pin_corner_to_sibling   BOTTOM_LEFT
+				pin_to_sibling_corner   BOTTOM_LEFT
+		}
 	}
 }

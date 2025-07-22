@@ -60,6 +60,61 @@ struct
 	#endif
 } file
 
+void function Sh_FlowstateCommonSharedInit()
+{
+	#if SERVER || CLIENT
+		// Remote Functions
+		RegisterFlowstateRemoteFunctions()
+
+		// Init Weapons
+		InitFlowstateWeapons()
+	#endif
+	
+	// Includes UI VM
+	// Gamemodes
+	RegisterFlowstateGamemodes()
+	
+	// Custom Weapons
+	RegisterFlowstateCustomWeapons()
+	
+	AddCallback_OnLootDatatablesLoaded( Flowstate_LoadLootDatatables )
+}
+
+void function Flowstate_LoadLootDatatables()
+{
+	SURVIVAL_Loot_RegFromDataTable( GetDataTable( $"datatable/flowstate_all_new.rpak" ) )
+	
+	if( Gamemode() == eGamemodes.fs_snd )
+		SURVIVAL_Loot_RegFromDataTable( GetDataTable( $"datatable/flowstate_all_new_snd.rpak" ) )
+}
+
+void function RegisterFlowstateCustomWeapons()
+{
+	//Rapidpistol
+	CustomWeaponData rapidpistol
+	rapidpistol.className = "mp_weapon_rapidpistol"
+	rapidpistol.name = "Rapidpistol"
+	rapidpistol.tier = eLootTier.RARE
+	rapidpistol.weaponType = "pistol"
+	rapidpistol.hudIcon = "$\"rui/weapon_icons/my_custom_rifle\""
+	rapidpistol.supportedAttachments = ["barrel", "mag", "sight", "grip", "hopup"]
+	rapidpistol.pickupSound1p = "survival_loot_pickup_weapon_rspn101"
+	rapidpistol.pickupSound3p = "survival_loot_pickup_3p_weapon_rspn101"
+	rapidpistol.lowWeaponChance = 5.0
+	rapidpistol.medWeaponChance = 10.0
+	rapidpistol.highWeaponChance = 25.0
+	rapidpistol.isCP = false
+	
+	RegisterModWeapon(rapidpistol, false) // Default: enableGroundLoot = true
+	
+	//Another one
+
+	// "","mp_weapon_lightninggun","main_weapon","","","","assault",5,"","rui/hud/gametype_icons/survival/sur_ammo_lstar","","",0,"","survival_loot_pickup_weapon_r97","survival_loot_pickup_3p_weapon_r97","","","",1,1,"","",0,0,20,0,0,0,0
+	// "","mp_weapon_flamethrower","main_weapon","","","","lmg","5","PING_WEAPON_COLDWAR","","","","0","","survival_loot_pickup_weapon_pulse_lmg","survival_loot_pickup_3p_weapon_pulse_lmg","","","","1","1","","","0","0","20","0","0","0","0"
+	// "","mp_weapon_raygun","main_weapon","","","","assault",5,"","rui/hud/gametype_icons/survival/sur_ammo_lstar","","",0,"","survival_loot_pickup_weapon_r97","survival_loot_pickup_3p_weapon_r97","","","",1,1,"","",0,0,20,0,0,0,0
+
+}
+
 // Gamemodes, Remote Functions and Weapons init
 // This has to be executed by Server, Client and UI VM
 void function RegisterFlowstateGamemodes()
@@ -815,12 +870,8 @@ void function CodeCallback_Flowstate_ModInit()
 	
 	AddClientCommandCallback( "donatetocafe", ClientCommand_DonateToCafe )
 	AddCallback_OnClientConnected( FS_OnClientConnected )
-	
-	// Gamemodes
-	RegisterFlowstateGamemodes()
-	
-	// Remote functions
-	RegisterFlowstateRemoteFunctions()
+
+	Sh_FlowstateCommonSharedInit() //Gamemodes, Remote Functions, Custom Weapons
 	
 	// Custom Heirlooms
 	PrecacheWeapon( $"mp_weapon_vctblue_primary" )
@@ -881,9 +932,6 @@ void function CodeCallback_Flowstate_ModInit()
 	}
 		
 	RegisterSignal( "VCTBlueFX" )
-	
-	// Init weapons
-	InitFlowstateWeapons()
 	
 	//Server only init for flowstate gamemodes
 	switch( GetCurrentPlaylistName() )
@@ -1084,16 +1132,9 @@ void function ClientCodeCallback_Flowstate_ModInit()
 	HAS_FLOWSTATE_MOD = true
 	
 	RegisterSignal( "VCTBlueFX" )
-	
-	// Gamemodes
-	RegisterFlowstateGamemodes()
-	
-	// Remote functions
-	RegisterFlowstateRemoteFunctions()
-	
-	// Init weapons
-	InitFlowstateWeapons()
 
+	Sh_FlowstateCommonSharedInit()
+	
 	//Client only init for flowstate playlists
 	
 	//todo(cafe): have to wait for entitiesdidload flag i think
@@ -1133,8 +1174,7 @@ void function UICodeCallback_Flowstate_ModInit()
 	AddUICallback_OnDevMenuLoaded( FS_OnDevMenuLoaded )
 	AddUICallback_OnInitMenus( RegisterMenus )
 
-	// Gamemodes
-	RegisterFlowstateGamemodes()
+	Sh_FlowstateCommonSharedInit()
 }
 
 void function FS_OnLeveLInit()
@@ -1156,7 +1196,8 @@ void function RegisterMenus()
 
 	//Flowstate Aim Trainer
 	//Main Menu
-	AddMenu( "FRChallengesMainMenu", $"scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu", InitFRChallengesMainMenu )
+	var aimtrainer_mainmenu = AddMenu( "FRChallengesMainMenu", $"scripts/resource/ui/menus/FRChallenges/mainmenu_main.menu", InitFRChallengesMainMenu, "AimTrainer Main Menu"  )
+	AddPanel( aimtrainer_mainmenu, "ChallengesList", Init_ChallengesListMenu )
 	
 	//Settings
 	AddMenu( "FRChallengesSettings", $"scripts/resource/ui/menus/FRChallenges/mainmenu_settings.menu", InitFRChallengesSettings )

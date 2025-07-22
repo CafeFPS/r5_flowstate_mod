@@ -44,45 +44,39 @@ struct
 table<int, array<ChallengeScore> > ChallengesData //implement this
 table<int, int> ChallengesBestScores
 
+//Challenge Registry for unified CC_StartChallenge command
+struct ChallengeInfo
+{
+	void functionref(entity) challengeFunc
+	void functionref(entity, bool) challengeFuncWithParam = null
+	int challengeId
+	bool requiresParameter = false
+}
+
+table<string, ChallengeInfo> challengeRegistry
+
+//Wrapper functions to handle optional parameters properly
+void function StartPopcornChallenge_Normal(entity player, bool variant)
+{
+	StartPopcornChallenge(player, variant)
+}
+
+void function StartAntiMirrorStrafingChallenge_Wrapper(entity player, bool isMirror)
+{
+	StartAntiMirrorStrafingChallenge(player, isMirror)
+}
+
 void function _ChallengesByColombia_Init()
 {
 	//Increase client command limit to 60
 	SetConVarInt("sv_quota_stringCmdsPerSecond", 60)
 	SetConVarInt("net_processTimeBudget", 0 )
 
-	//Todo: create only one cc for this
-	//first challenges select menu column
-	AddClientCommandCallback("CC_StartChallenge1", CC_StartChallenge1)
-	AddClientCommandCallback("CC_StartChallenge2", CC_StartChallenge2)
-	AddClientCommandCallback("CC_StartChallenge3", CC_StartChallenge3)
-	AddClientCommandCallback("CC_StartChallenge4", CC_StartChallenge4)
-	AddClientCommandCallback("CC_StartChallenge5", CC_StartChallenge5)
-	AddClientCommandCallback("CC_StartChallenge6", CC_StartChallenge6)
-	AddClientCommandCallback("CC_StartChallenge7", CC_StartChallenge7)
-	AddClientCommandCallback("CC_StartChallenge8", CC_StartChallenge8)
-	//second challenges select menu column
-	AddClientCommandCallback("CC_StartChallenge1NewC", CC_StartChallenge1NewC)
-	AddClientCommandCallback("CC_StartChallenge2NewC", CC_StartChallenge2NewC)
-	AddClientCommandCallback("CC_StartChallenge3NewC", CC_StartChallenge3NewC)
-	AddClientCommandCallback("CC_StartChallenge4NewC", CC_StartChallenge4NewC)
-	AddClientCommandCallback("CC_StartChallenge5NewC", CC_StartChallenge5NewC)
-	AddClientCommandCallback("CC_StartChallenge6NewC", CC_StartChallenge6NewC)
-	AddClientCommandCallback("CC_StartChallenge7NewC", CC_StartChallenge7NewC)
-	AddClientCommandCallback("CC_StartChallenge8NewC", CC_StartChallenge8NewC)
+	//Initialize challenge registry
+	InitializeChallengeRegistry()
 	
-	//tracking challenges
-	AddClientCommandCallback("CC_StartPatternTrackingChallenge", CC_StartPatternTrackingChallenge)
-	AddClientCommandCallback("CC_StartBouncingTrackingChallenge", CC_StartBouncingTrackingChallenge)
-	AddClientCommandCallback("CC_StartMultiBallHealthTrackingChallenge", CC_StartMultiBallHealthTrackingChallenge)
-	AddClientCommandCallback("CC_StartRandomSpeedTrackingChallenge", CC_StartRandomSpeedTrackingChallenge)
-	AddClientCommandCallback("CC_StartAntiMirrorStrafingChallenge", CC_StartAntiMirrorStrafingChallenge)
-	AddClientCommandCallback("CC_StartMirrorStrafingChallenge", CC_StartMirrorStrafingChallenge)
-	AddClientCommandCallback("CC_StartPopcornPhysicsChallenge", CC_StartPopcornPhysicsChallenge)
-	
-	//kovaaks scenarios
-	AddClientCommandCallback("CC_Start1Wall6TargetsChallenge", CC_Start1Wall6TargetsChallenge)
-	AddClientCommandCallback("CC_StartCloseLongStrafesChallenge", CC_StartCloseLongStrafesChallenge)
-	AddClientCommandCallback("CC_StartTileFrenzyStrafingChallenge", CC_StartTileFrenzyStrafingChallenge)
+	//Unified challenge starter command - replaces all individual CC_Start* commands
+	AddClientCommandCallback("CC_StartChallenge", CC_StartChallenge_Unified)
 	
 	//settings buttons
 	AddClientCommandCallback("CC_Weapon_Selector_Open", CC_Weapon_Selector_Open)
@@ -230,6 +224,8 @@ void function StartFRChallenges(entity player)
 	SetServerVar( "minimapState", eMinimapState.Hidden)
 	printt( "Aimtrainer Start" )
 	
+	SetGameState( eGameState.Playing )
+		
 	StartInputDetectorForPlayer( player )
 }
 
@@ -4426,10 +4422,126 @@ void function PreChallengeStart(entity player, int challenge)
 
 		player.p.isChallengeActivated = true
 		Remote_CallFunction_NonReplay(player, "ServerCallback_SetChallengeActivated", true)
-
-		SetGameState( eGameState.Playing )
+	
 	}()
 }
+
+//Initialize Challenge Registry - maps challenge identifiers to their functions and IDs
+void function InitializeChallengeRegistry()
+{
+	//Original Challenge Series (1-8)
+	ChallengeInfo challenge1; challenge1.challengeFunc = StartStraferDummyChallenge; challenge1.challengeId = 1
+	challengeRegistry["1"] <- challenge1
+	ChallengeInfo challenge2; challenge2.challengeFunc = StartSwapFocusDummyChallenge; challenge2.challengeId = 2
+	challengeRegistry["2"] <- challenge2
+	ChallengeInfo challenge3; challenge3.challengeFunc = StartFloatingTargetChallenge; challenge3.challengeId = 3
+	challengeRegistry["3"] <- challenge3
+	ChallengeInfo challenge4; challenge4.challengeFuncWithParam = StartPopcornChallenge_Normal; challenge4.challengeId = 4; challenge4.requiresParameter = true
+	challengeRegistry["4"] <- challenge4
+	ChallengeInfo challenge5; challenge5.challengeFunc = StartTileFrenzyChallenge; challenge5.challengeId = 10
+	challengeRegistry["5"] <- challenge5
+	ChallengeInfo challenge6; challenge6.challengeFunc = StartCloseFastStrafesChallenge; challenge6.challengeId = 11
+	challengeRegistry["6"] <- challenge6
+	ChallengeInfo challenge7; challenge7.challengeFunc = StartSmoothbotChallenge; challenge7.challengeId = 12
+	challengeRegistry["7"] <- challenge7
+	ChallengeInfo challenge8; challenge8.challengeFuncWithParam = StartPopcornChallenge_Normal; challenge8.challengeId = 13; challenge8.requiresParameter = true
+	challengeRegistry["8"] <- challenge8
+	
+	//New Challenge Series (1NewC-8NewC)
+	ChallengeInfo challenge1newc; challenge1newc.challengeFunc = StartTapyDuckStrafesChallenge; challenge1newc.challengeId = 6
+	challengeRegistry["1newc"] <- challenge1newc
+	ChallengeInfo challenge2newc; challenge2newc.challengeFunc = StartArcstarsChallenge; challenge2newc.challengeId = 7
+	challengeRegistry["2newc"] <- challenge2newc
+	ChallengeInfo challenge3newc; challenge3newc.challengeFunc = StartVerticalGrenadesChallenge; challenge3newc.challengeId = 14
+	challengeRegistry["3newc"] <- challenge3newc
+	ChallengeInfo challenge4newc; challenge4newc.challengeFunc = StartStraightUpChallenge; challenge4newc.challengeId = 9
+	challengeRegistry["4newc"] <- challenge4newc
+	ChallengeInfo challenge5newc; challenge5newc.challengeFunc = StartLiftUpChallenge; challenge5newc.challengeId = 8
+	challengeRegistry["5newc"] <- challenge5newc
+	ChallengeInfo challenge6newc; challenge6newc.challengeFunc = StartSkyDiveChallenge; challenge6newc.challengeId = 15
+	challengeRegistry["6newc"] <- challenge6newc
+	ChallengeInfo challenge7newc; challenge7newc.challengeFunc = StartRunningTargetsChallenge; challenge7newc.challengeId = 16
+	challengeRegistry["7newc"] <- challenge7newc
+	ChallengeInfo challenge8newc; challenge8newc.challengeFunc = StartArmorSwapChallenge; challenge8newc.challengeId = 17
+	challengeRegistry["8newc"] <- challenge8newc
+	
+	//Tracking Challenges
+	ChallengeInfo patternTracking; patternTracking.challengeFunc = StartPatternTrackingChallenge; patternTracking.challengeId = 18
+	challengeRegistry["pattern_tracking"] <- patternTracking
+	ChallengeInfo bouncingTracking; bouncingTracking.challengeFunc = StartBouncingTrackingChallenge; bouncingTracking.challengeId = 19
+	challengeRegistry["bouncing_tracking"] <- bouncingTracking
+	ChallengeInfo multiBallHealth; multiBallHealth.challengeFunc = StartMultiBallHealthTrackingChallenge; multiBallHealth.challengeId = 22
+	challengeRegistry["multiball_health"] <- multiBallHealth
+	ChallengeInfo randomSpeed; randomSpeed.challengeFunc = StartRandomSpeedTrackingChallenge; randomSpeed.challengeId = 23
+	challengeRegistry["random_speed"] <- randomSpeed
+	ChallengeInfo antiMirror; antiMirror.challengeFuncWithParam = StartAntiMirrorStrafingChallenge_Wrapper; antiMirror.challengeId = 24; antiMirror.requiresParameter = true
+	challengeRegistry["anti_mirror"] <- antiMirror
+	ChallengeInfo mirror; mirror.challengeFuncWithParam = StartAntiMirrorStrafingChallenge_Wrapper; mirror.challengeId = 25; mirror.requiresParameter = true
+	challengeRegistry["mirror"] <- mirror
+	ChallengeInfo popcornPhysics; popcornPhysics.challengeFunc = StartPopcornPhysicsChallenge; popcornPhysics.challengeId = 25
+	challengeRegistry["popcorn_physics"] <- popcornPhysics
+	
+	//Kovaaks Scenarios
+	ChallengeInfo oneWall6Targets; oneWall6Targets.challengeFunc = Start1Wall6TargetsChallenge; oneWall6Targets.challengeId = 20
+	challengeRegistry["1wall6targets"] <- oneWall6Targets
+	ChallengeInfo closeLongStrafes; closeLongStrafes.challengeFunc = StartCloseLongStrafesChallenge; closeLongStrafes.challengeId = 21
+	challengeRegistry["close_long_strafes"] <- closeLongStrafes
+	ChallengeInfo tileFrenzy; tileFrenzy.challengeFunc = StartTileFrenzyStrafingChallenge; tileFrenzy.challengeId = 22
+	challengeRegistry["tile_frenzy"] <- tileFrenzy
+}
+
+//Unified Challenge Starter - replaces all individual CC_Start* commands
+bool function CC_StartChallenge_Unified(entity player, array<string> args)
+{
+	if(args.len() < 1)
+	{
+#if DEVELOPER
+		printt("[AimTrainer] CC_StartChallenge_Unified: No challenge identifier provided")
+#endif
+		return false
+	}
+	
+	string challengeId = args[0].tolower()
+	
+	if(!(challengeId in challengeRegistry))
+	{
+#if DEVELOPER
+		printt("[AimTrainer] CC_StartChallenge_Unified: Unknown challenge identifier '" + challengeId + "'")
+#endif
+		return false
+	}
+	
+	ChallengeInfo challengeInfo = challengeRegistry[challengeId]
+	
+	//Start the challenge using PreChallengeStart and the appropriate function
+	PreChallengeStart(player, challengeInfo.challengeId)
+	
+	if(challengeInfo.requiresParameter && challengeInfo.challengeFuncWithParam != null)
+	{
+		//Special challenges that need a boolean parameter
+		bool param = false
+		if(challengeId == "4")
+			param = false //StartPopcornChallenge(player, false) - normal variant
+		else if(challengeId == "8")
+			param = true //StartPopcornChallenge(player, true) - second variant
+		else if(challengeId == "anti_mirror")
+			param = false //StartAntiMirrorStrafingChallenge(player, false) - anti-mirror mode
+		else if(challengeId == "mirror")
+			param = true //StartAntiMirrorStrafingChallenge(player, true) - mirror mode
+		thread challengeInfo.challengeFuncWithParam(player, param)
+	}
+	else if(challengeInfo.challengeFunc != null)
+	{
+		thread challengeInfo.challengeFunc(player)
+	}
+	
+	return false
+}
+
+/*
+//LEGACY INDIVIDUAL CHALLENGE FUNCTIONS - REPLACED BY UNIFIED SYSTEM
+//These functions have been replaced by CC_StartChallenge_Unified
+//Use: CC_StartChallenge <challenge_identifier> instead
 
 bool function CC_StartChallenge1( entity player, array<string> args )
 {
@@ -4541,7 +4653,7 @@ bool function CC_StartChallenge8NewC( entity player, array<string> args )
 	thread StartArmorSwapChallenge(player)
 	return false
 }
-
+*/
 
 bool function CC_ChallengesSkipButton( entity player, array<string> args )
 {
@@ -5343,7 +5455,7 @@ bool function CC_AimTrainer_PLATFORM_HEIGHT( entity player, array<string> args )
 	return false
 }
 
-
+/*
 // 2025 challenges
 bool function CC_StartPatternTrackingChallenge( entity player, array<string> args )
 {
@@ -5415,6 +5527,7 @@ bool function CC_StartTileFrenzyStrafingChallenge( entity player, array<string> 
 	thread StartTileFrenzyStrafingChallenge(player)
 	return false
 }
+*/
 
 // 1Wall6Targets Challenge - Priority 1: Static Clicking
 void function Start1Wall6TargetsChallenge(entity player)
