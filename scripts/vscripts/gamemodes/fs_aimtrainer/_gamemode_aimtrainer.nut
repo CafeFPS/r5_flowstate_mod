@@ -152,7 +152,7 @@ void function _ChallengesByColombia_Init()
 		case eMaps.mp_rr_desertlands_mu1_tt:
 		case eMaps.mp_rr_desertlands_mu2:
 		case eMaps.mp_rr_desertlands_holiday:
-			file.floorLocation = <-10020.1543, -8643.02832, 189.92578>
+			file.floorLocation = <-10020.1543, -8643.02832, 5189.92578>
 			file.floorLocationSky = <-10020.1543, -8643.02832, 50189.92578>
 			
 			file.onGroundLocationPos = <12891.2783, -2391.77124, -3121.60132>
@@ -670,12 +670,22 @@ void function CreateDummyPopcornChallenge(entity player)
 				int enemyID    = GetParticleSystemIndex( $"P_enemy_jump_jet_ON_trails" )
 				entity enemyFX = StartParticleEffectOnEntity_ReturnEntity( dummy, enemyID, FX_PATTACH_POINT_FOLLOW, dummy.LookupAttachment( attachment ) )
 		}
-	thread CheckDistanceFromPlayer(player, dummy)
-	while(IsValid(ai)){		
+	
+	while( IsValid(ai) )
+	{
+		WaitFrame()
+
 		if( ai.GetOrigin().z - file.floorLocation.z < 50)
 		{
 			vector angles2 = VectorToAngles( Vector(player.GetOrigin().x, player.GetOrigin().y, file.floorCenterForPlayer.z) - ai.GetOrigin())
 			ai.SetAngles(Vector(0, angles2.y, 0))
+
+			if( Distance( player.GetOrigin(), ai.GetOrigin() ) > 1500)
+			{
+				ai.SetVelocity(AnglesToForward( angles2 ) * 500 + AnglesToUp(angles2)*RandomFloatRange(512,1024))
+				EmitSoundOnEntity( ai, "JumpPad_LaunchPlayer_3p" )
+				continue
+			}
 			
 			if(CoinFlip())
 				random = 1
@@ -690,22 +700,6 @@ void function CreateDummyPopcornChallenge(entity player)
 				
 			EmitSoundOnEntity( ai, "JumpPad_LaunchPlayer_3p" )
 		}
-		WaitFrame()
-	}
-}
-
-void function CheckDistanceFromPlayer(entity player, entity ai)
-{
-	while( IsValid(ai) )
-	{
-		if( Distance( player.GetOrigin(), ai.GetOrigin() ) > 1500)
-		{
-			ChallengesEntities.dummies.removebyvalue(ai)
-			ai.Destroy()
-			break
-		}
-	
-		WaitFrame()
 	}
 }
 
@@ -4590,123 +4584,6 @@ bool function CC_StartChallenge_Unified(entity player, array<string> args)
 	return false
 }
 
-/*
-//LEGACY INDIVIDUAL CHALLENGE FUNCTIONS - REPLACED BY UNIFIED SYSTEM
-//These functions have been replaced by CC_StartChallenge_Unified
-//Use: CC_StartChallenge <challenge_identifier> instead
-
-bool function CC_StartChallenge1( entity player, array<string> args )
-{
-	PreChallengeStart(player, 1)
-	thread StartStraferDummyChallenge(player)
-	return false
-}
-
-bool function CC_StartChallenge2( entity player, array<string> args )
-{
-	PreChallengeStart(player, 2)
-	thread StartSwapFocusDummyChallenge(player)
-	return false
-}
-
-bool function CC_StartChallenge3( entity player, array<string> args )
-{
-	PreChallengeStart(player, 3)
-	thread StartFloatingTargetChallenge(player)
-	return false
-}
-
-bool function CC_StartChallenge4( entity player, array<string> args )
-{
-	PreChallengeStart(player, 4)
-	thread StartPopcornChallenge(player)
-	return false
-}
-
-bool function CC_StartChallenge5( entity player, array<string> args )
-{
-	PreChallengeStart(player, 10)
-	thread StartTileFrenzyChallenge(player)
-	return false
-}
-
-bool function CC_StartChallenge6( entity player, array<string> args )
-{
-	PreChallengeStart(player, 11)
-	thread StartCloseFastStrafesChallenge(player)
-	return false
-}
-
-bool function CC_StartChallenge7( entity player, array<string> args )
-{
-	PreChallengeStart(player, 12)
-	thread StartSmoothbotChallenge(player)
-	return false
-}
-
-bool function CC_StartChallenge8( entity player, array<string> args )
-{
-	PreChallengeStart(player, 13)
-	thread StartPopcornChallenge(player, true)
-	return false
-}
-bool function CC_StartChallenge1NewC( entity player, array<string> args )
-{
-	PreChallengeStart(player, 6)
-	thread StartTapyDuckStrafesChallenge(player)
-	return false
-}
-
-bool function CC_StartChallenge2NewC( entity player, array<string> args )
-{
-	PreChallengeStart(player, 7)
-	thread StartArcstarsChallenge(player)
-	return false
-}
-
-bool function CC_StartChallenge3NewC( entity player, array<string> args )
-{
-	PreChallengeStart(player, 14)
-	thread StartVerticalGrenadesChallenge(player)
-	return false
-}
-
-bool function CC_StartChallenge4NewC( entity player, array<string> args )
-{
-	PreChallengeStart(player, 9)
-	thread StartStraightUpChallenge(player)
-	return false
-}
-
-bool function CC_StartChallenge5NewC( entity player, array<string> args )
-{
-	PreChallengeStart(player, 8)
-	thread StartLiftUpChallenge(player)
-	return false
-}
-
-bool function CC_StartChallenge6NewC( entity player, array<string> args )
-{
-	PreChallengeStart(player, 15)
-	thread StartSkyDiveChallenge(player)
-	return false
-}
-
-bool function CC_StartChallenge7NewC( entity player, array<string> args )
-{
-	PreChallengeStart(player, 16)
-	thread StartRunningTargetsChallenge(player)
-	return false
-}
-
-bool function CC_StartChallenge8NewC( entity player, array<string> args )
-{
-	PreChallengeStart(player, 17)
-	thread StartArmorSwapChallenge(player)
-	return false
-}
-*/
-
 bool function CC_ChallengesSkipButton( entity player, array<string> args )
 {
 	Signal(player, "ForceResultsEnd_SkipButton")
@@ -5507,80 +5384,6 @@ bool function CC_AimTrainer_PLATFORM_HEIGHT( entity player, array<string> args )
 	return false
 }
 
-/*
-// 2025 challenges
-bool function CC_StartPatternTrackingChallenge( entity player, array<string> args )
-{
-	PreChallengeStart(player, 18)
-	thread StartPatternTrackingChallenge(player)
-	return false
-}
-
-bool function CC_StartBouncingTrackingChallenge( entity player, array<string> args )
-{
-	PreChallengeStart(player, 19)
-	thread StartBouncingTrackingChallenge(player)
-	return false
-}
-
-bool function CC_StartMultiBallHealthTrackingChallenge( entity player, array<string> args )
-{
-	PreChallengeStart(player, 22)
-	thread StartMultiBallHealthTrackingChallenge(player)
-	return false
-}
-
-bool function CC_StartRandomSpeedTrackingChallenge( entity player, array<string> args )
-{
-	PreChallengeStart(player, 23)
-	thread StartRandomSpeedTrackingChallenge(player)
-	return false
-}
-
-bool function CC_StartAntiMirrorStrafingChallenge( entity player, array<string> args )
-{
-	PreChallengeStart(player, 24)
-	thread StartAntiMirrorStrafingChallenge(player)
-	return false
-}
-
-bool function CC_StartMirrorStrafingChallenge( entity player, array<string> args )
-{
-	PreChallengeStart(player, 25)
-	thread StartAntiMirrorStrafingChallenge(player, true)
-	return false
-}
-
-bool function CC_StartPopcornPhysicsChallenge( entity player, array<string> args )
-{
-	PreChallengeStart(player, 25)
-	thread StartPopcornPhysicsChallenge(player)
-	return false
-}
-
-// Kovaaks Scenarios Implementation
-bool function CC_Start1Wall6TargetsChallenge( entity player, array<string> args )
-{
-	PreChallengeStart(player, 20)
-	thread Start1Wall6TargetsChallenge(player)
-	return false
-}
-
-bool function CC_StartCloseLongStrafesChallenge( entity player, array<string> args )
-{
-	PreChallengeStart(player, 21)
-	thread StartCloseLongStrafesChallenge(player)
-	return false
-}
-
-bool function CC_StartTileFrenzyStrafingChallenge( entity player, array<string> args )
-{
-	PreChallengeStart(player, 22)
-	thread StartTileFrenzyStrafingChallenge(player)
-	return false
-}
-*/
-
 // 1Wall6Targets Challenge - Priority 1: Static Clicking
 void function Start1Wall6TargetsChallenge(entity player)
 {
@@ -6025,11 +5828,15 @@ void function OnStaticTargetDamaged(entity target, var damageInfo)
 	// For 1Wall6Targets challenge, destroy target and respawn a new one
 	if(target.GetMaxHealth() == 1) // Insta-kill targets
 	{
+		// Ball killed, award points and clean up
+		attacker.p.straferDummyKilledCount++
+		Remote_CallFunction_NonReplay(attacker, "ServerCallback_LiveStatsUIDummiesKilled", attacker.p.straferDummyKilledCount)
+		
 		// Play hit sound
 		EmitSoundOnEntityOnlyToPlayer( attacker, attacker, "player_hitbeep" )
 		
 		// Update UI stats
-		Remote_CallFunction_NonReplay(attacker, "ServerCallback_LiveStatsUIDamageViaDummieDamaged", int(damage))
+		Remote_CallFunction_NonReplay(attacker, "ServerCallback_LiveStatsUIDamageViaDummieDamaged", 1)
 		Remote_CallFunction_NonReplay(attacker, "ServerCallback_LiveStatsUIAccuracyViaShotsHits")
 		
 		// Remove from props array and occupied positions

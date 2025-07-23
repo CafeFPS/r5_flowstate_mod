@@ -43,6 +43,8 @@ void function OpenFRChallengesHistory(int dummiesKilled)
 	EmitUISound("UI_Menu_SelectMode_Extend")
 	AdvanceMenu( file.menu )
 	
+	AddButtonEventHandler( Hud_GetChild( file.menu, "SupportTheDev"), UIE_CLICK, SupportTheDev)
+	
 	if(ChallengesHistory.len() == 0)
 	{
 		ShowNoChallengesPlayed(true)
@@ -73,6 +75,11 @@ void function OpenFRChallengesHistory(int dummiesKilled)
 			Hud_SetText( Hud_GetChild( file.menu, "ChallengeAccuracy" + i ), ChallengesHistory[i].ChallengeAccuracy.tostring() )
 		}
 	}
+}
+
+void function SupportTheDev(var button)
+{
+LaunchExternalWebBrowser( "https://ko-fi.com/r5r_colombia", WEBBROWSER_FLAG_NONE )
 }
 
 void function PrevPage(var button)
