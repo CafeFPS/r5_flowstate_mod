@@ -79,21 +79,61 @@
 	Text0
 	{
 		ControlName					"Label"
-		labelText					"Strafing Dummy"
+		labelText					"Made by @CafeFPS"
 		xpos						"-25"
 		ypos						"0"
 		zpos						"5"
-		wide						"500"
-		tall						"45"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
 		fontHeight					"45"
 		visible					1
+		
 		
 		pin_to_sibling				Button0
 		pin_corner_to_sibling		LEFT
 		pin_to_sibling_corner		LEFT
 	}
 
+	Score0
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button0
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
 
+	IsNew0
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text0
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
+	
+	/////////////////////////////////////////
+	
     Button1
     {
         ControlName              RuiButton
@@ -116,12 +156,12 @@
     Text1
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
 		
@@ -129,6 +169,44 @@
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score1
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button1
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew1
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text1
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button2
@@ -153,18 +231,56 @@
     Text2
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button2
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score2
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button2
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew2
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text2
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button3
@@ -190,18 +306,56 @@
     Text3
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button3
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score3
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button3
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew3
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text3
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button4
@@ -227,18 +381,56 @@
     Text4
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button4
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score4
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button4
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew4
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text4
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button5
@@ -264,18 +456,56 @@
     Text5
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button5
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score5
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button5
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew5
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text5
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button6
@@ -300,18 +530,56 @@
     Text6
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button6
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score6
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button6
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew6
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text6
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button7
@@ -336,18 +604,56 @@
     Text7
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button7
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score7
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button7
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew7
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text7
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button8
@@ -372,18 +678,56 @@
     Text8
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button8
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score8
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button8
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew8
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text8
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button9
@@ -408,18 +752,56 @@
     Text9
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button9
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score9
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button9
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew9
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text9
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button10
@@ -444,18 +826,56 @@
     Text10
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button10
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score10
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button10
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew10
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text10
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button11
@@ -480,18 +900,56 @@
     Text11
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button11
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score11
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button11
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew11
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text11
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button12
@@ -516,18 +974,56 @@
     Text12
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button12
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score12
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button12
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew12
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text12
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button13
@@ -552,18 +1048,56 @@
     Text13
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button13
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score13
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button13
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew13
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text13
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button14
@@ -588,18 +1122,56 @@
     Text14
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button14
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score14
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button14
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew14
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text14
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button15
@@ -624,18 +1196,56 @@
     Text15
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button15
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score15
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button15
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew15
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text15
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button16
@@ -660,18 +1270,56 @@
     Text16
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button16
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score16
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button16
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew16
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text16
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button17
@@ -696,18 +1344,56 @@
     Text17
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button17
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score17
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button17
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew17
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text17
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button18
@@ -732,18 +1418,56 @@
     Text18
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button18
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score18
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button18
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew18
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text18
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button19
@@ -768,18 +1492,56 @@
     Text19
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button19
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score19
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button19
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew19
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text19
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button20
@@ -804,18 +1566,56 @@
     Text20
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button20
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score20
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button20
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew20
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text20
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button21
@@ -840,18 +1640,56 @@
     Text21
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button21
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score21
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button21
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew21
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text21
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button22
@@ -876,18 +1714,56 @@
     Text22
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button22
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score22
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button22
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew22
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text22
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button23
@@ -912,18 +1788,56 @@
     Text23
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button23
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score23
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button23
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew23
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text23
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button24
@@ -948,18 +1862,56 @@
     Text24
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button24
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score24
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button24
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew24
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text24
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button25
@@ -984,18 +1936,56 @@
     Text25
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					1
         pin_to_sibling           Button25
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score25
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button25
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew25
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text25
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button26
@@ -1020,18 +2010,56 @@
     Text26
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button26
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score26
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button26
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew26
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text26
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button27
@@ -1056,18 +2084,56 @@
     Text27
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button27
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score27
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button27
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew27
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text27
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button28
@@ -1092,18 +2158,56 @@
     Text28
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button28
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score28
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button28
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew28
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text28
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button29
@@ -1128,18 +2232,56 @@
     Text29
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button29
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score29
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button29
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew29
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text29
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button30
@@ -1164,18 +2306,56 @@
     Text30
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button30
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score30
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button30
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew30
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text30
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button31
@@ -1200,18 +2380,56 @@
     Text31
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button31
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score31
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button31
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew31
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text31
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button32
@@ -1236,18 +2454,56 @@
     Text32
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button32
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score32
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button32
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew32
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text32
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button33
@@ -1272,18 +2528,56 @@
     Text33
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button33
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score33
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button33
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew33
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text33
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button34
@@ -1308,18 +2602,56 @@
     Text34
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button34
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score34
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button34
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew34
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text34
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button35
@@ -1344,18 +2676,56 @@
     Text35
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button35
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score35
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button35
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew35
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text35
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button36
@@ -1380,18 +2750,56 @@
     Text36
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button36
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score36
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button36
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew36
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text36
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button37
@@ -1416,18 +2824,56 @@
     Text37
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button37
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score37
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button37
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew37
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text37
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button38
@@ -1452,18 +2898,56 @@
     Text38
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button38
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score38
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button38
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew38
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text38
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button39
@@ -1488,18 +2972,56 @@
     Text39
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button39
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score39
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button39
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew39
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text39
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button40
@@ -1524,18 +3046,56 @@
     Text40
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button40
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score40
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button40
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew40
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text40
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button41
@@ -1560,18 +3120,56 @@
     Text41
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button41
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score41
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button41
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew41
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text41
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button42
@@ -1596,18 +3194,56 @@
     Text42
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button42
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score42
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button42
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew42
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text42
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button43
@@ -1632,18 +3268,56 @@
     Text43
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button43
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score43
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button43
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew43
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text43
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button44
@@ -1668,18 +3342,56 @@
     Text44
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button44
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score44
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button44
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew44
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text44
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button45
@@ -1704,18 +3416,56 @@
     Text45
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button45
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score45
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button45
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew45
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text45
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button46
@@ -1740,18 +3490,56 @@
     Text46
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button46
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score46
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button46
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew46
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text46
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button47
@@ -1776,18 +3564,56 @@
     Text47
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button47
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score47
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button47
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew47
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text47
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button48
@@ -1812,18 +3638,56 @@
     Text48
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button48
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score48
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button48
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew48
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text48
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button49
@@ -1848,18 +3712,56 @@
     Text49
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button49
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score49
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button49
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew49
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text49
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     
 
     Button50
@@ -1884,17 +3786,55 @@
     Text50
     {
         ControlName              "Label"
-        labelText                "Test"
+        labelText					"Made by @CafeFPS"
         xpos                     "-25"
         ypos                     "0"
         zpos                     "5"
-        wide                     "500"
-        tall                     "45"
+        auto_wide_tocontents    1
+        auto_tall_tocontents    1
         fontHeight               "45"
 		visible					0
         pin_to_sibling           Button50
         pin_corner_to_sibling    LEFT
         pin_to_sibling_corner    LEFT
     }
+
+	Score50
+	{
+		ControlName					"Label"
+		labelText					"Best: 0"
+		xpos						"-25"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"35"
+		visible					1
+		textAlignment			west
+		
+		pin_to_sibling				Button50
+		pin_corner_to_sibling		RIGHT
+		pin_to_sibling_corner		RIGHT
+	}
+
+	IsNew50
+	{
+		ControlName					"Label"
+		labelText					"New!"
+		xpos						"15"
+		ypos						"0"
+		zpos						"5"
+		auto_wide_tocontents    1
+		auto_tall_tocontents    1
+		fontHeight					"25"
+		visible					1
+		font					TitleBoldFont
+		
+		fgcolor_override		"190 252 3 255"
+		
+		pin_to_sibling				Text50
+		pin_corner_to_sibling		LEFT
+		pin_to_sibling_corner		RIGHT
+	}
     	
 }

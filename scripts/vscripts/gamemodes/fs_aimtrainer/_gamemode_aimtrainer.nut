@@ -7,14 +7,6 @@ global function CC_AimTrainer_SelectWeaponSlot
 global function CC_AimTrainer_CloseWeaponSelector
 global function CreateAimtrainerDeathbox
 
-vector floorLocation
-vector floorCenterForPlayer
-vector floorCenterForButton
-vector onGroundLocationPos
-vector onGroundLocationAngs
-vector onGroundDummyPos
-vector AimTrainer_startPos
-vector AimTrainer_startAngs
 
 struct{
 	array<entity> floor
@@ -38,6 +30,20 @@ struct
 	
 	// 1Wall6Targets occupied positions tracking
 	array<vector> occupied1Wall6Positions = []
+	
+	// Challenge timing for duration validation
+	float challengeStartTime = 0.0
+	
+	vector floorLocation
+	vector floorLocationSky
+	vector floorCenterForPlayer
+	vector floorCenterForPlayerSky
+	vector floorCenterForButton
+	vector onGroundLocationPos
+	vector onGroundLocationAngs
+	vector onGroundDummyPos
+	vector AimTrainer_startPos
+	vector AimTrainer_startAngs
 	
 } file
 
@@ -146,19 +152,23 @@ void function _ChallengesByColombia_Init()
 		case eMaps.mp_rr_desertlands_mu1_tt:
 		case eMaps.mp_rr_desertlands_mu2:
 		case eMaps.mp_rr_desertlands_holiday:
-			floorLocation = <-10020.1543, -8643.02832, 50189.92578>
-			onGroundLocationPos = <12891.2783, -2391.77124, -3121.60132>
-			onGroundLocationAngs = <0, -157.629303, 0>
-			AimTrainer_startPos = <10623.7773, 4953.48975, -4303.92041>
-			AimTrainer_startAngs = <0, 143.031052, 0>	
+			file.floorLocation = <-10020.1543, -8643.02832, 189.92578>
+			file.floorLocationSky = <-10020.1543, -8643.02832, 50189.92578>
+			
+			file.onGroundLocationPos = <12891.2783, -2391.77124, -3121.60132>
+			file.onGroundLocationAngs = <0, -157.629303, 0>
+			file.AimTrainer_startPos = <10623.7773, 4953.48975, -4303.92041>
+			file.AimTrainer_startAngs = <0, 143.031052, 0>	
 		break
 
 		case eMaps.mp_rr_canyonlands_staging:
-			floorLocation = <35306.2344, -16956.5098, -27010.2539>
-			onGroundLocationPos = <33946,-6511,-28859>
-			onGroundLocationAngs = <0,-90,0>
-			AimTrainer_startPos = <32645.04,-9575.77,-25911.94>
-			AimTrainer_startAngs = <7.71,91.67,0.00>	
+			file.floorLocation = <35306.2344, -16956.5098, -27010.2539>
+			file.floorLocationSky =  <35306.2344, -16956.5098, -27010.2539>
+			
+			file.onGroundLocationPos = <33946,-6511,-28859>
+			file.onGroundLocationAngs = <0,-90,0>
+			file.AimTrainer_startPos = <32645.04,-9575.77,-25911.94>
+			file.AimTrainer_startAngs = <7.71,91.67,0.00>	
 		break
 
 		case eMaps.mp_rr_canyonlands_mu1:
@@ -168,20 +178,24 @@ void function _ChallengesByColombia_Init()
 		case eMaps.mp_rr_canyonlands_mu2_tt:
 		case eMaps.mp_rr_canyonlands_mu2_mv:
 		case eMaps.mp_rr_canyonlands_mu2_ufo:
-			floorLocation = <-11964.7803, -8858.25098, 17252.25>
-			onGroundLocationPos = <-14599.2178, -7073.89551, 2703.93286>
-			onGroundLocationAngs = <0,90,0>
-			AimTrainer_startPos = <-16613.873, -487.12088, 3312.10791>
-			AimTrainer_startAngs = <0, 144.184357, 0>
+			file.floorLocation = <-11964.7803, -8858.25098, 17252.25>
+			file.floorLocationSky = <-11964.7803, -8858.25098, 17252.25>
+			
+			file.onGroundLocationPos = <-14599.2178, -7073.89551, 2703.93286>
+			file.onGroundLocationAngs = <0,90,0>
+			file.AimTrainer_startPos = <-16613.873, -487.12088, 3312.10791>
+			file.AimTrainer_startAngs = <0, 144.184357, 0>
 		break
 
 		case eMaps.mp_rr_olympus:
 		case eMaps.mp_rr_olympus_tt:
-			floorLocation = <9857.08496, -7948.96631, -1000>
-			onGroundLocationPos = <-13700.8594, 26238.1387, -6891.95508>
-			onGroundLocationAngs = <0, 175.306152, 0>
-			AimTrainer_startPos = <-34234.2148, 9426.86426, -5563.96875>
-			AimTrainer_startAngs = <0, 69.2027512, 0>
+			file.floorLocation = <9857.08496, -7948.96631, -1000>
+			file.floorLocationSky = <9857.08496, -7948.96631, -1000>
+			
+			file.onGroundLocationPos = <-13700.8594, 26238.1387, -6891.95508>
+			file.onGroundLocationAngs = <0, 175.306152, 0>
+			file.AimTrainer_startPos = <-34234.2148, 9426.86426, -5563.96875>
+			file.AimTrainer_startAngs = <0, 69.2027512, 0>
 		break
 		
 		default:
@@ -190,8 +204,10 @@ void function _ChallengesByColombia_Init()
 		break
 	}
 
-	floorCenterForPlayer = <floorLocation.x+3840, floorLocation.y+3840, floorLocation.z+200>
-	floorCenterForButton = <floorLocation.x+3840+200, floorLocation.y+3840, floorLocation.z+18>
+	file.floorCenterForPlayer = <file.floorLocation.x+3840, file.floorLocation.y+3840, file.floorLocation.z+200>
+	file.floorCenterForPlayerSky = <file.floorLocationSky.x+3840, file.floorLocationSky.y+3840, file.floorLocationSky.z+200>
+	
+	file.floorCenterForButton = <file.floorLocation.x+3840+200, file.floorLocation.y+3840, file.floorLocation.z+18>
 	
 	for(int i = 0; i<50; i++)
 	{
@@ -217,8 +233,8 @@ void function StartFRChallenges(entity player)
 	Remote_CallFunction_NonReplay(player, "ServerCallback_CoolCameraOnMenu")
 	Remote_CallFunction_NonReplay(player, "ServerCallback_OpenFRChallengesMainMenu", 0)
 
-	player.SetOrigin(AimTrainer_startPos)
-	player.SetAngles(AimTrainer_startAngs)
+	player.SetOrigin(file.AimTrainer_startPos)
+	player.SetAngles(file.AimTrainer_startAngs)
 
 	player.p.isChallengeActivated = false
 	SetServerVar( "minimapState", eMinimapState.Hidden)
@@ -284,8 +300,8 @@ vector function AimTrainerOriginToGround( vector origin )
 void function StartStraferDummyChallenge(entity player)
 {
 	if(!IsValid(player)) return
-	player.SetOrigin(onGroundLocationPos)
-	player.SetAngles(onGroundLocationAngs)
+	player.SetOrigin(file.onGroundLocationPos)
+	player.SetAngles(file.onGroundLocationAngs)
 	
 	EndSignal(player, "ChallengeTimeOver")
 	OnThreadEnd(
@@ -304,7 +320,7 @@ void function StartStraferDummyChallenge(entity player)
 
 	while(true){
 		if(!AimTrainer_INFINITE_CHALLENGE && Time() > endtime) break
-		vector dummypos = player.GetOrigin() + AnglesToForward(onGroundLocationAngs)*100*AimTrainer_SPAWN_DISTANCE
+		vector dummypos = player.GetOrigin() + AnglesToForward(file.onGroundLocationAngs)*100*AimTrainer_SPAWN_DISTANCE
 		entity dummy = CreateDummy( 99, AimTrainerOriginToGround( dummypos + Vector(0,0,10000)), Vector(0,0,0) )
 		vector pos = dummy.GetOrigin()
 		vector angles = dummy.GetAngles()
@@ -371,8 +387,8 @@ void function StartSwapFocusDummyChallenge(entity player)
 {
 	if(!IsValid(player)) return
 	
-	player.SetOrigin(onGroundLocationPos)
-	player.SetAngles(onGroundLocationAngs)
+	player.SetOrigin(file.onGroundLocationPos)
+	player.SetAngles(file.onGroundLocationAngs)
 	EndSignal(player, "ChallengeTimeOver")
 	
 	OnThreadEnd(
@@ -421,7 +437,7 @@ void function StartSwapFocusDummyChallenge(entity player)
 		if(ChallengesEntities.dummies.len()<5){
 
 			vector circleoriginfordummy = FS_GetGoodPosForTSDummy( circleLocations )
-			entity dummy = CreateDummy( 99, circleoriginfordummy, onGroundLocationAngs*-1 )
+			entity dummy = CreateDummy( 99, circleoriginfordummy, file.onGroundLocationAngs*-1 )
 			vector pos = dummy.GetOrigin()
 			vector angles = dummy.GetAngles()
 			StartParticleEffectInWorld( GetParticleSystemIndex( FIRINGRANGE_ITEM_RESPAWN_PARTICLE ), pos, angles )
@@ -543,10 +559,10 @@ void function StartFloatingTargetChallenge(entity player)
 {
 	if(!IsValid(player)) return
 
-	player.SetOrigin(floorCenterForPlayer)
+	player.SetOrigin(file.floorCenterForPlayer)
 	player.SetAngles(Vector(0,-90,0))
 	EndSignal(player, "ChallengeTimeOver")
-	ChallengesEntities.floor = CreateFloorAtOrigin(floorLocation, 30, 30)
+	ChallengesEntities.floor = CreateFloorAtOrigin(file.floorLocation, 30, 30)
 	
 	OnThreadEnd(
 		function() : ( player)
@@ -596,9 +612,9 @@ void function StartPopcornChallenge(entity player, bool secondvariant = false)
 {
 	if(!IsValid(player)) return
 	
-	player.SetOrigin(floorCenterForPlayer)
+	player.SetOrigin(file.floorCenterForPlayer)
 	player.SetAngles(Vector(0,-90,0))
-	ChallengesEntities.floor = CreateFloorAtOrigin(floorLocation, 30, 30)
+	ChallengesEntities.floor = CreateFloorAtOrigin(file.floorLocation, 30, 30)
 	EndSignal(player, "ChallengeTimeOver")
 	
 	OnThreadEnd(
@@ -656,9 +672,9 @@ void function CreateDummyPopcornChallenge(entity player)
 		}
 	thread CheckDistanceFromPlayer(player, dummy)
 	while(IsValid(ai)){		
-		if( ai.GetOrigin().z - floorLocation.z < 50)
+		if( ai.GetOrigin().z - file.floorLocation.z < 50)
 		{
-			vector angles2 = VectorToAngles( Vector(player.GetOrigin().x, player.GetOrigin().y, floorCenterForPlayer.z) - ai.GetOrigin())
+			vector angles2 = VectorToAngles( Vector(player.GetOrigin().x, player.GetOrigin().y, file.floorCenterForPlayer.z) - ai.GetOrigin())
 			ai.SetAngles(Vector(0, angles2.y, 0))
 			
 			if(CoinFlip())
@@ -701,7 +717,7 @@ void function MakePlayerBounce(entity player)
 	int random = 1				
 	if(CoinFlip()) random = -1
 	while(IsValid(ai)){		
-		if( ai.GetOrigin().z - floorLocation.z < 50)
+		if( ai.GetOrigin().z - file.floorLocation.z < 50)
 		{
 			vector angles2 = player.GetAngles()
 			
@@ -727,8 +743,8 @@ void function StartStraightUpChallenge(entity player)
 {
 	if(!IsValid(player)) return
 	
-	ChallengesEntities.floor = CreateFloorAtOrigin(floorLocation, 30, 30)
-	player.SetOrigin(floorCenterForPlayer)
+	ChallengesEntities.floor = CreateFloorAtOrigin(file.floorLocation, 30, 30)
+	player.SetOrigin(file.floorCenterForPlayer)
 	player.SetAngles(Vector(0,180,0))
 	EndSignal(player, "ChallengeTimeOver")
 	
@@ -813,8 +829,8 @@ void function StartArcstarsChallenge(entity player)
 	if(!IsValid(player)) return
 	wait 0.1
 	
-	player.SetOrigin(onGroundLocationPos)
-	player.SetAngles(onGroundLocationAngs)
+	player.SetOrigin(file.onGroundLocationPos)
+	player.SetAngles(file.onGroundLocationAngs)
 	EndSignal(player, "ChallengeTimeOver")
 	TakeAllWeapons(player)
 	player.GiveWeapon( "mp_weapon_grenade_emp", WEAPON_INVENTORY_SLOT_PRIMARY_0, ["challenges_infinite_arcstars"] )
@@ -849,7 +865,7 @@ void function StartArcstarsChallenge(entity player)
 		if(!AimTrainer_INFINITE_CHALLENGE && Time() > endtime) break
 		if(ChallengesEntities.dummies.len()<5){
 			vector circleoriginfordummy = circleLocations.getrandom()
-			entity dummy = CreateDummy( 99, AimTrainerOriginToGround( <circleoriginfordummy.x, circleoriginfordummy.y, 10000> ), onGroundLocationAngs*-1)
+			entity dummy = CreateDummy( 99, AimTrainerOriginToGround( <circleoriginfordummy.x, circleoriginfordummy.y, 10000> ), file.onGroundLocationAngs*-1)
 			StartParticleEffectInWorld( GetParticleSystemIndex( FIRINGRANGE_ITEM_RESPAWN_PARTICLE ), dummy.GetOrigin(), dummy.GetAngles() )
 			SetSpawnOption_AISettings( dummy, "npc_dummie_combat_trainer" )
 			DispatchSpawn( dummy )
@@ -949,8 +965,8 @@ void function StartVerticalGrenadesChallenge(entity player)
 	if(!IsValid(player)) return
 	wait 0.1
 	
-	ChallengesEntities.floor = CreateFloorAtOrigin(floorLocation, 30, 30)
-	player.SetOrigin(floorCenterForPlayer)
+	ChallengesEntities.floor = CreateFloorAtOrigin(file.floorLocation, 30, 30)
+	player.SetOrigin(file.floorCenterForPlayer)
 	player.SetAngles(Vector(0,180,0))
 	EndSignal(player, "ChallengeTimeOver")
 	TakeAllWeapons(player)
@@ -996,7 +1012,7 @@ void function StartVerticalGrenadesChallenge(entity player)
 		}
 		if(ChallengesEntities.dummies.len()<4){
 			vector circlelocation = circleLocations[i]	
-			entity dummy = CreateDummy( 99, circlelocation, onGroundLocationAngs*-1)
+			entity dummy = CreateDummy( 99, circlelocation, file.onGroundLocationAngs*-1)
 			StartParticleEffectInWorld( GetParticleSystemIndex( FIRINGRANGE_ITEM_RESPAWN_PARTICLE ), dummy.GetOrigin(), dummy.GetAngles() )
 			SetSpawnOption_AISettings( dummy, "npc_dummie_combat_trainer" )
 			DispatchSpawn( dummy )
@@ -1031,8 +1047,8 @@ void function StartLiftUpChallenge(entity player)
 {
 	if(!IsValid(player)) return
 	player.SetVelocity(Vector(0,0,0))
-	player.SetOrigin(onGroundLocationPos)
-	player.SetAngles(onGroundLocationAngs)
+	player.SetOrigin(file.onGroundLocationPos)
+	player.SetAngles(file.onGroundLocationAngs)
 	EndSignal(player, "ChallengeTimeOver")
 
 	entity weapon = player.GetNormalWeapon( WEAPON_INVENTORY_SLOT_PRIMARY_0 )
@@ -1064,7 +1080,7 @@ void function StartLiftUpChallenge(entity player)
 		if(!AimTrainer_INFINITE_CHALLENGE && Time() > endtime) break	
 		if(ChallengesEntities.dummies.len()<6){
 			vector circleoriginfordummy = circleLocations.getrandom()
-			entity dummy = CreateDummy( 99, AimTrainerOriginToGround( <circleoriginfordummy.x, circleoriginfordummy.y, 10000> ), onGroundLocationAngs*-1 )
+			entity dummy = CreateDummy( 99, AimTrainerOriginToGround( <circleoriginfordummy.x, circleoriginfordummy.y, 10000> ), file.onGroundLocationAngs*-1 )
 			StartParticleEffectInWorld( GetParticleSystemIndex( FIRINGRANGE_ITEM_RESPAWN_PARTICLE ), dummy.GetOrigin(), dummy.GetAngles() )
 			SetSpawnOption_AISettings( dummy, "npc_dummie_combat_trainer" )
 			DispatchSpawn( dummy )
@@ -1188,7 +1204,7 @@ void function ForceToBeInLiftForChallenge( entity player )
 		if(IsValid(player))
 		{
 			player.SetVelocity(Vector(0,0,0))
-			player.SetOrigin(onGroundLocationPos)
+			player.SetOrigin(file.onGroundLocationPos)
 		}
 	}
 }
@@ -1281,11 +1297,11 @@ void function LiftPlayerUp( entity bottom, entity top, vector pos, entity player
 void function StartTileFrenzyChallenge(entity player)
 {
 	if(!IsValid(player)) return
-	player.SetOrigin(floorCenterForPlayer)
+	player.SetOrigin(file.floorCenterForPlayer)
 	player.SetAngles(Vector(0,0,0))
 	EndSignal(player, "ChallengeTimeOver")
 	WaitFrame()
-	ChallengesEntities.floor = CreateFloorAtOrigin(floorLocation, 30, 30)
+	ChallengesEntities.floor = CreateFloorAtOrigin(file.floorLocation, 30, 30)
 	array<entity> Wall = CreateWallAtOrigin(player.GetOrigin()-Vector(0,0,200) + AnglesToForward(player.GetAngles())*580 + AnglesToRight(player.GetAngles())*1180, 9, 5, 90)
 	foreach(entity wallprop in Wall)
 		ChallengesEntities.floor.append(wallprop)
@@ -1372,10 +1388,10 @@ void function StartTileFrenzyChallenge(entity player)
 void function StartCloseFastStrafesChallenge(entity player)
 {
 	if(!IsValid(player)) return
-	player.SetOrigin(floorCenterForPlayer)
+	player.SetOrigin(file.floorCenterForPlayer)
 	player.SetAngles(Vector(0,90,0))
-	ChallengesEntities.floor = CreateFloorAtOrigin(floorLocation, 30, 30)
-	onGroundDummyPos = player.GetOrigin() + AnglesToForward(onGroundLocationAngs)*100*AimTrainer_SPAWN_DISTANCE
+	ChallengesEntities.floor = CreateFloorAtOrigin(file.floorLocation, 30, 30)
+	file.onGroundDummyPos = player.GetOrigin() + AnglesToForward(file.onGroundLocationAngs)*100*AimTrainer_SPAWN_DISTANCE
 
 	EndSignal(player, "ChallengeTimeOver")
 	
@@ -1396,7 +1412,7 @@ void function StartCloseFastStrafesChallenge(entity player)
 	while(true){
 		if(!AimTrainer_INFINITE_CHALLENGE && Time() > endtime) break
 		
-		entity dummy = CreateDummy( 99, onGroundDummyPos, onGroundLocationAngs*-1 )
+		entity dummy = CreateDummy( 99, file.onGroundDummyPos, file.onGroundLocationAngs*-1 )
 		StartParticleEffectInWorld( GetParticleSystemIndex( FIRINGRANGE_ITEM_RESPAWN_PARTICLE ), dummy.GetOrigin(), dummy.GetAngles() )
 		SetSpawnOption_AISettings( dummy, "npc_dummie_combat_trainer" )
 		DispatchSpawn( dummy )	
@@ -1460,10 +1476,10 @@ void function DummyFastCloseStrafeMovement(entity dummy, entity player)
 void function StartTapyDuckStrafesChallenge(entity player)
 {
 	if(!IsValid(player)) return
-	player.SetOrigin(floorCenterForPlayer)
+	player.SetOrigin(file.floorCenterForPlayer)
 	player.SetAngles(Vector(0,90,0))
-	ChallengesEntities.floor = CreateFloorAtOrigin(floorLocation, 30, 30)
-	onGroundDummyPos = player.GetOrigin() + AnglesToForward(Vector(0,-90,0))*400
+	ChallengesEntities.floor = CreateFloorAtOrigin(file.floorLocation, 30, 30)
+	file.onGroundDummyPos = player.GetOrigin() + AnglesToForward(Vector(0,-90,0))*400
 
 	EndSignal(player, "ChallengeTimeOver")
 	
@@ -1484,7 +1500,7 @@ void function StartTapyDuckStrafesChallenge(entity player)
 	while(true){
 		if(!AimTrainer_INFINITE_CHALLENGE && Time() > endtime) break
 		
-		entity dummy = CreateDummy( 99, onGroundDummyPos, onGroundLocationAngs )
+		entity dummy = CreateDummy( 99, file.onGroundDummyPos, file.onGroundLocationAngs )
 		vector pos = dummy.GetOrigin()
 		vector angles = dummy.GetAngles()
 		StartParticleEffectInWorld( GetParticleSystemIndex( FIRINGRANGE_ITEM_RESPAWN_PARTICLE ), pos, angles )
@@ -1796,10 +1812,10 @@ void function DummyJumpAnimThreaded(entity dummy)
 void function StartSmoothbotChallenge(entity player)
 {
 	if(!IsValid(player)) return
-	player.SetOrigin(floorCenterForPlayer)
+	player.SetOrigin(file.floorCenterForPlayer)
 	player.SetAngles(Vector(-25,90,0))
-	ChallengesEntities.floor = CreateFloorAtOrigin(floorLocation, 30, 30)
-	onGroundDummyPos = player.GetOrigin() + AnglesToForward(onGroundLocationAngs)*400
+	ChallengesEntities.floor = CreateFloorAtOrigin(file.floorLocation, 30, 30)
+	file.onGroundDummyPos = player.GetOrigin() + AnglesToForward(file.onGroundLocationAngs)*400
 
 	EndSignal(player, "ChallengeTimeOver")
 
@@ -1820,7 +1836,7 @@ void function StartSmoothbotChallenge(entity player)
 	while(true){
 		if(!AimTrainer_INFINITE_CHALLENGE && Time() > endtime) break
 		
-		entity dummy = CreateDummy( 99, onGroundDummyPos, onGroundLocationAngs*-1 )
+		entity dummy = CreateDummy( 99, file.onGroundDummyPos, file.onGroundLocationAngs*-1 )
 		vector pos = dummy.GetOrigin()
 		vector angles = dummy.GetAngles()
 		StartParticleEffectInWorld( GetParticleSystemIndex( FIRINGRANGE_ITEM_RESPAWN_PARTICLE ), pos, angles )
@@ -1971,10 +1987,10 @@ void function CoolScriptMoverMovement(entity player, entity script_mover, vector
 void function StartSkyDiveChallenge(entity player)
 {
 	if(!IsValid(player)) return
-	player.SetOrigin(floorCenterForPlayer)
+	player.SetOrigin(file.floorCenterForPlayer)
 	player.SetAngles(Vector(0,90,0))
-	ChallengesEntities.floor = CreateFloorAtOrigin(floorLocation, 30, 30)
-	onGroundDummyPos = player.GetOrigin() + AnglesToForward(Vector(0,-90,0))*100*AimTrainer_SPAWN_DISTANCE 
+	ChallengesEntities.floor = CreateFloorAtOrigin(file.floorLocation, 30, 30)
+	file.onGroundDummyPos = player.GetOrigin() + AnglesToForward(Vector(0,-90,0))*100*AimTrainer_SPAWN_DISTANCE 
 
 	EndSignal(player, "ChallengeTimeOver")
 		
@@ -1996,7 +2012,7 @@ void function StartSkyDiveChallenge(entity player)
 		if(!AimTrainer_INFINITE_CHALLENGE && Time() > endtime) break
 		
 		if(ChallengesEntities.dummies.len()<4){	
-			entity dummy = CreateDummy( 99, onGroundDummyPos, onGroundLocationAngs )
+			entity dummy = CreateDummy( 99, file.onGroundDummyPos, file.onGroundLocationAngs )
 			SetSpawnOption_AISettings( dummy, "npc_training_dummy_trainer" )
 			DispatchSpawn( dummy )	
 			dummy.SetShieldHealthMax( ReturnShieldAmountForDesiredLevel() )
@@ -2140,8 +2156,8 @@ void function PlaySkyDiveAnims(entity dummy, array<vector> ground, int locationi
 void function StartRunningTargetsChallenge(entity player)
 {
 	if(!IsValid(player)) return
-	player.SetOrigin(onGroundLocationPos)
-	player.SetAngles(onGroundLocationAngs)
+	player.SetOrigin(file.onGroundLocationPos)
+	player.SetAngles(file.onGroundLocationAngs)
 	EndSignal(player, "ChallengeTimeOver")
 
 	OnThreadEnd(
@@ -2263,9 +2279,9 @@ void function StartArmorSwapChallenge(entity player)
 	 MapName() == eMaps.mp_rr_desertlands_mu1 || MapName() == eMaps.mp_rr_desertlands__mu1_tt || MapName() == eMaps.mp_rr_desertlands_mu2 || MapName() == eMaps.mp_rr_desertlands_holiday )
 		player.SetOrigin(<10377.2695, 6253.86523, -4303.90625>)
 	else
-		player.SetOrigin(onGroundLocationPos)
+		player.SetOrigin(file.onGroundLocationPos)
 	
-	player.SetAngles(onGroundLocationAngs)
+	player.SetAngles(file.onGroundLocationAngs)
 	EndSignal(player, "ChallengeTimeOver")
 
 	OnThreadEnd(
@@ -2333,7 +2349,7 @@ void function StartPatternTrackingChallenge(entity player)
 	float boxDepth = AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0  // Y dimension (left to right)
 	
 	// Calculate room center position (independent of player)
-	vector roomCenter = floorCenterForPlayer + Vector(0, 0, boxHeight/2)
+	vector roomCenter = file.floorCenterForPlayerSky + Vector(0, 0, boxHeight/2)
 	
 	// Position player against back wall (X positive direction), centered in Y, at mid height (Z)
 	vector playerPos = roomCenter + Vector(boxWidth/2 - AimTrainer_TRACKING_PLAYER_WALL_OFFSET, 0, 0)
@@ -2397,7 +2413,7 @@ void function StartBouncingTrackingChallenge(entity player)
 	float boxDepth = AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0  // Y dimension (left to right)
 	
 	// Calculate room center position (independent of player)
-	vector roomCenter = floorCenterForPlayer + Vector(0, 0, boxHeight/2)
+	vector roomCenter = file.floorCenterForPlayerSky + Vector(0, 0, boxHeight/2)
 	
 	// Position player against back wall (X positive direction), centered in Y, at mid height (Z)
 	vector playerPos = roomCenter + Vector(boxWidth/2 - AimTrainer_TRACKING_PLAYER_WALL_OFFSET, 0, 0)
@@ -2472,7 +2488,7 @@ void function StartMultiBallHealthTrackingChallenge(entity player)
 	float boxDepth = AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0  // Y dimension (left to right)
 	
 	// Calculate room center position (independent of player)
-	vector roomCenter = floorCenterForPlayer + Vector(0, 0, boxHeight/2)
+	vector roomCenter = file.floorCenterForPlayerSky + Vector(0, 0, boxHeight/2)
 	
 	// Position player against back wall (X positive direction), centered in Y, at mid height (Z)
 	vector playerPos = roomCenter + Vector(boxWidth/2 - AimTrainer_TRACKING_PLAYER_WALL_OFFSET, 0, 0)
@@ -2652,7 +2668,7 @@ void function StartRandomSpeedTrackingChallenge(entity player)
 	float boxDepth = AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0  // Y dimension (left to right)
 	
 	// Calculate room center position (independent of player)
-	vector roomCenter = floorCenterForPlayer + Vector(0, 0, boxHeight/2)
+	vector roomCenter = file.floorCenterForPlayerSky + Vector(0, 0, boxHeight/2)
 	
 	// Position player against back wall (X positive direction), centered in Y, at mid height (Z)
 	vector playerPos = roomCenter + Vector(boxWidth/2 - AimTrainer_TRACKING_PLAYER_WALL_OFFSET, 0, 0)
@@ -2836,7 +2852,7 @@ void function RandomSpeedBounceMovement(entity player, entity target, vector cen
 	float halfWidth = (AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0) / 2
 	float halfHeight = boxHeight / 2
 	
-	float floorZ = floorCenterForPlayer.z
+	float floorZ = file.floorCenterForPlayer.z
 	float ceilingZ = floorZ + boxHeight
 	
 	OnThreadEnd(
@@ -2895,10 +2911,10 @@ void function StartAntiMirrorStrafingChallenge(entity player, bool isMirror = fa
 	float boxDepth = AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0  // Y dimension (left to right)
 	
 	// Calculate room center position (independent of player)
-	vector roomCenter = floorCenterForPlayer + Vector(0, 0, boxHeight/2)
+	vector roomCenter = file.floorCenterForPlayerSky + Vector(0, 0, boxHeight/2)
 	
 	// Position player at ground level in center of room
-	vector playerPos = Vector(roomCenter.x, roomCenter.y, floorCenterForPlayer.z)
+	vector playerPos = Vector(roomCenter.x, roomCenter.y, file.floorCenterForPlayer.z)
 	player.SetOrigin(playerPos)
 	player.SetAngles(Vector(0, 0, 0)) // Face forward initially
 	
@@ -2944,9 +2960,9 @@ void function StartPopcornPhysicsChallenge(entity player)
 	float boxDepth = AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0
 	
 	// Calculate room center and player position (same as AntiMirrorStrafing challenge)
-	vector roomCenter = floorCenterForPlayer + Vector(0, 0, boxHeight/2)
+	vector roomCenter = file.floorCenterForPlayerSky + Vector(0, 0, boxHeight/2)
 	// Position player at ground level in center of room (inside the box)
-	vector playerPos = Vector(roomCenter.x, roomCenter.y, floorCenterForPlayer.z)
+	vector playerPos = Vector(roomCenter.x, roomCenter.y, file.floorCenterForPlayer.z)
 	vector playerAngles = Vector(0, 0, 0)
 	
 	player.SetOrigin(playerPos)
@@ -2998,7 +3014,7 @@ void function SpawnPopcornPhysicsTarget(entity player, vector roomCenter, float 
 	float boxDepth = AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0
 	
 	// Player position for distance calculation
-	vector playerPos = Vector(roomCenter.x, roomCenter.y, floorCenterForPlayer.z)
+	vector playerPos = Vector(roomCenter.x, roomCenter.y, file.floorCenterForPlayer.z)
 	
 	// Generate spawn position at random distance from player within bounds
 	vector spawnPos
@@ -3091,10 +3107,10 @@ void function PopcornPhysicsMovement(entity player, entity target, vector roomCe
 	while(IsValid(target) && target.GetHealth() > 0)
 	{
 		// Check if target hits ground (same logic as old popcorn)
-		if(target.GetOrigin().z - floorCenterForPlayer.z < 50)
+		if(target.GetOrigin().z - file.floorCenterForPlayer.z < 50)
 		{
 			// Calculate direction toward player
-			vector angles2 = VectorToAngles(Vector(player.GetOrigin().x, player.GetOrigin().y, floorCenterForPlayer.z) - target.GetOrigin())
+			vector angles2 = VectorToAngles(Vector(player.GetOrigin().x, player.GetOrigin().y, file.floorCenterForPlayer.z) - target.GetOrigin())
 			target.SetAngles(Vector(0, angles2.y, 0))
 			
 			// Random direction modifier
@@ -3617,8 +3633,8 @@ void function BounceMovement(entity player, entity target, vector centerPos)
 	float halfWidth = (AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0) / 2
 	float boxHeight = AimTrainer_TRACKING_TILES_VERTICAL * 700.0
 	
-	// Calculate floor and ceiling positions - floor is at floorCenterForPlayer level
-	float floorZ = floorCenterForPlayer.z
+	// Calculate floor and ceiling positions - floor is at file.floorCenterForPlayer level
+	float floorZ = file.floorCenterForPlayer.z
 	float ceilingZ = floorZ + boxHeight
 	
 	// Generate velocity with angle constraints to avoid too horizontal/vertical movement
@@ -3832,6 +3848,12 @@ void function OnChallengeEnd(entity player)
 	player.p.isChallengeActivated = false
 	Remote_CallFunction_NonReplay(player, "ServerCallback_SetChallengeActivated", false)
 	
+	//Calculate challenge duration for validation
+	float challengeDuration = Time() - file.challengeStartTime
+	
+	//Get shared Challenge data using legacy server ID 
+	Challenge ornull challengeData = GetChallengeByLegacyServerId(player.p.challengeName)
+	
 	ChallengeScore ThisChallengeData
 	ThisChallengeData.straferDummyKilledCount = player.p.straferDummyKilledCount
 	ThisChallengeData.straferChallengeDamage = player.p.straferChallengeDamage
@@ -3845,6 +3867,35 @@ void function OnChallengeEnd(entity player)
 	float accuracyBonus = ThisChallengeData.straferAccuracy * 300.0
 	float killBonus = float(ThisChallengeData.straferDummyKilledCount) * 25.0
 	float totalScore = finalMovementScore + accuracyBonus + killBonus
+	
+	//Update max score convar if duration >= 60 seconds and challenge data found
+	if(challengeDuration >= 60.0 && challengeData != null)
+	{
+		expect Challenge(challengeData)
+		int currentMaxScore = GetConVarInt(challengeData.maxScoreConVar)
+		int finalScore = ThisChallengeData.straferShotsHit //Use shots hit as the score metric
+		
+		if(finalScore > currentMaxScore)
+		{
+			SetConVarInt(challengeData.maxScoreConVar, finalScore)
+			
+			#if DEVELOPER
+			printt("[CHALLENGE] Updated max score for " + challengeData.name + ": " + finalScore + " (duration: " + challengeDuration + "s)")
+			#endif
+		}
+		else
+		{
+			#if DEVELOPER
+			printt("[CHALLENGE] Score " + finalScore + " did not exceed max " + currentMaxScore + " for " + challengeData.name)
+			#endif
+		}
+	}
+	else if(challengeDuration < 60.0)
+	{
+		#if DEVELOPER
+		printt("[CHALLENGE] Challenge duration " + challengeDuration + "s < 60s required - score not saved")
+		#endif
+	}
 	
 	ChallengesData[player.p.challengeName].append(ThisChallengeData)
 
@@ -3885,10 +3936,10 @@ void function ChallengesStartAgain(entity player)
 				player.FreezeControlsOnServer()
 				player.SetVelocity(Vector(0,0,0))
 				if(!player.p.isRestartingLevel)
-					player.SetOrigin(AimTrainer_startPos)
+					player.SetOrigin(file.AimTrainer_startPos)
 				player.SetVelocity(Vector(0,0,0))
 				if(!player.p.isRestartingLevel)
-					player.SetAngles(AimTrainer_startAngs)
+					player.SetAngles(file.AimTrainer_startAngs)
 				
 				//entities cleanup
 				foreach(entity floor in ChallengesEntities.floor)
@@ -4419,6 +4470,7 @@ void function PreChallengeStart(entity player, int challenge)
 		AddCinematicFlag( player, CE_FLAG_HIDE_MAIN_HUD_INSTANT )
 		AddCinematicFlag( player, CE_FLAG_HIDE_PERMANENT_HUD)
 		player.p.challengeName = challenge
+		file.challengeStartTime = Time() //Track challenge start time for duration validation
 
 		player.p.isChallengeActivated = true
 		Remote_CallFunction_NonReplay(player, "ServerCallback_SetChallengeActivated", true)
@@ -5400,8 +5452,8 @@ bool function CC_Weapon_Selector_Open( entity player, array<string> args )
 {
 	thread SetupPlayer( player, true )
 
-	player.SetOrigin(AimTrainer_startPos)
-	player.SetAngles(AimTrainer_startAngs)
+	player.SetOrigin(file.AimTrainer_startPos)
+	player.SetAngles(file.AimTrainer_startAngs)
 	return false
 }
 bool function CC_Weapon_Selector_Close( entity player, array<string> args )
@@ -5547,7 +5599,7 @@ void function Start1Wall6TargetsChallenge(entity player)
 	float boxDepth = AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0
 	
 	// Calculate room center position
-	vector roomCenter = floorCenterForPlayer + Vector(0, 0, boxHeight/2)
+	vector roomCenter = file.floorCenterForPlayerSky + Vector(0, 0, boxHeight/2)
 	
 	// Position player against back wall on platform (same as bouncing tracking scenario)
 	vector playerPos = roomCenter + Vector(boxWidth/2 - AimTrainer_TRACKING_PLAYER_WALL_OFFSET, 0, 0)
@@ -5691,7 +5743,7 @@ void function SpawnNew1Wall6Target(entity player)
 	float boxHeight = AimTrainer_TRACKING_TILES_VERTICAL * 700.0
 	float boxDepth = AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0
 	
-	vector roomCenter = floorCenterForPlayer + Vector(0, 0, boxHeight/2)
+	vector roomCenter = file.floorCenterForPlayerSky + Vector(0, 0, boxHeight/2)
 	vector frontWallCenter = roomCenter + Vector(-boxWidth/2 + AimTrainer_TRACKING_TARGET_WALL_OFFSET, 0, 0)
 	
 	// Calculate grid dimensions based on 50x50 target size within 700x700 tiles (same as original spawn)
@@ -5782,7 +5834,7 @@ void function StartCloseLongStrafesChallenge(entity player)
 	float boxDepth = AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0
 	
 	// Calculate room center position
-	vector roomCenter = floorCenterForPlayer + Vector(0, 0, boxHeight/2)
+	vector roomCenter = file.floorCenterForPlayerSky + Vector(0, 0, boxHeight/2)
 	
 	// Position player against back wall on platform (same as 1Wall6Targets scenario)
 	vector playerPos = roomCenter + Vector(boxWidth/2 - AimTrainer_TRACKING_PLAYER_WALL_OFFSET, 0, 0)
@@ -5850,7 +5902,7 @@ void function StartTileFrenzyStrafingChallenge(entity player)
 	float boxDepth = AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0
 	
 	// Calculate room center position
-	vector roomCenter = floorCenterForPlayer + Vector(0, 0, boxHeight/2)
+	vector roomCenter = file.floorCenterForPlayerSky + Vector(0, 0, boxHeight/2)
 	
 	// Position player on middle platform (for better movement)
 	float platformHeight = AimTrainer_MIDDLE_PLATFORM_HEIGHT_RATIO * boxHeight
@@ -6046,7 +6098,7 @@ void function Respawn1Wall6Targets(entity player, entity target)
 	float boxHeight = AimTrainer_TRACKING_TILES_VERTICAL * 700.0
 	float boxDepth = AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0
 	
-	vector roomCenter = floorCenterForPlayer + Vector(0, 0, boxHeight/2)
+	vector roomCenter = file.floorCenterForPlayerSky + Vector(0, 0, boxHeight/2)
 	vector frontWallCenter = roomCenter + Vector(-boxWidth/2 + AimTrainer_TRACKING_TARGET_WALL_OFFSET, 0, 0)
 	
 	// Same 6 positions as original spawn
@@ -6075,7 +6127,7 @@ void function RespawnTileFrenzy(entity player, entity target)
 	float boxHeight = AimTrainer_TRACKING_TILES_VERTICAL * 700.0
 	float boxDepth = AimTrainer_TRACKING_TILES_HORIZONTAL * 700.0
 	
-	vector roomCenter = floorCenterForPlayer + Vector(0, 0, boxHeight/2)
+	vector roomCenter = file.floorCenterForPlayerSky + Vector(0, 0, boxHeight/2)
 	
 	// Generate random tile position
 	int randomY = RandomInt(AimTrainer_TRACKING_TILES_HORIZONTAL)

@@ -6,6 +6,9 @@ Scripts:
 	
 	//1v1 COACHING MODE
 	gamemodes/fs_1v1/sh_gamemode_1v1_coaching.nut
+
+	//AIMTRAINER
+	gamemodes/fs_aimtrainer/sh_gamemode_aimtrainer.nut
 ]
 
 When: "SERVER || CLIENT"
@@ -78,9 +81,6 @@ Scripts:
 	
 	//PKKNOCKBACK
 	gamemodes/fs_pkknockback/sh_gamemode_pkknockback.nut
-
-	//AIMTRAINER
-	gamemodes/fs_aimtrainer/sh_gamemode_aimtrainer.nut
 	
 	//DUCKHUNT
 	gamemodes/fs_duckhunt/sh_gamemode_duckhunt.nut

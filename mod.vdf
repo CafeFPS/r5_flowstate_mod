@@ -184,6 +184,310 @@
 				"max"		"5"
 			}
 		}
+		
+		//Aim Trainer Challenge Max Scores - Existing Challenges
+		"fs_aimtrainer_challenge_max_score_strafingdummy"
+		{
+			"helpText" "Max score for Strafing Dummy challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_shootingvalksult"
+		{
+			"helpText" "Max score for Shooting Valk's Ult challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_closefaststrafes"
+		{
+			"helpText" "Max score for Close Fast Strafes challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_skydivingtargets"
+		{
+			"helpText" "Max score for Skydiving Targets challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_smoothbot"
+		{
+			"helpText" "Max score for Smoothbot challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_runningtargets"
+		{
+			"helpText" "Max score for Running Targets challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_popcorntargets"
+		{
+			"helpText" "Max score for Popcorn Targets challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_arcstarspractice"
+		{
+			"helpText" "Max score for Arc Stars Practice challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_grenadespractice"
+		{
+			"helpText" "Max score for Grenades Practice challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_tilefrenzy"
+		{
+			"helpText" "Max score for Tile Frenzy challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_floatingtarget"
+		{
+			"helpText" "Max score for Floating Target challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_targetswitching"
+		{
+			"helpText" "Max score for Target Switching challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_armorswaptrainer"
+		{
+			"helpText" "Max score for Armor Swap Trainer challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_fastjumpsstrafes"
+		{
+			"helpText" "Max score for Fast Jumps Strafes challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_shootingfromlift"
+		{
+			"helpText" "Max score for Shooting From Lift challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_bouncessimulator"
+		{
+			"helpText" "Max score for Bounces Simulator challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		
+		//Aim Trainer Challenge Max Scores - New Challenges
+		"fs_aimtrainer_challenge_max_score_1wall6targets"
+		{
+			"helpText" "Max score for 1wall6targets challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_tilefrenzy3d"
+		{
+			"helpText" "Max score for Tile Frenzy 3D challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_pattern2dtracking"
+		{
+			"helpText" "Max score for Pattern 2D Tracking challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_bouncing2dtracking"
+		{
+			"helpText" "Max score for Bouncing 2D Tracking challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_horizontalballtracking"
+		{
+			"helpText" "Max score for Horizontal Ball Tracking challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_antimirrorstrafing"
+		{
+			"helpText" "Max score for AntiMirror Strafing challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_mirrorstrafing"
+		{
+			"helpText" "Max score for Mirror Strafing challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_multiballswitching"
+		{
+			"helpText" "Max score for MultiBall Switching challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
+		"fs_aimtrainer_challenge_max_score_multiballswitchingrandomspeed"
+		{
+			"helpText" "Max score for MultiBall Switching Random Speed challenge"
+			"flags" 		"ARCHIVE|RELEASE"
+
+			"Values"
+			{
+				"default"	"0"
+				"min" 		"0"
+				"max"		"999999"
+			}
+		}
 		//Lightning Gun
 		"fs_lightning_gun_color_r"
 		{
