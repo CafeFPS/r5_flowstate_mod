@@ -15,8 +15,7 @@ WeaponData
 	"weapon_type_flags"							"WPT_MELEE"
 	
 	// Models
-	//"viewmodel"   									"mdl/Weapons/vctblue/vctblue_ptpov.rmdl"
-	"viewmodel"   									"mdl/Weapons/ptpov_horizon_heirloom/ptpov_horizon_heirloom.rmdl"
+	"viewmodel"   									"mdl/Weapons/vctblue/vctblue_ptpov.rmdl"
 	"playermodel" 									"mdl/Weapons/vctblue_w/vctblue_w.rmdl"
 	
 	"OnWeaponActivate"							"OnWeaponActivate_vctblue"

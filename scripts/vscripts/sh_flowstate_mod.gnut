@@ -903,7 +903,7 @@ void function CodeCallback_Flowstate_ModInit()
 	PrecacheWeapon( $"mp_weapon_turret" )
 	PrecacheWeapon( $"npc_weapon_turret_volt" )
 	PrecacheWeapon( $"mp_ability_space_elevator_tac" )
-	PrecacheModel( $"mdl/Weapons/ptpov_horizon_heirloom/ptpov_horizon_heirloom.rmdl" )
+	//PrecacheModel( $"mdl/Weapons/ptpov_horizon_heirloom/ptpov_horizon_heirloom.rmdl" )
 	
 	switch( GameRules_GetGameMode() )
 	{
@@ -936,13 +936,13 @@ void function CodeCallback_Flowstate_ModInit()
 	PrecacheModel( $"mdl/flowstate_custom/ptpov_pete_mri.rmdl" ) // Pete mri
 	PrecacheModel( $"mdl/flowstate_custom/w_pete_mri.rmdl" )
 	
-	PrecacheModel( $"mdl/Humans/pilots/w_agent.rmdl" ) // Splinter Cell Agent
-	PrecacheModel( $"mdl/Humans/pilots/ptpov_agent.rmdl" )
+	//PrecacheModel( $"mdl/Humans/pilots/w_agent.rmdl" ) // Splinter Cell Agent
+	//PrecacheModel( $"mdl/Humans/pilots/ptpov_agent.rmdl" )
 	
-	PrecacheModel( $"mdl/Humans/pilots/w_nickmercs_hodded.rmdl" ) // Nickmercs hodded
-	PrecacheModel( $"mdl/Humans/pilots/ptpov_nickmercs_hodded.rmdl" )
+	//PrecacheModel( $"mdl/Humans/pilots/w_nickmercs_hodded.rmdl" ) // Nickmercs hodded
+	//PrecacheModel( $"mdl/Humans/pilots/ptpov_nickmercs_hodded.rmdl" )
 	
-	PrecacheModel( $"mdl/flowstate_custom/charm_nickmercs.rmdl" ) // Nickmercs Charm
+	//PrecacheModel( $"mdl/flowstate_custom/charm_nickmercs.rmdl" ) // Nickmercs Charm
 	
 	if( GetCurrentPlaylistVarBool( "enable_oddball_gamemode", false ) )
 	{

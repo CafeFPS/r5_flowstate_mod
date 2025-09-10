@@ -15,8 +15,7 @@ WeaponData
 	"hud_icon"										"rui/weapon_icons/r5/weapon_bolo"
 
 	// Models
-	//"viewmodel"   									"mdl/Weapons/vctblue/vctblue_ptpov.rmdl"
-	"viewmodel"   									"mdl/Weapons/ptpov_horizon_heirloom/ptpov_horizon_heirloom.rmdl"
+	"viewmodel"   									"mdl/Weapons/vctblue/vctblue_ptpov.rmdl"
 	"playermodel" 									"mdl/Weapons/vctblue_w/vctblue_w.rmdl"
 
 	"OnWeaponActivate"							"OnWeaponActivate_vctblue"
