@@ -28,6 +28,10 @@ global function DEV_GetPropAtCrosshair
 global function GetCommunityHeirlooms
 global function FS_InitCommunityHeirlooms
 global function CreateHeirloom
+
+global function DroppodTest
+global function DropshipTest
+
 #endif
 
 #if CLIENT
@@ -59,6 +63,22 @@ struct
 	array<Heirloom> heirlooms
 	#endif
 } file
+
+// UTILITY
+#if SERVER
+void function DroppodTest(entity player)
+{
+	thread AirDropFireteam( player.GetOrigin() + <0,0,8000>, <0,180,0>, "idle", 0, "droppod_fireteam", player )
+	player.SetAngles( <0,180,0> )
+}
+
+void function DropshipTest(entity player)
+{
+	thread RespawnPlayersInDropshipAtPoint( [player], player.GetOrigin(), player.GetAngles() )
+}
+
+#endif
+//
 
 void function Sh_FlowstateCommonSharedInit()
 {
@@ -766,8 +786,7 @@ void function InitFlowstateWeapons()
 	
 	//// Prototipos
 	AudioVisualCluesTracker_Init() // Audio Visual Clues
-	ShHoverVehicle_Init() // Trident
-	TitanFastball_Init() // Titan Fastball
+	//TitanFastball_Init() // Titan Fastball
 	// MpAbilityPhaseDoor_Init() // Alter Tactical
 	// ShHoverBike_Init()
 	
